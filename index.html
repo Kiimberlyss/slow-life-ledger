@@ -1,0 +1,1417 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Slow Life Ledger</title>
+<meta name="description" content="A free fan-made tracker for Isekai: Slow Life. Keep your fellows, family, profile and events in one place, read straight from your screen recordings.">
+<meta name="theme-color" content="#cfe9f6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23171a33'/%3E%3Cpath d='M32 12c9 8 13 16 13 23a13 13 0 0 1-26 0c0-7 4-15 13-23z' fill='%23ff9ec7'/%3E%3Cpath d='M32 22v28' stroke='%23ffd36e' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Lexend:wght@400;600;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js" defer></script>
+<style>
+/* Layout: a village notebook. A hillside banner with the brand, notebook tabs along its lower edge,
+   and plain page headers with stamp-style stat tiles above the cards. Light first, with a twilight dark mode. */
+:root {
+  --bg: #f2f7f3;
+  --panel: #ffffff;
+  --panel-2: #f6faf7;
+  --line: #d8e5dc;
+  --line-2: #bfd3c6;
+  --ink: #1e362f;
+  --muted: #587064;
+  --dim: #849a8e;
+  --pink: #c8436f;
+  --gold: #c98a12;
+  --mint: #2e8f5a;
+  --sky: #3a7fbf;
+  --lilac: #7f58c2;
+  --coral: #cf5233;
+  --hill-1: #b9dcb0; --hill-2: #8cc48a; --hill-3: #5fa56a; --sun: #ffd877; --sky-top: #cfe9f6; --sky-bot: #eaf6ee;
+  --r-n: #7c8a84; --r-r: #2e9a5b; --r-sr: #3a7fbf; --r-ssr: #7f58c2; --r-ssrp: #c8436f; --r-ur: #c98a12; --r-urs: #d06a1c; --r-lr: #c73b3b;
+  --f-dil: #2e9a5b; --f-ins: #c8436f; --f-bra: #d06a1c; --f-inf: #3a7fbf; --f-unf: #7f58c2;
+  --on-accent: #ffffff;
+  --font-display: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Lexend", "Segoe UI", system-ui, sans-serif;
+  --radius: 16px;
+  --shadow: 0 1px 0 var(--line), 0 10px 24px -16px rgb(30 54 47 / 0.35);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101b18; --panel: #172521; --panel-2: #1c2d28; --line: #263a33; --line-2: #344d44; --ink: #e6f1eb; --muted: #9db3a7; --dim: #6f877b;
+    --pink: #ef7fa4; --gold: #f2c25a; --mint: #6dd39a; --sky: #7fb6ea; --lilac: #b493ec; --coral: #f08a6a;
+    --hill-1: #1f3a30; --hill-2: #1a3229; --hill-3: #142a22; --sun: #f5e3a8; --sky-top: #0f2033; --sky-bot: #142620;
+    --r-n: #a5b3ac; --r-r: #6dd39a; --r-sr: #7fb6ea; --r-ssr: #b493ec; --r-ssrp: #ef7fa4; --r-ur: #f2c25a; --r-urs: #f3a05c; --r-lr: #f37b7b;
+    --f-dil: #6dd39a; --f-ins: #ef7fa4; --f-bra: #f3a05c; --f-inf: #7fb6ea; --f-unf: #b493ec;
+    --on-accent: #10201a;
+    --shadow: 0 1px 0 var(--line), 0 10px 24px -16px rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101b18; --panel: #172521; --panel-2: #1c2d28; --line: #263a33; --line-2: #344d44; --ink: #e6f1eb; --muted: #9db3a7; --dim: #6f877b;
+  --pink: #ef7fa4; --gold: #f2c25a; --mint: #6dd39a; --sky: #7fb6ea; --lilac: #b493ec; --coral: #f08a6a;
+  --hill-1: #1f3a30; --hill-2: #1a3229; --hill-3: #142a22; --sun: #f5e3a8; --sky-top: #0f2033; --sky-bot: #142620;
+  --r-n: #a5b3ac; --r-r: #6dd39a; --r-sr: #7fb6ea; --r-ssr: #b493ec; --r-ssrp: #ef7fa4; --r-ur: #f2c25a; --r-urs: #f3a05c; --r-lr: #f37b7b;
+  --f-dil: #6dd39a; --f-ins: #ef7fa4; --f-bra: #f3a05c; --f-inf: #7fb6ea; --f-unf: #b493ec;
+  --on-accent: #10201a;
+  --shadow: 0 1px 0 var(--line), 0 10px 24px -16px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.55; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; margin: 0; text-wrap: balance; line-height: 1.15; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.tnum { font-variant-numeric: tabular-nums; }
+a { color: var(--sky); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* ---------- Banner ---------- */
+.banner { position: relative; background: linear-gradient(180deg, var(--sky-top), var(--sky-bot)); overflow: hidden; padding-top: env(safe-area-inset-top, 0px); }
+.hills { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 150px; pointer-events: none; }
+.hills .h1 { fill: var(--hill-1); } .hills .h2 { fill: var(--hill-2); } .hills .h3 { fill: var(--hill-3); } .hills .sun { fill: var(--sun); }
+.banner-row { position: relative; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding-block: 22px 18px; }
+.brand { display: flex; align-items: center; gap: 12px; margin-right: auto; text-decoration: none; color: var(--ink); }
+.logo { width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; background: var(--panel); box-shadow: var(--shadow); color: var(--mint); flex: none; }
+.logo svg { width: 28px; height: 28px; }
+.brand h1 { font-size: 1.75rem; line-height: 1; }
+.brand small { display: block; color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
+.banner-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.search { display: flex; align-items: center; gap: 8px; background: var(--panel); border-radius: 99px; padding: 0 14px; box-shadow: var(--shadow); width: 260px; max-width: 100%; }
+.search svg { width: 16px; height: 16px; color: var(--dim); flex: none; }
+.search input { border: 0; background: transparent; padding: 9px 0; width: 100%; min-width: 0; outline: none; }
+.today { display: inline-flex; align-items: center; gap: 8px; background: var(--panel); border-radius: 99px; padding: 8px 14px; box-shadow: var(--shadow); font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
+.today .clock { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.live-pill { border: 0; cursor: pointer; color: var(--mint); font-weight: 600; }
+.live-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.tabs { position: relative; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-top: 34px; }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px 11px; border-radius: 14px 14px 0 0; text-decoration: none; color: var(--ink); font-weight: 600; background: color-mix(in srgb, var(--panel) 72%, transparent); white-space: nowrap; transition: background 0.15s; }
+.tabs a:hover { background: var(--panel); }
+.tabs a[aria-current="page"] { background: var(--bg); color: var(--ink); box-shadow: inset 0 3px 0 var(--c); }
+.tabs a svg { width: 18px; height: 18px; color: var(--c); }
+.tabs .count { font-size: 0.72rem; font-weight: 600; color: var(--muted); background: var(--panel-2); border-radius: 99px; padding: 0 7px; min-width: 22px; text-align: center; }
+.icon { width: 18px; height: 18px; }
+
+/* ---------- Page ---------- */
+.content { display: grid; gap: 18px; align-content: start; padding-block: 22px 36px; min-width: 0; }
+section.content { padding-block: 0; }
+.hero { display: grid; gap: 12px; }
+.hero h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); }
+.hero h2 em { font-style: normal; text-decoration: underline wavy var(--c); text-decoration-thickness: 2px; text-underline-offset: 7px; }
+.hero p { margin: 0; color: var(--muted); max-width: 62ch; }
+.hero-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.pills { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.pill { display: grid; gap: 0; padding: 12px 14px; border-radius: 12px; background: var(--panel); border: 2px dashed var(--line-2); color: var(--muted); font-size: 0.8rem; }
+.pill b { font-family: var(--font-display); font-size: 1.55rem; line-height: 1.15; color: var(--c, var(--ink)); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line-2); cursor: pointer; padding: 9px 16px; border-radius: 99px; font-weight: 600; font-size: 0.9rem; background: var(--panel); color: var(--ink); text-decoration: none; }
+.btn:hover { border-color: var(--mint); }
+.btn svg { width: 16px; height: 16px; }
+.btn.hot { background: var(--mint); border-color: var(--mint); color: var(--on-accent); }
+.btn.hot:hover { filter: brightness(1.07); }
+.btn.ghost { background: transparent; border-color: transparent; color: var(--muted); }
+.btn.ghost:hover { color: var(--ink); border-color: var(--line-2); }
+.btn.sm { padding: 6px 12px; font-size: 0.82rem; }
+.btn.danger { color: var(--coral); }
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+
+/* ---------- Cards ---------- */
+.card { background: var(--panel); border-radius: var(--radius); box-shadow: var(--shadow); min-width: 0; }
+.card-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 16px 18px 4px; }
+.card-head h3 { font-size: 1.25rem; margin-right: auto; }
+.card-head .sub { font-size: 0.82rem; color: var(--muted); }
+.card-body { padding: 10px 18px 18px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.stat { padding: 16px 18px; display: grid; gap: 2px; }
+.stat .lbl { font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.stat .lbl .dot { width: 10px; height: 10px; border-radius: 3px; background: currentColor; }
+.stat .val { font-family: var(--font-display); font-size: 2.1rem; font-weight: 700; line-height: 1.15; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.stat .sub { font-size: 0.84rem; color: var(--muted); }
+.up { color: var(--mint); } .down { color: var(--coral); }
+.toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.field-in { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; min-width: 0; }
+.seg { display: inline-flex; gap: 2px; background: var(--panel); border-radius: 99px; padding: 4px; box-shadow: var(--shadow); flex-wrap: wrap; }
+.seg button { border: 0; background: transparent; padding: 6px 14px; border-radius: 99px; cursor: pointer; font-weight: 600; font-size: 0.84rem; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.check { display: inline-flex; gap: 8px; align-items: center; font-size: 0.86rem; color: var(--muted); cursor: pointer; }
+.check input { accent-color: var(--mint); width: 16px; height: 16px; }
+
+.fbars { display: grid; gap: 12px; }
+.fbar { display: grid; grid-template-columns: 110px minmax(0, 1fr) 92px; gap: 12px; align-items: center; font-size: 0.88rem; }
+.track { height: 12px; background: var(--panel-2); border-radius: 99px; overflow: hidden; border: 1px solid var(--line); }
+.fill { height: 100%; border-radius: 99px; background: var(--c); }
+.fbar .tnum { color: var(--muted); text-align: right; font-size: 0.8rem; }
+.chip { display: inline-flex; align-items: center; padding: 1px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 700; color: var(--on-accent); background: var(--c, var(--muted)); white-space: nowrap; }
+.fac { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-size: 0.8rem; color: var(--muted); }
+.fac::before { content: ""; width: 9px; height: 9px; border-radius: 3px; background: var(--c, var(--muted)); transform: rotate(45deg); }
+
+/* Character cards */
+.chars { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.char { position: relative; background: var(--panel-2); border: 1px solid var(--line); border-top: 6px solid var(--fc); border-radius: 14px; padding: 12px 14px 12px; display: grid; gap: 10px; text-align: left; cursor: pointer; color: inherit; transition: transform 0.15s, box-shadow 0.15s; min-width: 0; }
+.char:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.char.missing { opacity: 0.55; border-top-color: var(--line-2); }
+.char-top { display: flex; gap: 12px; align-items: center; min-width: 0; }
+.avatar { width: 44px; height: 44px; border-radius: 12px; flex: none; display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--fc); background: color-mix(in srgb, var(--fc) 14%, var(--panel)); border: 2px solid var(--rc); }
+.char-name { min-width: 0; }
+.char-name b { display: block; font-family: var(--font-display); font-size: 1.08rem; line-height: 1.2; overflow-wrap: anywhere; }
+.char-name span { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 3px; }
+.char-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.cs { padding: 6px 8px; min-width: 0; background: var(--panel); }
+.cs + .cs { border-left: 1px solid var(--line); }
+.cs i { display: block; font-style: normal; font-size: 0.68rem; color: var(--dim); }
+.cs b { display: block; font-weight: 600; font-size: 0.95rem; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.char-foot { display: flex; justify-content: space-between; gap: 8px; font-size: 0.74rem; color: var(--dim); }
+.prog { color: var(--muted); }
+
+/* Events */
+.events { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.ev { background: var(--panel); border-radius: 16px; padding: 16px; display: grid; gap: 10px; align-content: start; box-shadow: var(--shadow); border-left: 5px solid var(--sc); min-width: 0; }
+.ev[data-s="ended"] { opacity: 0.6; }
+.ev-top { display: flex; gap: 10px; align-items: start; }
+.ev-top h3 { font-size: 1.2rem; margin-right: auto; overflow-wrap: anywhere; }
+.status { display: inline-flex; align-items: center; gap: 6px; font-size: 0.74rem; font-weight: 700; padding: 2px 10px; border-radius: 99px; color: var(--sc); border: 1px solid var(--sc); white-space: nowrap; }
+.status .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.big-count { font-family: var(--font-display); font-weight: 700; font-size: 1.75rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.big-count small { display: block; font-family: var(--font-body); font-size: 0.76rem; font-weight: 400; color: var(--muted); }
+.big-count.urgent { color: var(--coral); }
+.ev .track { height: 8px; }
+.ev .fill { --c: var(--sc); }
+.ev .meta { font-size: 0.8rem; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.ev .note-b { font-size: 0.88rem; overflow-wrap: anywhere; }
+.ev .note-b i { font-style: normal; display: block; font-size: 0.74rem; color: var(--dim); }
+.ev-foot { display: flex; gap: 8px; align-items: center; border-top: 1px dashed var(--line-2); padding-top: 10px; }
+.ev-foot .check { margin-right: auto; }
+
+/* Profile chart */
+.chart { width: 100%; height: 190px; display: block; }
+.chart .grid { stroke: var(--line); stroke-dasharray: 3 5; }
+.chart .area { fill: color-mix(in srgb, var(--mint) 16%, transparent); }
+.chart .line { fill: none; stroke: var(--mint); stroke-width: 2.5; vector-effect: non-scaling-stroke; }
+.chart .pt { fill: var(--panel); stroke: var(--mint); stroke-width: 2; }
+.chart text { fill: var(--muted); font-size: 11px; font-family: var(--font-body); }
+.kv { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0 18px; margin: 0; }
+.kv div { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line-2); min-width: 0; }
+.kv dt { color: var(--muted); font-size: 0.86rem; }
+.kv dd { margin: 0; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+
+/* Tips */
+.tips { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.tip { padding: 18px; display: grid; gap: 8px; align-content: start; }
+.tip-top { display: flex; gap: 12px; align-items: center; }
+.tip h3 { font-size: 1.12rem; }
+.tip p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+.tip ul { margin: 0; padding-left: 18px; font-size: 0.9rem; }
+.tag { font-size: 0.74rem; font-weight: 700; color: var(--c); }
+.bubble { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; flex: none; background: color-mix(in srgb, var(--c) 14%, var(--panel)); color: var(--c); }
+.bubble svg { width: 20px; height: 20px; }
+
+.empty { padding: 30px 20px; text-align: center; display: grid; gap: 10px; justify-items: center; color: var(--muted); }
+.empty .orb { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--c) 14%, var(--panel)); color: var(--c); }
+.empty .orb svg { width: 34px; height: 34px; }
+.empty strong { color: var(--ink); font-family: var(--font-display); font-size: 1.3rem; }
+.empty p { margin: 0; max-width: 54ch; }
+
+/* ---------- Sheet ---------- */
+.overlay { position: fixed; inset: 0; z-index: 40; background: rgb(15 30 25 / 0.5); display: grid; place-items: center; padding: 16px; padding-top: max(16px, env(safe-area-inset-top, 0px)); padding-bottom: max(16px, env(safe-area-inset-bottom, 0px)); }
+.sheet { width: min(820px, 100%); max-height: 100%; overflow: auto; background: var(--bg); border-radius: 20px; box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.5); display: grid; }
+.sheet-head { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 10px; padding: 16px 20px; background: var(--panel); border-bottom: 1px solid var(--line); }
+.sheet-head h2 { font-size: 1.5rem; margin-right: auto; }
+.sheet-body { padding: 18px 20px; display: grid; gap: 16px; }
+.sheet-foot { position: sticky; bottom: 0; display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; padding: 14px 20px; background: var(--panel); border-top: 1px solid var(--line); }
+.kinds { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.kind { position: relative; display: grid; gap: 4px; padding: 12px; border-radius: 12px; background: var(--panel); border: 2px solid var(--line); cursor: pointer; }
+.kind input { position: absolute; opacity: 0; pointer-events: none; }
+.kind:has(input:checked) { border-color: var(--c); background: color-mix(in srgb, var(--c) 8%, var(--panel)); }
+.kind:has(input:focus-visible) { outline: 3px solid var(--gold); outline-offset: 2px; }
+.kind b { font-family: var(--font-display); font-size: 1.08rem; }
+.kind span { font-size: 0.8rem; color: var(--muted); }
+.howto { background: var(--panel); border-radius: 12px; padding: 12px 16px; font-size: 0.9rem; border: 1px solid var(--line); }
+.howto b { font-family: var(--font-display); font-size: 1.02rem; }
+.howto ol { margin: 6px 0 0; padding-left: 20px; color: var(--muted); }
+.drop { display: grid; gap: 6px; justify-items: center; text-align: center; padding: 26px; border-radius: 14px; border: 2px dashed var(--line-2); background: var(--panel); color: var(--muted); cursor: pointer; }
+.drop:hover, .drop.over { border-color: var(--mint); color: var(--ink); }
+.drop strong { color: var(--ink); font-family: var(--font-display); font-size: 1.15rem; }
+.thumbs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.thumbs img { height: 110px; width: auto; border-radius: 8px; border: 1px solid var(--line-2); flex: none; }
+.bar { height: 10px; border-radius: 99px; background: var(--panel); overflow: hidden; border: 1px solid var(--line); }
+.bar div { height: 100%; width: 0; border-radius: 99px; background: var(--mint); transition: width 0.25s; }
+.muted { color: var(--muted); }
+.small { font-size: 0.84rem; }
+.err { color: var(--coral); font-weight: 600; }
+.table-scroll { overflow-x: auto; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); }
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+th { text-align: left; font-size: 0.74rem; color: var(--muted); padding: 10px; background: var(--panel-2); white-space: nowrap; font-weight: 600; }
+td { padding: 6px 10px; border-top: 1px solid var(--line); vertical-align: middle; }
+td input:not([type="checkbox"]) { width: 100%; min-width: 84px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; }
+td input.name-in { min-width: 140px; font-weight: 600; }
+td input[type="checkbox"] { accent-color: var(--mint); width: 16px; height: 16px; }
+.badge { font-size: 0.72rem; font-weight: 700; padding: 1px 8px; border-radius: 6px; color: var(--c); border: 1px solid var(--c); white-space: nowrap; }
+.badge.new { --c: var(--mint); } .badge.chg { --c: var(--gold); } .badge.same { --c: var(--dim); }
+details.raw { background: var(--panel); border-radius: 12px; padding: 10px 14px; border: 1px solid var(--line); }
+details.raw summary { cursor: pointer; font-weight: 600; color: var(--muted); font-size: 0.86rem; }
+details.raw pre { white-space: pre-wrap; font-size: 0.78rem; color: var(--muted); max-height: 240px; overflow: auto; margin: 8px 0 0; }
+.form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.form label { display: grid; gap: 5px; font-size: 0.8rem; color: var(--muted); }
+.form label.wide { grid-column: 1 / -1; }
+.form input, .form select, .form textarea { background: var(--panel); border: 1px solid var(--line-2); border-radius: 10px; padding: 9px 12px; color: var(--ink); width: 100%; font-size: 0.95rem; }
+.form textarea { min-height: 76px; resize: vertical; }
+
+.foot { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding-block: 18px calc(28px + env(safe-area-inset-bottom, 0px)); border-top: 1px dashed var(--line-2); color: var(--muted); font-size: 0.82rem; }
+.foot p { margin: 0 auto 0 0; max-width: 60ch; }
+.toasts { position: fixed; z-index: 60; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 8px; width: min(440px, calc(100% - 32px)); }
+.toast { background: var(--ink); color: var(--bg); padding: 11px 16px; border-radius: 12px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 12px 30px -10px rgb(0 0 0 / 0.5); }
+
+@media (max-width: 720px) {
+  .banner-row { padding-block: 16px 8px; }
+  .brand h1 { font-size: 1.45rem; }
+  .banner-tools { width: 100%; }
+  .search { flex: 1 1 100%; width: auto; }
+  .tabs { padding-top: 22px; }
+  .tabs a { padding: 9px 12px 10px; }
+  .fbar { grid-template-columns: 86px minmax(0, 1fr) 70px; }
+  .stat .val { font-size: 1.7rem; }
+  .hills { height: 110px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+  <symbol id="i-sword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3H21v6.5L10 20.5 3.5 14z"/><path d="M6 17l-3 3M8.5 12.5l3 3"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-9-9.5C2 7 4.5 4 7.5 4c2 0 3.5 1.2 4.5 2.8C13 5.2 14.5 4 16.5 4 19.5 4 22 7 21 10.5 19.5 15.4 12 20 12 20z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/><circle cx="12" cy="15" r="1.6" fill="currentColor"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v2.5A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V16"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5"/><path d="M4 16v2.5A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V16"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor"/></symbol>
+  <symbol id="i-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12c0-4 3-7 8-7 0 5-3 7-8 7z"/><path d="M12 14c0-3-2.5-5.5-7-5.5 0 4 2.5 5.5 7 5.5z"/></symbol>
+</svg>
+
+<header class="banner">
+  <svg class="hills" viewBox="0 0 1440 150" preserveAspectRatio="none" aria-hidden="true">
+    <circle class="sun" cx="1180" cy="58" r="34"/>
+    <path class="h1" d="M0 92 C 180 40, 360 40, 560 82 S 920 120, 1120 70 S 1360 40, 1440 60 V150 H0z"/>
+    <path class="h2" d="M0 112 C 220 70, 420 92, 640 108 S 1000 84, 1200 104 S 1380 118, 1440 100 V150 H0z"/>
+    <path class="h3" d="M0 136 C 260 116, 520 128, 760 132 S 1180 120, 1440 130 V150 H0z"/>
+  </svg>
+  <div class="wrap banner-row">
+    <a class="brand" href="#profile">
+      <span class="logo"><svg><use href="#i-sprout"/></svg></span>
+      <span><h1>Slow Life Ledger</h1><small>A free tracker for Isekai: Slow Life</small></span>
+    </a>
+    <div class="banner-tools">
+      <label class="search"><svg><use href="#i-search"/></svg><input type="search" id="global-search" placeholder="Find a fellow or family member…" aria-label="Find a fellow or family member"></label>
+      <span class="today">Local time <span class="clock" id="clock">--:--:--</span></span>
+      <button class="today live-pill" type="button" id="live-pill"><span class="dot"></span><span id="live-count">0 live</span></button>
+      <button class="btn hot" type="button" data-open-import><svg><use href="#i-film"/></svg>Import</button>
+    </div>
+  </div>
+  <nav class="wrap tabs" aria-label="Pages">
+    <a href="#profile" data-tab="profile" style="--c:var(--gold)"><svg><use href="#i-user"/></svg>Profile</a>
+    <a href="#fellows" data-tab="fellows" style="--c:var(--pink)"><svg><use href="#i-sword"/></svg>Fellows<span class="count" id="nav-fellows">0</span></a>
+    <a href="#family" data-tab="family" style="--c:var(--lilac)"><svg><use href="#i-heart"/></svg>Family<span class="count" id="nav-family">0</span></a>
+    <a href="#events" data-tab="events" style="--c:var(--mint)"><svg><use href="#i-cal"/></svg>Events<span class="count" id="nav-events">0</span></a>
+    <a href="#tips" data-tab="tips" style="--c:var(--sky)"><svg><use href="#i-bulb"/></svg>Tips<span class="count" id="nav-tips">0</span></a>
+  </nav>
+</header>
+
+<main class="wrap content">
+
+    <!-- PROFILE -->
+    <section data-view="profile" style="--c:var(--gold)" class="content">
+      <div class="hero">
+        <div>
+          <h2>Your <em>journey</em>, so far</h2>
+          <p>Level, earnings and power from your profile screen. Every import adds a reading, so you can watch your account grow.</p>
+          <div class="pills" id="profile-pills"></div>
+          <div class="hero-actions"><button class="btn hot" type="button" data-open-import="profile"><svg><use href="#i-film"/></svg>Import my profile</button><button class="btn" type="button" id="btn-edit-profile">Edit by hand</button></div>
+        </div>
+      </div>
+      <div class="grid-3" id="profile-stats"></div>
+      <div class="card"><div class="card-head"><h3>Growth</h3><span class="sub" id="growth-sub"></span>
+        <div class="seg" id="growth-metric" role="group" aria-label="Chart"><button type="button" data-m="power" aria-pressed="true">Power</button><button type="button" data-m="earnings" aria-pressed="false">Earnings</button><button type="button" data-m="level" aria-pressed="false">Level</button></div></div>
+        <div class="card-body" id="growth"></div></div>
+      <div class="card" id="profile-other-card" hidden><div class="card-head"><h3>Other stats</h3></div><div class="card-body"><dl class="kv" id="profile-other"></dl></div></div>
+    </section>
+
+    <!-- FELLOWS -->
+    <section data-view="fellows" style="--c:var(--pink)" class="content" hidden>
+      <div class="hero">
+        <div>
+          <h2>Your <em>fellows</em></h2>
+          <p>Every fellow you've recruited, with rarity, level, aptitude, power and Stella. Tap a card to edit it.</p>
+          <div class="pills" id="fellow-pills"></div>
+          <div class="hero-actions"><button class="btn hot" type="button" data-open-import="fellows"><svg><use href="#i-film"/></svg>Import fellows</button><button class="btn" type="button" id="btn-add-fellow">Add by hand</button></div>
+        </div>
+      </div>
+      <div class="card"><div class="card-head"><h3>Faction balance</h3><span class="sub">Share of your total fellow power</span></div><div class="card-body fbars" id="fellow-factions"></div></div>
+      <div class="card">
+        <div class="card-head"><h3>Roster</h3>
+          <div class="toolbar">
+            <select class="field-in" id="f-faction" aria-label="Faction"></select>
+            <select class="field-in" id="f-rarity" aria-label="Rarity"></select>
+            <select class="field-in" id="f-sort" aria-label="Sort by">
+              <option value="power">Sort: Power</option><option value="level">Sort: Level</option><option value="aptitude">Sort: Aptitude</option><option value="rarity">Sort: Rarity</option><option value="name">Sort: Name</option><option value="updatedAt">Sort: Recently updated</option>
+            </select>
+            <label class="check"><input type="checkbox" id="f-missing">Show fellows I don't have</label>
+          </div>
+        </div>
+        <div class="card-body"><div class="chars" id="fellow-grid"></div></div>
+      </div>
+    </section>
+
+    <!-- FAMILY -->
+    <section data-view="family" style="--c:var(--lilac)" class="content" hidden>
+      <div class="hero">
+        <div>
+          <h2>Your <em>family</em></h2>
+          <p>Family members bless your fellows with extra aptitude and power. Track their Intimacy, Blessing and Stella here.</p>
+          <div class="pills" id="family-pills"></div>
+          <div class="hero-actions"><button class="btn hot" type="button" data-open-import="family"><svg><use href="#i-film"/></svg>Import family</button><button class="btn" type="button" id="btn-add-family">Add by hand</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Members</h3>
+          <div class="toolbar">
+            <select class="field-in" id="m-faction" aria-label="Faction"></select>
+            <select class="field-in" id="m-sort" aria-label="Sort by"><option value="intimacy">Sort: Intimacy</option><option value="blessing">Sort: Blessing</option><option value="rarity">Sort: Rarity</option><option value="name">Sort: Name</option></select>
+          </div>
+        </div>
+        <div class="card-body"><div class="chars" id="family-grid"></div></div>
+      </div>
+    </section>
+
+    <!-- EVENTS -->
+    <section data-view="events" style="--c:var(--mint)" class="content" hidden>
+      <div class="hero">
+        <div>
+          <h2>Event <em>timers</em></h2>
+          <p>Live countdowns for every event you're tracking, so nothing ends before you've claimed what you wanted.</p>
+          <div class="pills" id="event-pills"></div>
+          <div class="hero-actions"><button class="btn hot" type="button" data-open-import="events"><svg><use href="#i-film"/></svg>Import events</button><button class="btn" type="button" id="btn-add-event">Add by hand</button></div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="seg" id="ev-filter" role="group" aria-label="Show events">
+          <button type="button" data-f="active" aria-pressed="true">Live and upcoming</button>
+          <button type="button" data-f="live" aria-pressed="false">Live</button>
+          <button type="button" data-f="upcoming" aria-pressed="false">Upcoming</button>
+          <button type="button" data-f="ended" aria-pressed="false">Ended</button>
+          <button type="button" data-f="all" aria-pressed="false">All</button>
+        </div>
+      </div>
+      <div class="events" id="event-grid"></div>
+    </section>
+
+    <!-- TIPS -->
+    <section data-view="tips" style="--c:var(--sky)" class="content" hidden>
+      <div class="hero">
+        <div>
+          <h2>What to do <em>next</em></h2>
+          <p>Suggestions worked out from your saved data. The more you import, the more useful they get.</p>
+          <div class="pills" id="tip-pills"></div>
+        </div>
+      </div>
+      <div class="tips" id="tip-grid"></div>
+    </section>
+</main>
+
+<footer class="wrap foot">
+  <p>Your data stays in this browser. Back it up to move it to another device. Fan-made and not affiliated with the game's developers. Fellow list from the fan wiki at <a href="https://zik-ascend.github.io/isl-tools/wiki/home/" target="_blank" rel="noopener">zik-ascend.github.io/isl-tools</a>.</p>
+  <button class="btn sm" type="button" id="btn-backup"><svg><use href="#i-down"/></svg>Back up</button>
+  <button class="btn sm" type="button" id="btn-restore"><svg><use href="#i-up"/></svg>Restore</button>
+  <input type="file" id="restore-file" accept="application/json,.json" hidden>
+</footer>
+
+<div class="overlay" id="overlay" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title"></div></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ================= Game reference (fan wiki: zik-ascend.github.io/isl-tools, patch 8105) ================= */
+const ROSTER_RAW = `Acedia|Dil|SSR
+Adeline|Unf|SR
+Aegle|Inf|UR
+Ainz Ooal Gown|Inf|SSR+
+Ais Wallenstein|Bra|SSR+>UR
+Aisha Greyrat|Ins|SSR
+Albedo|Bra|SSR>SSR+>UR>LR
+Allucia|Dil|SSR
+Amaterasu|Ins|UR
+Andras|Bra|UR
+Angie|Inf|SR
+Anne|Unf|SSR
+Anpu|Dil|UR
+Ao Li|Inf|UR
+Aqua|Ins|SSR+>UR>LR
+Arake|Dil|R
+Athena|Inf|UR
+Augustine|Inf|SSR
+Aurora|Bra|SSR+>UR
+Avar|Unf|SSR
+Avril|Ins|SSR
+Barbara|Inf|SR
+Beelsebub|Unf|UR
+Bell Cranel|Dil|SSR
+Belle|Dil|R
+Benimaru|Bra|SSR
+Beryl|Bra|UR*
+Björnson|Bra|R
+Black|Ins|SSR
+Boatter|Unf|R
+Brotein|Bra|SR
+Bubo|Inf|SSR
+Carrotte|Dil|SR
+Chisato Nishikigi|Unf|SSR>SSR+>UR>LR
+Cimitir|Inf|SR
+Crysta|Dil|SSR>SSR+
+Darkness|Unf|SSR
+Demiurge|Inf|SR
+Denisa|Dil|SR
+Dionysia|Bra|SSR+>UR*
+Dr.Dotor|Inf|R
+Elise|Ins|SR
+Elma|Unf|SSR
+Emma|Dil|SR
+Emosen|Bra|SSR
+Eros|Unf|SR
+Erza|Bra|SSR
+Eter & NAL|Inf|SSR
+Fafnir|Bra|SSR
+Fafnyria|Dil|SSR+>UR*
+Fawna|Bra|SR
+Fifi|Dil|N
+Fifi|Unf|SSR+>UR
+Floaty|Inf|SR
+Flos|Inf|SSR
+Freesia|Bra|UR
+Frogella|Unf|SSR
+Future Maxim|Inf|SSR+>UR
+Gabrael|Inf|UR*
+Gale|Unf|SSR+>UR
+Geast|Dil|R
+Genos|Ins|SSR
+Giyu Tomioka|Bra|SSR+>UR
+Gray|Inf|SSR
+Grayce|Ins|SR
+Guarg|Bra|R
+Hakuren|Dil|SSR>UR
+Hattie|Inf|SSR>SSR+>UR*
+Hawker|Bra|R
+Healora|Bra|SSR
+Heracles|Bra|UR
+Hermes|Unf|UR
+Huowang Dade|Bra|SR
+Ida|Dil|SSR
+Inosuke Hashibira|Unf|SSR
+Iori|Unf|SSR
+Ira|Bra|SSR
+Ixchel|Ins|UR
+Jewlry|Dil|SSR
+Justitia|Ins|SR
+Kaity|Unf|R
+Kanna|Ins|SSR>SSR+>UR*
+Kaye|Dil|SSR
+Kazuma|Dil|SSR+
+Kerr & Bel & Ross|Ins|UR
+Knivi|Bra|N
+Kuku|Dil|SSR+>UR
+Lailah|Ins|SSR+>UR
+Leon|Bra|UR
+Lincale|Inf|R
+Linlang|Inf|SR>SSR+>UR
+Liona|Inf|SR>SSR+>UR
+Liz|Dil|SR
+Lokia|Dil|SSR+>UR
+Loya|Ins|SSR
+Lucoa|Inf|SR
+Lucoa|Inf|SSR
+Lula|Dil|SSR
+Luminus Valentine|Unf|SSR
+Lux|Ins|SSR
+Magellan|Ins|SSR
+Mammon|Bra|SSR
+Master Tongxuan|Dil|UR
+Maxim|Inf|N
+Meaden|Ins|R
+Mescal|Unf|SSR>UR
+Mia|Unf|UR
+Milim Nava|Unf|SSR>SSR+>UR*
+Mio|Ins|SSR
+Mirac|Ins|R
+Moork|Unf|SR
+Mulberry|Ins|SSR
+Mushimi|Ins|SSR>SSR+>UR*
+Myner|Unf|SSR
+Nalu|Ins|SR
+Narberal Gamma|Bra|SSR+
+Natsu|Dil|SSR>SSR+>UR*
+Nemetona|Dil|UR
+Neptune|Inf|UR
+Nierus|Inf|UR
+Nip|Unf|SSR
+Norn Greyrat|Dil|SSR
+Nyar|Bra|UR
+Onikiri|Ins|SSR
+Orivita|Unf|UR
+Paat|Bra|SSR
+Phanes|Ins|UR
+Phinphinx|Ins|UR
+Prim|Unf|R
+Pump|Unf|N
+Quenchy|Bra|SR
+Rani|Ins|SR
+Reir|Ins|N
+Rimuru Tempest|Unf|SSR>SSR+>UR*>LR
+Rissette|Unf|SR>SSR+>UR
+Rogile|Inf|R
+Roxy Migurdia|Inf|SSR>SSR+>UR*
+Rudeus Greyrat|Bra|SSR
+Ryu Lion|Unf|SSR
+Saitama|Dil|SSR
+Salvo|Bra|SSR
+Scorion|Bra|SR
+Searin|Unf|SR
+Serious Acedia|Dil|SSR+>UR
+Shiki|Inf|SSR
+Shinobu Kocho|Inf|SSR+>UR>LR
+Shlomo|Ins|SSR>UR*
+Spipi|Dil|SR
+Stephanie|Inf|SSR
+Stheno|Inf|SSR
+Sunna|Dil|UR
+Super|Inf|SSR
+Surena|Bra|SSR
+Tamamo|Ins|UR
+Tanjiro Kamado|Bra|SSR+
+Terrible Tornado|Bra|SSR>SSR+>UR>LR
+Thalia|Dil|SSR
+Thora|Unf|SSR+>UR
+Tigirl|Bra|SSR
+Tigris|Inf|SSR
+Tohru|Dil|UR
+Tomoe|Unf|SSR>UR
+Trady|Dil|SSR>UR
+Umbra|Inf|SSR+>UR
+Veldora Tempest|Ins|SSR+
+Verity|Bra|SSR+>UR
+Violetta|Dil|SSR>SSR+>UR*
+Witty|Unf|SR
+Woolf|Ins|R
+Zenitsu Agatsuma|Dil|SSR+`;
+const FAMILY_KNOWN = ["Crysta", "Hestia", "Liliruca Arde", "Mia", "Usuri", "Loo", "Diablo", "Mors"];
+
+const FACTION_CODES = { Dil: "Diligent", Ins: "Inspiring", Bra: "Brave", Inf: "Informed", Unf: "Unfettered" };
+const FACTIONS = Object.values(FACTION_CODES);
+const FACTION_VAR = { Diligent: "--f-dil", Inspiring: "--f-ins", Brave: "--f-bra", Informed: "--f-inf", Unfettered: "--f-unf" };
+const RARITIES = ["N", "R", "SR", "SSR", "SSR+", "UR", "UR*", "LR"];
+const RARITY_VAR = { "N": "--r-n", "R": "--r-r", "SR": "--r-sr", "SSR": "--r-ssr", "SSR+": "--r-ssrp", "UR": "--r-ur", "UR*": "--r-urs", "LR": "--r-lr" };
+
+const norm = s => String(s ?? "").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]/g, "");
+const ROSTER = ROSTER_RAW.trim().split("\n").map(line => {
+  const [name, f, prog] = line.split("|");
+  const steps = prog.split(">");
+  return { name, faction: FACTION_CODES[f], rarity: steps[0], maxRarity: steps[steps.length - 1], prog: steps.join(" → ") };
+});
+const ROSTER_BY = new Map();
+for (const r of ROSTER) if (!ROSTER_BY.has(norm(r.name))) ROSTER_BY.set(norm(r.name), r);
+
+/* ================= Helpers ================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const blank = v => v === null || v === undefined || String(v).trim() === "";
+const show = v => blank(v) ? "—" : esc(v);
+const clone = o => JSON.parse(JSON.stringify(o ?? null));
+const newId = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+
+function parseNum(v) {
+  if (blank(v)) return NaN;
+  if (typeof v === "number") return v;
+  const s = String(v).replace(/,/g, "").replace(/\s+/g, "").replace(/^[^\d.]+/, "");
+  const m = s.match(/^(\d+(?:\.\d+)?)([a-zA-Z]{0,2})/);
+  if (!m) return NaN;
+  const n = parseFloat(m[1]), suf = m[2].toUpperCase();
+  const mult = { "": 1, K: 1e3, M: 1e6, B: 1e9, T: 1e12, Q: 1e15 };
+  if (suf in mult) return n * mult[suf];
+  if (/^[A-Z]{2}$/.test(suf)) { const i = (suf.charCodeAt(0) - 65) * 26 + (suf.charCodeAt(1) - 65); return n * Math.pow(10, 15 + 3 * i); }
+  return n;
+}
+function fmtNum(n) {
+  if (!isFinite(n)) return "—";
+  const a = Math.abs(n);
+  if (a >= 1e15) {
+    const exp = Math.floor(Math.log10(a) / 3) * 3, i = (exp - 15) / 3;
+    const suf = String.fromCharCode(97 + Math.floor(i / 26)) + String.fromCharCode(97 + (i % 26));
+    return trimDec(n / Math.pow(10, exp)) + suf;
+  }
+  for (const [v, u] of [[1e12, "T"], [1e9, "B"], [1e6, "M"], [1e3, "K"]]) if (a >= v) return trimDec(n / v) + u;
+  return Math.round(n).toLocaleString();
+}
+function trimDec(x) { const a = Math.abs(x); return String(+x.toFixed(a >= 100 ? 0 : a >= 10 ? 1 : 2)); }
+function ago(iso) {
+  if (!iso) return ""; const d = new Date(iso); if (isNaN(d)) return "";
+  const s = (Date.now() - d) / 1000;
+  if (s < 60) return "just now"; if (s < 3600) return Math.floor(s / 60) + "m ago"; if (s < 86400) return Math.floor(s / 3600) + "h ago";
+  if (s < 604800) return Math.floor(s / 86400) + "d ago";
+  return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+function fmtDate(iso, withTime = true) {
+  const d = new Date(iso); if (!iso || isNaN(d)) return "";
+  return d.toLocaleString(undefined, withTime ? { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" } : { month: "short", day: "numeric" });
+}
+function fmtLeft(ms) {
+  if (ms <= 0) return "0m";
+  const d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24, m = Math.floor(ms / 6e4) % 60, s = Math.floor(ms / 1e3) % 60;
+  if (d > 0) return `${d}d ${h}h ${m}m`;
+  if (h > 0) return `${h}h ${m}m ${String(s).padStart(2, "0")}s`;
+  return `${m}m ${String(s).padStart(2, "0")}s`;
+}
+function parseRemaining(str) {
+  if (blank(str)) return null;
+  let ms = 0, hit = false, m;
+  const re = /(\d+(?:\.\d+)?)\s*(d|day|days|h|hr|hrs|hour|hours|m|min|mins|minute|minutes|s|sec|secs|seconds)(?![a-z])/gi;
+  while ((m = re.exec(str))) { hit = true; const n = parseFloat(m[1]), u = m[2].toLowerCase()[0]; ms += n * (u === "d" ? 864e5 : u === "h" ? 36e5 : u === "m" ? 6e4 : 1e3); }
+  const clock = String(str).match(/(\d{1,3}):(\d{2})(?::(\d{2}))?/);
+  if (clock) { const c = (+clock[1] * 3600 + +clock[2] * 60 + +(clock[3] || 0)) * 1000; if (!hit) { hit = true; ms = c; } else if (/\d+\s*d/i.test(str) && !/\d+\s*h/i.test(str)) ms += c; }
+  return hit ? ms : null;
+}
+function toLocalInput(iso) {
+  const d = new Date(iso); if (!iso || isNaN(d)) return "";
+  const p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+function fromLocalInput(v) { if (!v) return null; const d = new Date(v); return isNaN(d) ? null : d.toISOString(); }
+function rarityChip(r) { return blank(r) ? "" : `<span class="chip" style="--c:var(${RARITY_VAR[r] || "--muted"})">${esc(r)}</span>`; }
+function factionTag(f) { return blank(f) ? "" : `<span class="fac" style="--c:var(${FACTION_VAR[f] || "--muted"})">${esc(f)}</span>`; }
+function canonFaction(f) { if (blank(f)) return null; const n = norm(f); return FACTIONS.find(x => norm(x) === n || (n.length >= 3 && norm(x).startsWith(n.slice(0, 3)))) || String(f); }
+function canonRarity(r) { if (blank(r)) return null; const s = String(r).toUpperCase().replace(/\s/g, ""); return RARITIES.find(x => x === s) || String(r); }
+function initials(name) { const w = String(name || "?").replace(/[^\p{L}\p{N} ]/gu, "").trim().split(/\s+/); return ((w[0] || "?")[0] + (w.length > 1 ? w[w.length - 1][0] : (w[0] || "")[1] || "")).toUpperCase(); }
+function toast(msg) { const t = document.createElement("div"); t.className = "toast"; t.textContent = msg; $("#toasts").append(t); setTimeout(() => t.remove(), 4200); }
+function levenshtein(a, b) {
+  if (a === b) return 0; if (!a.length) return b.length; if (!b.length) return a.length;
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    for (let j = 1; j <= b.length; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[b.length];
+}
+const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/* ================= Storage (this browser) ================= */
+const KEYS = ["profile", "fellows", "family", "events"];
+const STORE_KEY = "slow-life-ledger:v1";
+const EMPTY = () => ({ profile: { current: {}, history: [] }, fellows: { items: [] }, family: { items: [] }, events: { items: [] } });
+let S = EMPTY();
+let storageOk = true;
+function shapeAll(d) {
+  const e = EMPTY(); d = d || {};
+  e.profile.current = (d.profile && d.profile.current) || {};
+  e.profile.history = Array.isArray(d.profile && d.profile.history) ? d.profile.history : [];
+  for (const k of ["fellows", "family", "events"]) e[k].items = Array.isArray(d[k] && d[k].items) ? d[k].items.filter(x => x && typeof x === "object") : [];
+  for (const k of ["fellows", "family", "events"]) for (const it of e[k].items) if (!it.id) it.id = newId();
+  return e;
+}
+function load() {
+  try { const raw = localStorage.getItem(STORE_KEY); if (raw) S = shapeAll(JSON.parse(raw)); }
+  catch { storageOk = false; }
+}
+function save(key) {
+  if (key) S[key].updatedAt = new Date().toISOString();
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); }
+  catch { if (storageOk) toast("This browser is blocking storage, so changes won't be kept after you close the page."); storageOk = false; }
+  renderAll();
+}
+
+/* ================= Routing ================= */
+const TABS = ["profile", "fellows", "family", "events", "tips"];
+function route() {
+  const h = location.hash.replace("#", "");
+  const tab = TABS.includes(h) ? h : "profile";
+  document.querySelectorAll("[data-view]").forEach(v => v.hidden = v.dataset.view !== tab);
+  document.querySelectorAll("[data-tab]").forEach(a => { if (a.dataset.tab === tab) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+}
+window.addEventListener("hashchange", () => { route(); window.scrollTo({ top: 0 }); });
+
+/* ================= Profile ================= */
+let growthMetric = "power";
+function renderProfile() {
+  const cur = S.profile.current || {}, hist = S.profile.history || [];
+  const prev = hist.length >= 2 ? hist[hist.length - 2] : null;
+  $("#profile-pills").innerHTML = [["Level", cur.level], ["Power", cur.power], ["Earnings", cur.earnings]]
+    .map(([l, v]) => `<span class="pill"><b>${show(v)}</b>${l}</span>`).join("") + `<span class="pill" style="--c:var(--muted)"><b>${hist.length}</b>readings</span>`;
+  $("#profile-stats").innerHTML = [["level", "Level", "var(--gold)"], ["power", "Power", "var(--pink)"], ["earnings", "Earnings", "var(--mint)"]].map(([k, label, c]) => {
+    let sub = blank(cur[k]) ? "Not read yet" : (S.profile.updatedAt ? "Updated " + esc(ago(S.profile.updatedAt)) : "");
+    if (prev && !blank(cur[k]) && !blank(prev[k])) {
+      const a = parseNum(cur[k]), b = parseNum(prev[k]);
+      if (isFinite(a) && isFinite(b) && a !== b) sub = `<span class="${a > b ? "up" : "down"}">${a > b ? "▲ +" : "▼ −"}${fmtNum(Math.abs(a - b))}</span> since ${esc(fmtDate(prev.at, false))}`;
+    }
+    return `<div class="card stat"><span class="lbl"><span class="dot" style="color:${c}"></span>${label}</span><span class="val">${show(cur[k])}</span><span class="sub">${sub}</span></div>`;
+  }).join("");
+  document.querySelectorAll("#growth-metric button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.m === growthMetric)));
+  const pts = hist.map(h => ({ at: h.at, v: parseNum(h[growthMetric]) })).filter(p => isFinite(p.v));
+  $("#growth-sub").textContent = pts.length >= 2 ? `${fmtNum(pts[0].v)} → ${fmtNum(pts[pts.length - 1].v)}` : "";
+  $("#growth").innerHTML = pts.length >= 2 ? chart(pts) : `<div class="empty"><div class="orb" style="--c:var(--gold)"><svg><use href="#i-sprout"/></svg></div><strong>${hist.length ? "One reading so far" : "No readings yet"}</strong><p>${hist.length ? "Import your profile again in a day or two and your growth line appears here." : "Screenshot or record your profile screen, then choose Import. Each import adds a point to this chart."}</p>${hist.length ? "" : `<button class="btn hot" type="button" data-open-import="profile">Import my profile</button>`}</div>`;
+  const other = Object.entries(cur.other || {}).filter(([, v]) => !blank(v));
+  $("#profile-other-card").hidden = !other.length;
+  $("#profile-other").innerHTML = other.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+}
+function chart(pts) {
+  const W = 800, H = 180, L = 52, R = 16, T = 14, B = 26;
+  const t0 = new Date(pts[0].at).getTime(), t1 = new Date(pts[pts.length - 1].at).getTime();
+  const vs = pts.map(p => p.v); let lo = Math.min(...vs), hi = Math.max(...vs);
+  if (lo === hi) { lo = lo * 0.95; hi = hi * 1.05 || 1; }
+  const x = p => L + (t1 === t0 ? 0.5 : (new Date(p.at).getTime() - t0) / (t1 - t0)) * (W - L - R);
+  const y = v => T + (1 - (v - lo) / (hi - lo)) * (H - T - B);
+  const line = pts.map(p => `${x(p).toFixed(1)},${y(p.v).toFixed(1)}`).join(" ");
+  const ticks = [lo, (lo + hi) / 2, hi];
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${growthMetric} from ${fmtNum(pts[0].v)} to ${fmtNum(pts[pts.length - 1].v)}">
+    ${ticks.map(v => `<line class="grid" x1="${L}" x2="${W - R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/><text x="${L - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${fmtNum(v)}</text>`).join("")}
+    <polygon class="area" points="${L},${H - B} ${line} ${x(pts[pts.length - 1]).toFixed(1)},${H - B}"/>
+    <polyline class="line" points="${line}"/>
+    ${pts.length <= 40 ? pts.map(p => `<circle class="pt" cx="${x(p).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="3.5"/>`).join("") : ""}
+    <text x="${L}" y="${H - 6}">${esc(fmtDate(pts[0].at, false))}</text><text x="${W - R}" y="${H - 6}" text-anchor="end">${esc(fmtDate(pts[pts.length - 1].at, false))}</text>
+  </svg>`;
+}
+
+/* ================= Fellows & family ================= */
+function fillSelect(sel, label, opts) { const cur = sel.value; sel.innerHTML = `<option value="">${label}</option>` + opts.map(o => `<option>${esc(o)}</option>`).join(""); sel.value = cur; }
+function sortBy(rows, key) {
+  const numeric = ["power", "level", "aptitude", "stella", "intimacy", "blessing"].includes(key);
+  return rows.sort((a, b) => {
+    if (key === "rarity") return RARITIES.indexOf(b.rarity) - RARITIES.indexOf(a.rarity) || norm(a.name).localeCompare(norm(b.name));
+    if (key === "name") return String(a.name).localeCompare(String(b.name));
+    if (key === "updatedAt") return String(b.updatedAt || "").localeCompare(String(a.updatedAt || ""));
+    const x = parseNum(a[key]), y = parseNum(b[key]);
+    if (!isFinite(x) && !isFinite(y)) return 0; if (!isFinite(x)) return 1; if (!isFinite(y)) return -1;
+    return numeric ? y - x : 0;
+  });
+}
+function charCard(r, kind) {
+  const fc = `var(${FACTION_VAR[r.faction] || "--muted"})`, rc = `var(${RARITY_VAR[r.rarity] || "--line-2"})`;
+  const ref = kind === "fellows" ? ROSTER_BY.get(norm(r.name)) : null;
+  const stats = kind === "fellows" ? [["Level", r.level], ["Aptitude", r.aptitude], ["Power", r.power]] : [["Intimacy", r.intimacy], ["Blessing", r.blessing], ["Stella", r.stella]];
+  const foot = r._missing ? `<span>Not recruited</span><span class="prog">${esc(ref ? ref.prog : "")}</span>`
+    : kind === "fellows" ? `<span>${blank(r.stella) ? "" : "Stella " + esc(r.stella)}</span><span>${esc(ago(r.updatedAt))}</span>`
+    : `<span>${blank(r.blessed) ? "" : "Blesses " + esc(r.blessed)}</span><span>${esc(ago(r.updatedAt))}</span>`;
+  const attr = r._missing ? `data-add-known="${esc(r.name)}"` : `data-edit="${kind}:${esc(r.id)}"`;
+  return `<button type="button" class="char ${r._missing ? "missing" : ""}" style="--fc:${fc};--rc:${rc}" ${attr} aria-label="${esc(r.name)}">
+    <div class="char-top"><span class="avatar">${esc(initials(r.name))}</span><div class="char-name"><b>${esc(r.name)}</b><span>${rarityChip(r.rarity)}${factionTag(r.faction)}</span></div></div>
+    ${r._missing ? "" : `<div class="char-stats">${stats.map(([l, v]) => `<div class="cs"><i>${l}</i><b>${show(v)}</b></div>`).join("")}</div>`}
+    <div class="char-foot">${foot}</div></button>`;
+}
+function renderFellows() {
+  const items = S.fellows.items;
+  fillSelect($("#f-faction"), "All factions", FACTIONS);
+  fillSelect($("#f-rarity"), "All rarities", RARITIES);
+  const owned = new Set(items.map(f => norm(f.name)));
+  const have = ROSTER.filter(r => owned.has(norm(r.name))).length;
+  const powers = items.map(f => parseNum(f.power)).filter(isFinite);
+  const total = powers.reduce((a, b) => a + b, 0);
+  const urUp = items.filter(f => RARITIES.indexOf(f.rarity) >= RARITIES.indexOf("UR")).length;
+  $("#fellow-pills").innerHTML = `<span class="pill"><b>${items.length}</b>recruited</span><span class="pill" style="--c:var(--muted)"><b>${have}/${ROSTER.length}</b>of the wiki roster</span><span class="pill"><b>${powers.length ? fmtNum(total) : "—"}</b>total power</span><span class="pill" style="--c:var(--gold)"><b>${urUp}</b>UR or higher</span>`;
+  const byF = FACTIONS.map(f => { const l = items.filter(x => x.faction === f); return { f, n: l.length, p: l.map(x => parseNum(x.power)).filter(isFinite).reduce((a, b) => a + b, 0) }; });
+  const maxP = Math.max(1, ...byF.map(x => x.p));
+  $("#fellow-factions").innerHTML = items.length ? byF.map(x => `<div class="fbar" style="--c:var(${FACTION_VAR[x.f]})"><span class="fac">${x.f}</span><div class="track"><div class="fill" style="width:${(x.p / maxP * 100).toFixed(1)}%"></div></div><span class="tnum">${x.n} · ${total ? Math.round(x.p / total * 100) + "%" : "—"}</span></div>`).join("")
+    : `<p class="muted small" style="margin:0">Your faction balance shows up once you import fellows.</p>`;
+
+  const q = norm($("#global-search").value), fac = $("#f-faction").value, rar = $("#f-rarity").value, showMissing = $("#f-missing").checked;
+  let rows = items.map(f => ({ ...f }));
+  if (showMissing) rows = rows.concat(ROSTER.filter(r => !owned.has(norm(r.name))).map(r => ({ name: r.name, faction: r.faction, rarity: r.rarity, _missing: true })));
+  rows = rows.filter(r => (!q || norm(r.name).includes(q)) && (!fac || r.faction === fac) && (!rar || r.rarity === rar));
+  sortBy(rows, $("#f-sort").value);
+  if (showMissing) rows.sort((a, b) => (a._missing ? 1 : 0) - (b._missing ? 1 : 0));
+  const g = $("#fellow-grid");
+  if (!items.length && !showMissing) { g.innerHTML = emptyState("i-sword", "var(--pink)", "No fellows yet", "Open your Fellows screen, start your phone's screen recorder and scroll slowly through the whole list. Then import the video here.", "fellows"); return; }
+  g.innerHTML = rows.length ? rows.map(r => charCard(r, "fellows")).join("") : `<p class="muted">No fellows match these filters.</p>`;
+}
+function renderFamily() {
+  const items = S.family.items;
+  fillSelect($("#m-faction"), "All factions", FACTIONS);
+  const sum = k => items.map(x => parseNum(x[k])).filter(isFinite).reduce((a, b) => a + b, 0);
+  const has = k => items.some(x => isFinite(parseNum(x[k])));
+  $("#family-pills").innerHTML = `<span class="pill"><b>${items.length}</b>members</span><span class="pill"><b>${has("intimacy") ? fmtNum(sum("intimacy")) : "—"}</b>total Intimacy</span><span class="pill" style="--c:var(--gold)"><b>${has("blessing") ? fmtNum(sum("blessing")) : "—"}</b>total Blessing</span>`;
+  const g = $("#family-grid");
+  if (!items.length) { g.innerHTML = emptyState("i-heart", "var(--lilac)", "No family members yet", "Record your Family screen while you scroll through every member, or tap into a member's page while recording. Then import the video.", "family"); return; }
+  const q = norm($("#global-search").value), fac = $("#m-faction").value;
+  const rows = sortBy(items.filter(r => (!q || norm(r.name).includes(q)) && (!fac || r.faction === fac)).map(r => ({ ...r })), $("#m-sort").value);
+  g.innerHTML = rows.length ? rows.map(r => charCard(r, "family")).join("") : `<p class="muted">No family members match.</p>`;
+}
+function emptyState(icon, color, title, text, kind) {
+  return `<div class="empty" style="grid-column:1/-1"><div class="orb" style="--c:${color}"><svg><use href="#${icon}"/></svg></div><strong>${title}</strong><p>${text}</p><button class="btn hot" type="button" data-open-import="${kind}"><svg><use href="#i-film"/></svg>Import a recording</button></div>`;
+}
+
+/* ================= Events ================= */
+let evFilter = "active";
+const STATUS = { live: ["Live", "var(--mint)"], soon: ["Ending soon", "var(--coral)"], upcoming: ["Upcoming", "var(--sky)"], ended: ["Ended", "var(--dim)"] };
+function evStatus(e, now = Date.now()) {
+  const s = e.startsAt ? new Date(e.startsAt).getTime() : null, end = e.endsAt ? new Date(e.endsAt).getTime() : null;
+  if (s && now < s) return "upcoming"; if (end && now >= end) return "ended"; if (end && end - now < 864e5) return "soon"; return "live";
+}
+function evCount(e) {
+  const now = Date.now(), st = evStatus(e, now);
+  if (st === "upcoming") return ["Starts in", fmtLeft(new Date(e.startsAt) - now), false];
+  if (st === "ended") return ["Ended", fmtDate(e.endsAt), false];
+  if (!e.endsAt) return ["Ends", "No end date", false];
+  return ["Ends in", fmtLeft(new Date(e.endsAt) - now), st === "soon"];
+}
+function evProgress(e) {
+  const s = e.startsAt ? new Date(e.startsAt).getTime() : null, end = e.endsAt ? new Date(e.endsAt).getTime() : null;
+  if (!s || !end || end <= s) return null;
+  return Math.max(0, Math.min(1, (Date.now() - s) / (end - s)));
+}
+function renderEvents() {
+  const items = S.events.items, now = Date.now();
+  const st = items.map(e => evStatus(e, now));
+  const live = st.filter(s => s === "live" || s === "soon").length, soon = st.filter(s => s === "soon").length, up = st.filter(s => s === "upcoming").length;
+  $("#event-pills").innerHTML = `<span class="pill"><b>${live}</b>live now</span><span class="pill" style="--c:var(--coral)"><b>${soon}</b>ending within a day</span><span class="pill" style="--c:var(--sky)"><b>${up}</b>upcoming</span>`;
+  $("#live-count").textContent = `${live} live`;
+  document.querySelectorAll("#ev-filter button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.f === evFilter)));
+  const match = s => evFilter === "all" || (evFilter === "active" && s !== "ended") || (evFilter === "live" && (s === "live" || s === "soon")) || evFilter === s;
+  const rank = { soon: 0, live: 1, upcoming: 2, ended: 3 };
+  const rows = items.map((e, i) => ({ e, s: st[i] })).filter(x => match(x.s)).sort((a, b) => {
+    if (rank[a.s] !== rank[b.s]) return rank[a.s] - rank[b.s];
+    const ka = a.s === "upcoming" ? a.e.startsAt : a.e.endsAt, kb = b.s === "upcoming" ? b.e.startsAt : b.e.endsAt;
+    const x = ka ? new Date(ka).getTime() : Infinity, y = kb ? new Date(kb).getTime() : Infinity;
+    return a.s === "ended" ? y - x : x - y;
+  });
+  const g = $("#event-grid");
+  if (!items.length) { g.innerHTML = `<div class="card" style="grid-column:1/-1">${emptyState("i-cal", "var(--mint)", "No events tracked yet", "Record the game's event list or an event page showing its countdown and import it. You can also add an event by hand and type in its countdown.", "events")}</div>`; return; }
+  if (!rows.length) { g.innerHTML = `<p class="muted" style="grid-column:1/-1">No events in this view.</p>`; return; }
+  g.innerHTML = rows.map(({ e, s }) => {
+    const [lbl, val, urgent] = evCount(e), p = evProgress(e), [sl, sc] = STATUS[s];
+    return `<article class="ev" data-s="${s}" style="--sc:${sc}">
+      <div class="ev-top"><h3>${esc(e.name)}</h3><span class="status"><span class="dot"></span>${sl}</span></div>
+      <div class="big-count ${urgent ? "urgent" : ""}"><small>${lbl}</small><span data-count="${esc(e.id)}">${esc(val)}</span></div>
+      ${p == null ? "" : `<div class="track" title="${Math.round(p * 100)}% of the event has passed"><div class="fill" data-prog="${esc(e.id)}" style="width:${(p * 100).toFixed(1)}%"></div></div>`}
+      <div class="meta"><span>${e.startsAt ? esc(fmtDate(e.startsAt)) : "Start not set"}</span><span>${e.endsAt ? esc(fmtDate(e.endsAt)) : "End not set"}</span></div>
+      ${blank(e.rewards) ? "" : `<div class="note-b"><i>Rewards</i>${esc(e.rewards)}</div>`}
+      ${blank(e.goal) ? "" : `<div class="note-b"><i>My goal</i>${esc(e.goal)}</div>`}
+      ${blank(e.notes) ? "" : `<div class="note-b"><i>Notes</i>${esc(e.notes)}</div>`}
+      <div class="ev-foot"><label class="check"><input type="checkbox" data-done="${esc(e.id)}" ${e.done ? "checked" : ""}>Goal done</label><button class="btn ghost sm" type="button" data-edit="events:${esc(e.id)}">Edit</button></div>
+    </article>`;
+  }).join("");
+}
+
+/* ================= Tips ================= */
+function buildTips() {
+  const tips = [];
+  const F = S.fellows.items, M = S.family.items, E = S.events.items, P = S.profile, now = Date.now();
+  if (!F.length && !M.length && !(P.history || []).length) {
+    tips.push({ c: "var(--gold)", tag: "Start here", icon: "i-film", title: "Import your first recording", body: "<p>Begin with your Fellows list. Tips about upgrades and faction balance appear once the ledger knows your fellows.</p>", action: "fellows" });
+    return tips;
+  }
+  const soon = E.filter(e => evStatus(e, now) === "soon" && !e.done);
+  if (soon.length) tips.push({ c: "var(--coral)", tag: "Urgent", icon: "i-cal", title: `${soon.length} event${soon.length > 1 ? "s end" : " ends"} within a day`, body: `<ul>${soon.map(e => `<li><b>${esc(e.name)}</b>: ${esc(fmtLeft(new Date(e.endsAt) - now))} left${blank(e.goal) ? "" : " · goal: " + esc(e.goal)}</li>`).join("")}</ul>` });
+  const withP = F.filter(f => isFinite(parseNum(f.power)));
+  const total = withP.reduce((a, f) => a + parseNum(f.power), 0);
+  if (withP.length >= 5) {
+    const byF = FACTIONS.map(f => ({ f, p: withP.filter(x => x.faction === f).reduce((a, x) => a + parseNum(x.power), 0) })).filter(x => F.some(y => y.faction === x.f));
+    if (byF.length >= 2) {
+      byF.sort((a, b) => a.p - b.p);
+      const weak = byF[0], share = total ? weak.p / total : 0;
+      if (share < 0.15) tips.push({ c: `var(${FACTION_VAR[weak.f]})`, tag: "Balance", icon: "i-sword", title: `${weak.f} is your weakest faction`, body: `<p>${weak.f} fellows hold only ${Math.round(share * 100)}% of your fellow power. Faction-based bonuses and challenges reward a stronger ${weak.f} line-up, so it can be worth putting your next upgrades there.</p>` });
+    }
+    const sorted = [...withP].sort((a, b) => parseNum(b.power) - parseNum(a.power));
+    const top3 = sorted.slice(0, 3).reduce((a, f) => a + parseNum(f.power), 0);
+    if (total && top3 / total > 0.6) tips.push({ c: "var(--gold)", tag: "Focus", icon: "i-sword", title: "Most of your power sits in three fellows", body: `<p>${sorted.slice(0, 3).map(f => esc(f.name)).join(", ")} hold ${Math.round(top3 / total * 100)}% of your fellow power. Strengthening them pays off fastest; raising the next few closes the gap if you need wider coverage.</p>` });
+  }
+  const upgradable = F.map(f => ({ f, ref: ROSTER_BY.get(norm(f.name)) })).filter(x => x.ref && x.f.rarity && RARITIES.indexOf(x.f.rarity) >= 0 && RARITIES.indexOf(x.f.rarity) < RARITIES.indexOf(x.ref.maxRarity));
+  if (upgradable.length) {
+    upgradable.sort((a, b) => (parseNum(b.f.power) || 0) - (parseNum(a.f.power) || 0));
+    tips.push({ c: "var(--pink)", tag: "Upgrade", icon: "i-up", title: `${upgradable.length} fellow${upgradable.length > 1 ? "s" : ""} can still rise in rarity`, body: `<p>Rarity upgrades cost Crystal Fragments and add 5 Aptitude per level, with milestones at Lv 20, 40 and 80.</p><ul>${upgradable.slice(0, 6).map(x => `<li><b>${esc(x.f.name)}</b>: ${esc(x.f.rarity)} → ${esc(x.ref.maxRarity)}</li>`).join("")}</ul>` });
+  }
+  const noPower = F.filter(f => blank(f.power));
+  if (F.length && noPower.length / F.length > 0.3) tips.push({ c: "var(--sky)", tag: "Data", icon: "i-film", title: `${noPower.length} fellows have no power saved`, body: "<p>Record the fellows screen again, pausing a moment on each row, so the ledger can read their power. Better data means better tips.</p>", action: "fellows" });
+  const noBless = M.filter(m => blank(m.blessed));
+  if (noBless.length) tips.push({ c: "var(--lilac)", tag: "Family", icon: "i-heart", title: "Note who each family member blesses", body: `<p>Blessings add aptitude and power to specific fellows. Add the blessed fellow to ${noBless.length} member${noBless.length > 1 ? "s" : ""} so you can see which fellows get the most support.</p>` });
+  const lowInt = M.filter(m => isFinite(parseNum(m.intimacy))).sort((a, b) => parseNum(a.intimacy) - parseNum(b.intimacy)).slice(0, 3);
+  if (lowInt.length >= 2 && M.length >= 4) tips.push({ c: "var(--lilac)", tag: "Family", icon: "i-heart", title: "Lowest Intimacy", body: `<p>Intimacy raises Blessing. These members are furthest behind:</p><ul>${lowInt.map(m => `<li><b>${esc(m.name)}</b>: ${esc(m.intimacy)}${blank(m.blessed) ? "" : " · blesses " + esc(m.blessed)}</li>`).join("")}</ul>` });
+  const hist = (P.history || []).filter(h => isFinite(parseNum(h.power)));
+  if (hist.length >= 2) {
+    const a = hist[0], b = hist[hist.length - 1], days = (new Date(b.at) - new Date(a.at)) / 864e5;
+    if (days >= 0.5) { const rate = (parseNum(b.power) - parseNum(a.power)) / days; tips.push({ c: "var(--mint)", tag: "Growth", icon: "i-sprout", title: `About ${fmtNum(rate)} power a day`, body: `<p>Across ${hist.length} readings over ${Math.round(days)} day${Math.round(days) === 1 ? "" : "s"}. Import your profile every few days to keep this accurate.</p>` }); }
+  }
+  if (P.updatedAt && now - new Date(P.updatedAt) > 7 * 864e5) tips.push({ c: "var(--gold)", tag: "Reminder", icon: "i-user", title: "Your profile is over a week old", body: "<p>Take a fresh screenshot of your profile so your growth chart stays current.</p>", action: "profile" });
+  if (!tips.length) tips.push({ c: "var(--mint)", tag: "All good", icon: "i-sprout", title: "Nothing needs attention", body: "<p>Keep importing every few days and new suggestions will show up here.</p>" });
+  return tips;
+}
+function renderTips() {
+  const tips = buildTips();
+  $("#nav-tips").textContent = tips.length;
+  $("#tip-pills").innerHTML = `<span class="pill"><b>${tips.length}</b>suggestion${tips.length === 1 ? "" : "s"}</span>`;
+  $("#tip-grid").innerHTML = tips.map(t => `<article class="card tip" style="--c:${t.c}"><div class="tip-top"><span class="bubble" style="--c:${t.c}"><svg><use href="#${t.icon}"/></svg></span><div><div class="tag">${t.tag}</div><h3>${t.title}</h3></div></div>${t.body}${t.action ? `<div><button class="btn sm" type="button" data-open-import="${t.action}">Import ${t.action}</button></div>` : ""}</article>`).join("");
+}
+
+function renderAll() {
+  renderProfile(); renderFellows(); renderFamily(); renderEvents(); renderTips();
+  $("#nav-fellows").textContent = S.fellows.items.length;
+  $("#nav-family").textContent = S.family.items.length;
+  $("#nav-events").textContent = S.events.items.filter(e => evStatus(e) !== "ended").length;
+}
+
+/* ================= Clock & countdowns ================= */
+setInterval(() => {
+  $("#clock").textContent = new Date().toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+  if ($("[data-view='events']").hidden) return;
+  document.querySelectorAll("[data-count]").forEach(el => { const e = S.events.items.find(x => x.id === el.dataset.count); if (e) { const [, val, urgent] = evCount(e); el.textContent = val; el.parentElement.classList.toggle("urgent", urgent); } });
+  document.querySelectorAll("[data-prog]").forEach(el => { const e = S.events.items.find(x => x.id === el.dataset.prog); const p = e && evProgress(e); if (p != null) el.style.width = (p * 100).toFixed(1) + "%"; });
+}, 1000);
+
+/* ================= Sheets ================= */
+const overlay = $("#overlay"), sheet = $("#sheet");
+let busy = null;
+function openSheet(html) { sheet.innerHTML = html; overlay.hidden = false; document.body.style.overflow = "hidden"; const f = sheet.querySelector("input:not([type=radio]):not([type=file]), select, textarea"); if (f) f.focus(); }
+function closeSheet() { if (busy) { busy.abort(); busy = null; } overlay.hidden = true; sheet.innerHTML = ""; document.body.style.overflow = ""; }
+overlay.addEventListener("click", e => { if (e.target === overlay) closeSheet(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !overlay.hidden) closeSheet(); });
+function sheetHead(title) { return `<div class="sheet-head"><h2 id="sheet-title">${title}</h2><button class="btn ghost sm" type="button" data-close>Close</button></div>`; }
+
+const FIELDS = {
+  fellows: [["name", "Name"], ["faction", "Faction", FACTIONS], ["rarity", "Rarity", RARITIES], ["level", "Level"], ["aptitude", "Aptitude"], ["power", "Power"], ["stella", "Stella"], ["notes", "Notes", "area"]],
+  family: [["name", "Name"], ["faction", "Faction", FACTIONS], ["rarity", "Rarity", RARITIES], ["intimacy", "Intimacy"], ["blessing", "Blessing"], ["stella", "Stella"], ["blessed", "Fellow they bless"], ["notes", "Notes", "area"]],
+  profile: [["name", "Player name"], ["title", "Title or rank"], ["level", "Level"], ["earnings", "Earnings"], ["power", "Power"]],
+  events: [["name", "Event name"], ["startsAt", "Starts", "dt"], ["endsAt", "Ends", "dt"], ["rewards", "Rewards", "area"], ["goal", "My goal", "area"], ["notes", "Notes", "area"]],
+};
+function formHtml(fields, obj) {
+  return `<div class="form">${fields.map(([k, label, opt]) => {
+    const id = "fm-" + k, v = obj[k] ?? "";
+    if (Array.isArray(opt)) return `<label for="${id}">${label}<select id="${id}" name="${k}"><option value="">Unknown</option>${opt.map(o => `<option${o === v ? " selected" : ""}>${esc(o)}</option>`).join("")}</select></label>`;
+    if (opt === "area") return `<label class="wide" for="${id}">${label}<textarea id="${id}" name="${k}">${esc(v)}</textarea></label>`;
+    if (opt === "dt") return `<label for="${id}">${label}<input id="${id}" name="${k}" type="datetime-local" value="${esc(toLocalInput(v))}"></label>`;
+    return `<label for="${id}">${label}<input id="${id}" name="${k}" value="${esc(v)}" autocomplete="off"${k === "name" && obj === EMPTY_OBJ ? "" : ""}></label>`;
+  }).join("")}</div>`;
+}
+const EMPTY_OBJ = {};
+function readForm(fields) {
+  const o = {};
+  for (const [k, , opt] of fields) { const el = sheet.querySelector(`[name="${k}"]`); if (!el) continue; const v = el.value.trim(); o[k] = opt === "dt" ? fromLocalInput(v) : (v || null); }
+  return o;
+}
+function armDelete(btn, label, onConfirm) {
+  btn.addEventListener("click", () => {
+    if (btn.dataset.armed) return onConfirm();
+    btn.dataset.armed = "1"; btn.textContent = "Click again to confirm";
+    setTimeout(() => { if (btn.isConnected) { delete btn.dataset.armed; btn.textContent = label; } }, 3500);
+  });
+}
+function editItem(kind, id, preset) {
+  const fields = FIELDS[kind], list = S[kind].items;
+  const ex = id ? list.find(x => x.id === id) : null, obj = ex || preset || {};
+  const noun = { fellows: "fellow", family: "family member", events: "event" }[kind];
+  const other = Object.entries(obj.other || {}).filter(([, v]) => !blank(v));
+  openSheet(sheetHead(ex ? esc(ex.name) : "Add " + noun) + `<form class="sheet-body" id="edit-form">${formHtml(fields, obj)}
+    ${kind === "events" ? `<div class="form"><label class="wide" for="fm-left">Or set the end from the in-game countdown<input id="fm-left" placeholder="For example 3d 14h" autocomplete="off"></label></div>` : ""}
+    ${other.length ? `<div><p class="muted small" style="margin:0 0 6px">Other stats read from your recordings</p><dl class="kv">${other.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl></div>` : ""}
+    <p class="err" id="fm-err" hidden></p></form>
+    <div class="sheet-foot">${ex ? `<button class="btn danger" type="button" id="fm-del">Remove</button><span style="margin-right:auto"></span>` : ""}<button class="btn" type="button" data-close>Cancel</button><button class="btn hot" type="submit" form="edit-form">Save</button></div>`);
+  $("#edit-form").addEventListener("submit", ev => {
+    ev.preventDefault();
+    const o = readForm(fields);
+    if (kind === "events") { const left = parseRemaining($("#fm-left").value); if (left != null) { o.endsAt = new Date(Date.now() + left).toISOString(); if (!o.startsAt) o.startsAt = new Date().toISOString(); } }
+    if (!o.name) { const e = $("#fm-err"); e.hidden = false; e.textContent = "Add a name first."; return; }
+    if (ex) Object.assign(ex, o, kind === "events" ? {} : { updatedAt: new Date().toISOString() });
+    else list.push(Object.assign({ id: newId() }, kind === "events" ? { done: false } : { other: {}, updatedAt: new Date().toISOString() }, o));
+    save(kind); closeSheet(); toast(ex ? "Saved." : `Added ${o.name}.`);
+  });
+  const del = $("#fm-del");
+  if (del) armDelete(del, "Remove", () => { S[kind].items = list.filter(x => x !== ex); save(kind); closeSheet(); toast(`Removed ${ex.name}.`); });
+}
+function editProfile() {
+  openSheet(sheetHead("Edit profile") + `<form class="sheet-body" id="edit-form">${formHtml(FIELDS.profile, S.profile.current || {})}<label class="check"><input type="checkbox" id="fm-snap" checked>Add this as a new reading on the growth chart</label></form>
+    <div class="sheet-foot"><button class="btn" type="button" data-close>Cancel</button><button class="btn hot" type="submit" form="edit-form">Save</button></div>`);
+  $("#edit-form").addEventListener("submit", ev => { ev.preventDefault(); applyProfile(readForm(FIELDS.profile), $("#fm-snap").checked, true); closeSheet(); toast("Profile saved."); });
+}
+function applyProfile(p, snapshot, replace) {
+  const cur = S.profile.current || {};
+  const next = Object.assign({}, cur);
+  for (const [k, v] of Object.entries(p)) if (k !== "other" && (replace || !blank(v))) next[k] = v;
+  next.other = Object.assign({}, cur.other || {}, p.other || {});
+  S.profile.current = next;
+  if (snapshot) { S.profile.history.push({ at: new Date().toISOString(), level: next.level ?? null, earnings: next.earnings ?? null, power: next.power ?? null }); if (S.profile.history.length > 400) S.profile.history = S.profile.history.slice(-400); }
+  save("profile");
+}
+
+/* ================= Backup & restore ================= */
+$("#btn-backup").onclick = () => {
+  const blob = new Blob([JSON.stringify({ app: "slow-life-ledger", version: 1, savedAt: new Date().toISOString(), data: S }, null, 1)], { type: "application/json" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `slow-life-ledger-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  toast("Backup saved to your downloads.");
+};
+$("#btn-restore").onclick = () => $("#restore-file").click();
+$("#restore-file").onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ""; if (!f) return;
+  let data;
+  try { const j = JSON.parse(await f.text()); data = shapeAll(j.data || j); } catch { toast("That file isn't a Slow Life Ledger backup."); return; }
+  openSheet(sheetHead("Restore backup") + `<div class="sheet-body"><p>This backup has <b>${data.fellows.items.length}</b> fellows, <b>${data.family.items.length}</b> family members, <b>${data.events.items.length}</b> events and <b>${data.profile.history.length}</b> profile readings.</p><p class="muted">Restoring replaces everything currently saved in this browser.</p></div>
+    <div class="sheet-foot"><button class="btn" type="button" data-close>Cancel</button><button class="btn hot" type="button" id="do-restore">Replace my data</button></div>`);
+  $("#do-restore").onclick = () => { S = data; save(); closeSheet(); toast("Backup restored."); };
+};
+
+/* ================= Import: frames ================= */
+const KIND_INFO = {
+  fellows: { label: "Fellows", c: "var(--pink)", hint: "Your fellows list or a fellow's page", steps: ["Open your Fellows screen in the game.", "Start your phone's screen recorder.", "Scroll slowly through the whole list, pausing a moment on each screen.", "Stop recording and choose the video below."] },
+  family: { label: "Family", c: "var(--lilac)", hint: "Your family list or a member's page", steps: ["Open your Family screen.", "Start recording and scroll slowly through every member.", "For Intimacy and Blessing, tap into each member's page while recording.", "Stop recording and choose the video below."] },
+  profile: { label: "Profile", c: "var(--gold)", hint: "Level, earnings and power", steps: ["Open your profile, where your level, earnings and power show.", "A single screenshot is enough.", "Choose the screenshot below."] },
+  events: { label: "Events", c: "var(--mint)", hint: "Event list or an event's page", steps: ["Open the events list, or an event's page showing its countdown.", "Record while you tap through each event you care about.", "Choose the video below. Countdowns become end times."] },
+};
+let importKind = "fellows";
+const MAX_FRAMES = 40;
+
+function openImport(kind) {
+  if (kind) importKind = kind;
+  openSheet(sheetHead("Import a recording") + `<div class="sheet-body" id="imp-body">
+    <div class="kinds" role="radiogroup" aria-label="What does the recording show?">${Object.entries(KIND_INFO).map(([k, v]) => `<label class="kind" style="--c:${v.c}"><input type="radio" name="kind" value="${k}" ${k === importKind ? "checked" : ""}><b>${v.label}</b><span>${v.hint}</span></label>`).join("")}</div>
+    <div class="howto" id="imp-tip"></div>
+    <label class="drop" id="imp-drop" for="imp-file"><svg width="34" height="34" style="color:var(--gold)"><use href="#i-film"/></svg><strong>Choose a screen recording or screenshots</strong><span>Or drop them here. MP4, MOV and WebM videos and PNG or JPG images all work.</span><input type="file" id="imp-file" accept="video/*,image/*" multiple hidden></label>
+    <p class="muted small" style="margin:0">Everything is read on your own device. Nothing is uploaded. The first import downloads a text reader (about 10 MB), so it takes a little longer.</p>
+    <div id="imp-stage" hidden></div></div>`);
+  const tip = () => { const v = KIND_INFO[importKind]; $("#imp-tip").innerHTML = `<b>How to record your ${v.label.toLowerCase()}</b><ol>${v.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ol>`; };
+  tip();
+  sheet.querySelectorAll('input[name="kind"]').forEach(r => r.addEventListener("change", () => { importKind = r.value; tip(); }));
+  const input = $("#imp-file"), drop = $("#imp-drop");
+  input.addEventListener("change", () => { if (input.files.length) runImport([...input.files]); });
+  drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("over"); });
+  drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+  drop.addEventListener("drop", e => { e.preventDefault(); drop.classList.remove("over"); const fs = [...(e.dataTransfer?.files || [])]; if (fs.length) runImport(fs); });
+}
+function stage(title, pct, detail, extra = "") {
+  const st = $("#imp-stage"); if (!st) return;
+  st.innerHTML = `<div style="display:grid;gap:10px"><b style="font-family:var(--font-display);font-size:1.1rem">${esc(title)}</b><div class="bar"><div style="width:${Math.round(pct * 100)}%"></div></div><p class="muted small" style="margin:0" id="imp-detail">${esc(detail)}</p>${extra}<div><button class="btn sm" type="button" id="imp-stop">Stop</button></div></div>`;
+  $("#imp-stop").onclick = () => busy && busy.abort();
+}
+function setBar(p, detail) { const b = sheet.querySelector(".bar div"); if (b) b.style.width = Math.round(p * 100) + "%"; if (detail != null) { const d = $("#imp-detail"); if (d) d.textContent = detail; } }
+
+async function runImport(files) {
+  const kind = importKind;
+  sheet.querySelectorAll(".kinds, #imp-tip, #imp-drop, #imp-body > p").forEach(el => el.hidden = true);
+  $("#imp-stage").hidden = false;
+  const ctl = new AbortController(); busy = ctl;
+  try {
+    stage("Finding the screens in your recording", 0, "Looking for distinct screens…");
+    const frames = await collectFrames(files, ctl.signal, (p, n) => setBar(p, `${n} distinct screen${n === 1 ? "" : "s"} found so far`));
+    if (ctl.signal.aborted) throw { code: "cancelled" };
+    if (!frames.length) throw { code: "no_frames" };
+    const thumbs = `<div class="thumbs">${frames.slice(0, 12).map(b => `<img alt="" src="${URL.createObjectURL(b)}">`).join("")}</div>`;
+    stage("Getting the text reader ready", 0, "Loading the reader. The first time takes a little longer.", thumbs);
+    const worker = await getWorker(ctl.signal);
+    const pages = [];
+    for (let i = 0; i < frames.length; i++) {
+      if (ctl.signal.aborted) throw { code: "cancelled" };
+      stage(`Reading your ${KIND_INFO[kind].label.toLowerCase()}`, i / frames.length, `Reading screen ${i + 1} of ${frames.length}…`, thumbs);
+      const canvas = await prepForOcr(frames[i]);
+      const { data } = await worker.recognize(canvas);
+      pages.push({ w: canvas.width, h: canvas.height, lines: (data.lines || []).map(l => ({ text: l.text.replace(/\s+/g, " ").trim(), b: l.bbox, conf: l.confidence })).filter(l => l.text) });
+    }
+    busy = null;
+    showReview(kind, parsePages(kind, pages), frames.length, pages);
+  } catch (e) {
+    busy = null;
+    if (e && e.code === "cancelled") { closeSheet(); toast("Import stopped. Nothing was saved."); return; }
+    const st = $("#imp-stage"); if (!st) return;
+    st.innerHTML = `<p class="err">${esc(importError(e))}</p><div><button class="btn" type="button" id="imp-retry">Try another file</button></div>`;
+    $("#imp-retry").onclick = () => openImport(kind);
+  }
+}
+function importError(e) {
+  const c = e && e.code;
+  if (c === "no_frames") return "No usable screens were found in that file. Try a different recording or a screenshot.";
+  if (c === "video_decode") return "This browser can't open that video. On iPhone, set Settings › Camera › Formats to Most Compatible and record again, or open this site on the phone that made the recording.";
+  if (c === "ocr_load") return "The text reader couldn't be downloaded. Check your internet connection and try again.";
+  return "Something went wrong while reading the recording. Try again, or try a screenshot instead.";
+}
+async function collectFrames(files, signal, onProgress) {
+  const out = [];
+  for (const f of files) {
+    if (signal.aborted) break;
+    const isVideo = (f.type || "").startsWith("video/") || /\.(mp4|mov|m4v|webm|mkv)$/i.test(f.name);
+    if (isVideo) out.push(...await videoFrames(f, signal, p => onProgress(p, out.length)));
+    else if ((f.type || "").startsWith("image/") || /\.(png|jpe?g|webp|gif|bmp)$/i.test(f.name)) { out.push(f); onProgress(1, out.length); }
+  }
+  if (out.length > MAX_FRAMES) { const keep = [], step = out.length / MAX_FRAMES; for (let i = 0; i < MAX_FRAMES; i++) keep.push(out[Math.floor(i * step)]); return keep; }
+  return out;
+}
+function seek(v, t) { return new Promise(res => { let done = false; const fin = () => { if (done) return; done = true; v.removeEventListener("seeked", fin); res(); }; v.addEventListener("seeked", fin); v.currentTime = t; setTimeout(fin, 4000); }); }
+async function videoFrames(file, signal, onProgress) {
+  const url = URL.createObjectURL(file);
+  const v = document.createElement("video"); v.muted = true; v.playsInline = true; v.preload = "auto"; v.src = url;
+  try {
+    await new Promise((res, rej) => { v.addEventListener("loadeddata", res, { once: true }); v.addEventListener("error", () => rej({ code: "video_decode" }), { once: true }); setTimeout(() => rej({ code: "video_decode" }), 25000); });
+    const dur = v.duration; if (!isFinite(dur) || dur <= 0 || !v.videoWidth) throw { code: "video_decode" };
+    const w = v.videoWidth, h = v.videoHeight;
+    const c = document.createElement("canvas"); c.width = w; c.height = h; const ctx = c.getContext("2d");
+    const sw = 24, sh = Math.max(12, Math.round(24 * h / w));
+    const small = document.createElement("canvas"); small.width = sw; small.height = sh; const sctx = small.getContext("2d", { willReadFrequently: true });
+    const step = Math.max(0.4, dur / 180), kept = []; let prev = null;
+    for (let t = Math.min(0.1, dur / 2); t < dur; t += step) {
+      if (signal.aborted) break;
+      await seek(v, Math.min(t, dur - 0.05));
+      sctx.drawImage(v, 0, 0, sw, sh);
+      const px = sctx.getImageData(0, 0, sw, sh).data, g = new Float32Array(sw * sh);
+      for (let i = 0; i < g.length; i++) g[i] = px[i * 4] * 0.3 + px[i * 4 + 1] * 0.59 + px[i * 4 + 2] * 0.11;
+      let diff = Infinity; if (prev) { let s = 0; for (let i = 0; i < g.length; i++) s += Math.abs(g[i] - prev[i]); diff = s / g.length; }
+      if (diff > 3.5) { ctx.drawImage(v, 0, 0, w, h); const b = await new Promise(r => c.toBlob(r, "image/png")); if (b) { kept.push(b); prev = g; } }
+      onProgress(Math.min(1, t / dur));
+    }
+    return kept;
+  } finally { v.removeAttribute("src"); v.load(); URL.revokeObjectURL(url); }
+}
+
+/* ================= Import: on-device text reading ================= */
+let workerPromise = null;
+function waitForTesseract(signal) {
+  return new Promise((res, rej) => {
+    const t0 = Date.now();
+    (function poll() { if (window.Tesseract) return res(); if (signal.aborted) return rej({ code: "cancelled" }); if (Date.now() - t0 > 20000) return rej({ code: "ocr_load" }); setTimeout(poll, 200); })();
+  });
+}
+async function getWorker(signal) {
+  await waitForTesseract(signal);
+  if (!workerPromise) workerPromise = Tesseract.createWorker("eng", 1, { logger: m => { if (m.status && m.status.includes("load") && typeof m.progress === "number") setBar(m.progress, "Loading the text reader… " + Math.round(m.progress * 100) + "%"); } })
+    .catch(e => { workerPromise = null; throw { code: "ocr_load", e }; });
+  return workerPromise;
+}
+async function prepForOcr(blob) {
+  const bmp = await createImageBitmap(blob);
+  const target = 1400, sc = Math.max(1, Math.min(2.2, target / bmp.width));
+  const c = document.createElement("canvas"); c.width = Math.round(bmp.width * sc); c.height = Math.round(bmp.height * sc);
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  ctx.drawImage(bmp, 0, 0, c.width, c.height);
+  const img = ctx.getImageData(0, 0, c.width, c.height), d = img.data;
+  let sum = 0; for (let i = 0; i < d.length; i += 16) sum += d[i] * 0.3 + d[i + 1] * 0.59 + d[i + 2] * 0.11;
+  const invert = sum / (d.length / 16) < 120;
+  for (let i = 0; i < d.length; i += 4) {
+    let g = d[i] * 0.3 + d[i + 1] * 0.59 + d[i + 2] * 0.11;
+    if (invert) g = 255 - g;
+    g = Math.max(0, Math.min(255, (g - 128) * 1.35 + 128));
+    d[i] = d[i + 1] = d[i + 2] = g;
+  }
+  ctx.putImageData(img, 0, 0);
+  return c;
+}
+
+/* ================= Import: turning text into entries ================= */
+const NUM = "(\\d[\\d,.]*(?:[kmbtq](?![a-z])|[a-z]{2}(?![a-z]))?)";
+const LABELS = {
+  level: /\b(?:lv|lvl|level)\s*[.:]?\s*(\d{1,4})\b/i,
+  power: new RegExp("(?:power|pwr)\\s*[:：]?\\s*" + NUM, "i"),
+  aptitude: new RegExp("(?:aptitude|apt)\\s*[:：]?\\s*" + NUM, "i"),
+  stella: /\bstella\s*[:：]?\s*(?:s\s*)?(\d{1,2})\b/i,
+  intimacy: new RegExp("intimacy\\s*[:：]?\\s*" + NUM, "i"),
+  blessing: new RegExp("blessing\\s*[:：]?\\s*" + NUM, "i"),
+  earnings: new RegExp("(?:earnings?|income)\\s*[:：]?\\s*" + NUM, "i"),
+};
+const SUFFIXED = /\b(\d[\d,.]*\s?[KMBT])\b/;
+const COUNTDOWN = /(\d+\s*d(?:ays?)?\s*\d+\s*h(?:rs?|ours?)?(?:\s*\d+\s*m(?:in)?)?|\d+\s*h(?:rs?|ours?)?\s*\d+\s*m(?:in)?(?:\s*\d+\s*s)?|\d+\s*d(?:ays?)?|\d{1,2}:\d{2}:\d{2})/i;
+const RARITY_RE = /\b(LR|UR\*?|SSR\+?|SR|R|N)\b/;
+const cy = l => (l.b.y0 + l.b.y1) / 2, lh = l => Math.max(8, l.b.y1 - l.b.y0);
+
+function nameIndex(kind) {
+  const names = new Map();
+  const add = n => { const k = norm(n); if (k.length >= 3 && !names.has(k)) names.set(k, n); };
+  if (kind === "fellows") { ROSTER.forEach(r => add(r.name)); S.fellows.items.forEach(f => add(f.name)); }
+  else { FAMILY_KNOWN.forEach(add); S.family.items.forEach(f => add(f.name)); ROSTER.forEach(r => add(r.name)); }
+  return [...names.entries()].map(([k, n]) => ({ k, n, re: k.length <= 4 ? new RegExp("(^|[^a-z])" + escRe(n.toLowerCase()) + "([^a-z]|$)", "i") : null }));
+}
+function findName(text, idx) {
+  const t = norm(text); if (t.length < 3) return null;
+  let best = null;
+  for (const e of idx) {
+    if (e.re) { if (e.re.test(text) && (!best || e.k.length > best.e.k.length)) best = { e, d: 0 }; continue; }
+    if (t.includes(e.k)) { if (!best || best.d > 0 || e.k.length > best.e.k.length) best = { e, d: 0 }; continue; }
+    if (Math.abs(t.length - e.k.length) <= 3 && e.k.length >= 5) {
+      const d = levenshtein(t, e.k);
+      if (d <= Math.max(1, Math.floor(e.k.length * 0.2)) && (!best || d < best.d)) best = { e, d };
+    }
+  }
+  return best ? best.e.n : null;
+}
+function readStats(text, keys) {
+  const o = {};
+  for (const k of keys) { const m = text.match(LABELS[k]); if (m) o[k] = m[1].replace(/[.,]$/, ""); }
+  return o;
+}
+function vote(map, key, field, val) {
+  if (blank(val)) return;
+  const e = map.get(key) || {}; e[field] = e[field] || {}; e[field][val] = (e[field][val] || 0) + 1; map.set(key, e);
+}
+function winners(votes) { const o = {}; for (const [f, c] of Object.entries(votes)) o[f] = Object.entries(c).sort((a, b) => b[1] - a[1])[0][0]; return o; }
+
+function parsePages(kind, pages) {
+  if (kind === "profile") {
+    const all = pages.flatMap(p => p.lines.map(l => l.text)).join("\n");
+    const o = readStats(all, ["level", "power", "earnings"]);
+    const named = all.match(/(?:name|player)\s*[:：]\s*([^\n]{2,24})/i);
+    if (named) o.name = named[1].trim();
+    return o;
+  }
+  if (kind === "events") return parseEvents(pages);
+  const idx = nameIndex(kind);
+  const keys = kind === "fellows" ? ["level", "power", "aptitude", "stella"] : ["level", "intimacy", "blessing", "stella"];
+  const found = new Map(), order = [];
+  for (const p of pages) {
+    const anchors = [];
+    p.lines.forEach((l, i) => { const n = findName(l.text, idx); if (n) anchors.push({ i, n, l }); });
+    if (kind === "family" && !anchors.length) {
+      // No known name: use a short wordy line just above an Intimacy/Blessing label as the name.
+      p.lines.forEach((l, i) => {
+        if (!/intimacy|blessing/i.test(l.text)) return;
+        const cand = p.lines.filter(o => o !== l && cy(o) < cy(l) && cy(l) - cy(o) < lh(l) * 5 && /^[A-Za-z][A-Za-z '&.-]{2,24}$/.test(o.text) && !/intimacy|blessing|stella|level|power/i.test(o.text)).sort((a, b) => cy(b) - cy(a))[0];
+        if (cand && !anchors.some(a => a.l === cand)) anchors.push({ i: p.lines.indexOf(cand), n: cand.text.trim(), l: cand });
+      });
+    }
+    if (!anchors.length) continue;
+    const groups = new Map(anchors.map(a => [a, [a.l]]));
+    if (anchors.length === 1) groups.set(anchors[0], p.lines.slice());
+    else p.lines.forEach(l => {
+      if (anchors.some(a => a.l === l)) return;
+      let best = null, bd = Infinity;
+      for (const a of anchors) {
+        const dy = cy(l) - cy(a.l), h = lh(a.l);
+        if (dy < -h * 1.2 || dy > h * 4.5) continue;
+        const dx = Math.abs((l.b.x0 + l.b.x1) / 2 - (a.l.b.x0 + a.l.b.x1) / 2) / p.w;
+        const d = Math.abs(dy) / h + dx * 4;
+        if (d < bd) { bd = d; best = a; }
+      }
+      if (best) groups.get(best).push(l);
+    });
+    for (const [a, lines] of groups) {
+      const key = norm(a.n); if (!found.has(key)) { found.set(key, {}); order.push({ key, name: a.n }); }
+      const text = lines.map(l => l.text).join("\n").replace(new RegExp(escRe(a.n), "i"), " ");
+      const st = readStats(text, keys);
+      if (kind === "fellows" && !st.power) { const m = text.match(SUFFIXED); if (m) st.power = m[1].replace(/\s/g, ""); }
+      const r = a.l.text.match(RARITY_RE) || text.match(/\b(LR|UR\*?|SSR\+?)\b/);
+      if (r) st.rarity = r[1];
+      for (const [f, v] of Object.entries(st)) vote(found, key, f, v);
+      const fac = FACTIONS.find(f => new RegExp("\\b" + f + "\\b", "i").test(text)); if (fac) vote(found, key, "faction", fac);
+    }
+  }
+  return order.map(({ key, name }) => {
+    const o = Object.assign({ name }, winners(found.get(key) || {}));
+    if (o.rarity) o.rarity = canonRarity(o.rarity);
+    if (kind === "fellows") { const ref = ROSTER_BY.get(key); if (ref) { o.name = ref.name; o.faction = o.faction || ref.faction; o.rarity = o.rarity || ref.rarity; } }
+    return o;
+  });
+}
+function parseEvents(pages) {
+  const out = new Map();
+  for (const p of pages) {
+    p.lines.forEach(l => {
+      const m = l.text.match(COUNTDOWN); if (!m) return;
+      const left = parseRemaining(m[1]); if (left == null || left <= 0) return;
+      let name = l.text.slice(0, m.index).replace(/(ends?|ending|remaining|time left|left|in|:)\s*$/i, "").replace(/(ends?|ending|remaining|time left)\s*(in)?\s*$/i, "").trim();
+      if (!/[A-Za-z]{3}/.test(name)) {
+        const cand = p.lines.filter(o => o !== l && cy(o) < cy(l) && cy(l) - cy(o) < lh(l) * 4 && /[A-Za-z]{3}/.test(o.text) && !COUNTDOWN.test(o.text) && !/^(ends?|remaining|time left)/i.test(o.text)).sort((a, b) => cy(b) - cy(a))[0];
+        name = cand ? cand.text.trim() : "";
+      }
+      name = name.replace(/[^\p{L}\p{N} '&:!-]/gu, "").trim();
+      if (name.length < 3) return;
+      const key = norm(name);
+      if (!out.has(key)) out.set(key, { name, endsAt: new Date(Date.now() + left).toISOString(), timeRemaining: m[1] });
+    });
+  }
+  return [...out.values()];
+}
+
+/* ================= Import: review ================= */
+function showReview(kind, data, nFrames, pages) {
+  const st = $("#imp-stage");
+  const rawText = pages.map((p, i) => `— Screen ${i + 1} —\n` + p.lines.map(l => l.text).join("\n")).join("\n\n");
+  const raw = `<details class="raw"><summary>Show all the text that was read</summary><pre>${esc(rawText)}</pre></details>`;
+  if (kind === "profile") {
+    const f = FIELDS.profile;
+    st.innerHTML = `<p style="margin:0"><b>Here's what was read from ${nFrames} screen${nFrames === 1 ? "" : "s"}.</b> Fix anything that's wrong, then save.</p>
+      <form id="rv-form">${formHtml(f, data)}</form>${raw}
+      <div class="toolbar" style="justify-content:flex-end"><button class="btn" type="button" data-close>Discard</button><button class="btn hot" type="button" id="rv-save">Save reading</button></div>`;
+    $("#rv-save").onclick = () => { const o = readForm(f); applyProfile(o, true, false); closeSheet(); toast("Profile reading saved."); location.hash = "#profile"; };
+    return;
+  }
+  const cols = kind === "fellows" ? [["rarity", "Rarity"], ["level", "Level"], ["aptitude", "Aptitude"], ["power", "Power"], ["stella", "Stella"]]
+    : kind === "family" ? [["rarity", "Rarity"], ["intimacy", "Intimacy"], ["blessing", "Blessing"], ["stella", "Stella"]]
+    : [["timeRemaining", "Time left"]];
+  const list = S[kind].items;
+  const rows = data.map(it => {
+    const ex = list.find(x => norm(x.name) === norm(it.name));
+    const changed = ex ? cols.some(([f]) => f !== "timeRemaining" && !blank(it[f]) && String(it[f]) !== String(ex[f] ?? "")) || (kind === "events") : false;
+    return { it, ex, status: !ex ? "new" : changed ? "chg" : "same" };
+  });
+  if (!rows.length) {
+    st.innerHTML = `<p class="err" style="margin:0">No ${kind === "family" ? "family members" : kind} were recognised in ${nFrames} screen${nFrames === 1 ? "" : "s"}.</p>
+      <p class="muted small" style="margin:0">Make sure the recording shows the ${KIND_INFO[kind].label} screen and that names are readable. You can open the text below to see what the reader picked up, then add entries by hand.</p>${raw}
+      <div class="toolbar"><button class="btn" type="button" id="imp-retry">Try another file</button></div>`;
+    $("#imp-retry").onclick = () => openImport(kind); return;
+  }
+  const counts = { new: 0, chg: 0, same: 0 }; rows.forEach(r => counts[r.status]++);
+  st.innerHTML = `<p style="margin:0"><b>Found ${rows.length} ${kind === "family" ? "family members" : kind} in ${nFrames} screen${nFrames === 1 ? "" : "s"}.</b> ${counts.new} new, ${counts.chg} updated, ${counts.same} unchanged.</p>
+    <p class="muted small" style="margin:0">The reader can misread small text. Check the numbers, fix anything in the boxes, and untick rows that are wrong.</p>
+    <div class="table-scroll"><table><thead><tr><th><input type="checkbox" id="rv-all" checked aria-label="Select all"></th><th>Name</th><th></th>${cols.map(([, l]) => `<th>${l}</th>`).join("")}</tr></thead>
+    <tbody>${rows.map((r, i) => `<tr data-row="${i}"><td><input type="checkbox" class="rv-on" ${r.status === "same" ? "" : "checked"} aria-label="Save this row"></td>
+      <td><input class="name-in" data-f="name" value="${esc(r.it.name)}" aria-label="Name"></td><td><span class="badge ${r.status}">${r.status === "new" ? "New" : r.status === "chg" ? "Update" : "Same"}</span></td>
+      ${cols.map(([f, l]) => `<td><input data-f="${f}" value="${esc(r.it[f] ?? "")}" placeholder="${r.ex && !blank(r.ex[f]) ? esc(r.ex[f]) : "—"}" aria-label="${l}"></td>`).join("")}</tr>`).join("")}</tbody></table></div>
+    ${raw}
+    <div class="toolbar" style="justify-content:flex-end"><button class="btn" type="button" data-close>Discard</button><button class="btn hot" type="button" id="rv-save">Save selected</button></div>`;
+  $("#rv-all").onchange = e => st.querySelectorAll(".rv-on").forEach(c => c.checked = e.target.checked);
+  $("#rv-save").onclick = () => {
+    const now = new Date().toISOString(); let n = 0;
+    st.querySelectorAll("tr[data-row]").forEach(tr => {
+      if (!tr.querySelector(".rv-on").checked) return;
+      const r = rows[+tr.dataset.row], o = { ...r.it };
+      tr.querySelectorAll("input[data-f]").forEach(inp => { const v = inp.value.trim(); if (v) o[inp.dataset.f] = v; else if (inp.dataset.f !== "name") delete o[inp.dataset.f]; });
+      if (blank(o.name)) return;
+      if (kind === "events") { const left = parseRemaining(o.timeRemaining); if (left != null) o.endsAt = new Date(Date.now() + left).toISOString(); delete o.timeRemaining; }
+      if (o.faction) o.faction = canonFaction(o.faction); if (o.rarity) o.rarity = canonRarity(o.rarity);
+      const ex = list.find(x => norm(x.name) === norm(o.name));
+      if (ex) { Object.assign(ex, o); if (kind !== "events") ex.updatedAt = now; }
+      else list.push(Object.assign({ id: newId() }, kind === "events" ? { done: false, startsAt: now } : { other: {}, updatedAt: now }, o));
+      n++;
+    });
+    save(kind); closeSheet(); toast(n ? `Saved ${n} ${n === 1 ? "entry" : "entries"}.` : "Nothing was selected, so nothing was saved."); location.hash = "#" + kind;
+  };
+}
+
+/* ================= Wiring ================= */
+document.addEventListener("click", e => {
+  const t = e.target.closest("button, [data-open-import]"); if (!t) return;
+  if (t.matches("[data-close]")) return closeSheet();
+  if (t.hasAttribute("data-open-import")) return openImport(t.getAttribute("data-open-import") || undefined);
+  if (t.dataset.edit) { const [kind, id] = t.dataset.edit.split(":"); return editItem(kind, id); }
+  if (t.dataset.addKnown) { const r = ROSTER_BY.get(norm(t.dataset.addKnown)); return editItem("fellows", null, { name: r.name, faction: r.faction, rarity: r.rarity }); }
+});
+document.addEventListener("change", e => {
+  const id = e.target.dataset && e.target.dataset.done;
+  if (id) { const ev = S.events.items.find(x => x.id === id); if (ev) { ev.done = e.target.checked; save("events"); } }
+});
+$("#btn-edit-profile").onclick = editProfile;
+$("#btn-add-fellow").onclick = () => editItem("fellows", null);
+$("#btn-add-family").onclick = () => editItem("family", null);
+$("#btn-add-event").onclick = () => editItem("events", null);
+$("#live-pill").onclick = () => { evFilter = "live"; location.hash = "#events"; renderEvents(); };
+["#f-faction", "#f-rarity", "#f-sort", "#f-missing"].forEach(s => $(s).addEventListener("input", renderFellows));
+["#m-faction", "#m-sort"].forEach(s => $(s).addEventListener("input", renderFamily));
+$("#global-search").addEventListener("input", () => {
+  const h = location.hash.replace("#", "");
+  if (h !== "fellows" && h !== "family") location.hash = "#fellows";
+  renderFellows(); renderFamily();
+});
+$("#ev-filter").addEventListener("click", e => { const b = e.target.closest("button[data-f]"); if (b) { evFilter = b.dataset.f; renderEvents(); } });
+$("#growth-metric").addEventListener("click", e => { const b = e.target.closest("button[data-m]"); if (b) { growthMetric = b.dataset.m; renderProfile(); } });
+
+load();
+route();
+renderAll();
+$("#clock").textContent = new Date().toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+</script>
+</body>
+</html>
