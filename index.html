@@ -1224,7 +1224,7 @@ async function runImport(files) {
     for (let i = 0; i < frames.length; i++) {
       if (ctl.signal.aborted) throw { code: "cancelled" };
       stage(`Reading your ${KIND_INFO[kind].label.toLowerCase()}`, i / frames.length, `Reading screen ${i + 1} of ${frames.length}…`, thumbs);
-      pages.push(await readFrame(worker, frames[i], ctl.signal));
+      pages.push(await readFrame(worker, frames[i], ctl.signal, kind));
     }
     busy = null;
     showReview(kind, parsePages(kind, pages), frames.length, pages);
@@ -1300,7 +1300,8 @@ function waitForTesseract(signal) {
 }
 async function getWorker(signal) {
   await waitForTesseract(signal);
-  if (!workerPromise) workerPromise = Tesseract.createWorker("eng", 1, { logger: m => { if (m.status && m.status.includes("load") && typeof m.progress === "number") setBar(m.progress, "Loading the text reader… " + Math.round(m.progress * 100) + "%"); } })
+  // classify_enable_learning off: otherwise the reader adapts to each screen it reads and the next one reads differently
+  if (!workerPromise) workerPromise = Tesseract.createWorker("eng", 1, { logger: m => { if (m.status && m.status.includes("load") && typeof m.progress === "number") setBar(m.progress, "Loading the text reader… " + Math.round(m.progress * 100) + "%"); } }, { classify_enable_learning: "0" })
     .catch(e => { workerPromise = null; throw { code: "ocr_load", e }; });
   return workerPromise;
 }
@@ -1407,7 +1408,149 @@ function stripLines(words, h) {
   }
   return out.map(l => ({ text: l.words.map(w => w.t).join(" "), b: l.b, conf: l.words.reduce((s, w) => s + w.conf, 0) / l.words.length, words: l.words, strip: true }));
 }
-async function readFrame(worker, blob, signal) {
+/* Close-up number reading. Some numbers sit on busy or coloured badges (the yellow level in the green diamond,
+   the orange power figure, the small numbers on family cards) and the whole-screen pass garbles them. Crop just
+   that spot, turn it into black digits on white a few different ways, read digits only, and keep the most
+   confident reading that looks like a real game number. */
+const LUM = (r, g, b) => r * 0.3 + g * 0.59 + b * 0.11;
+const NUM_VARIANTS = [                       // badges: yellow on green, orange on dark
+  { f: LUM, otsu: true },
+  { f: LUM, otsu: true, dark: true },
+  { f: r => r, th: 180 },
+  { f: r => r, th: 150 },
+];
+const YELLOW = t => (r, g, b) => r > 165 && g > 115 && r - b > t ? 255 : 0;   // the player level: yellow digits on a green diamond
+const YELLOW_TEXT = [{ f: YELLOW(80), th: 128 }, { f: YELLOW(60), th: 128 }, { f: YELLOW(100), th: 128 }, { f: r => r, th: 180 }];
+const ORANGE = t => (r, g, b) => r > 180 && r - b > t ? 255 : 0;   // a fellow's power: orange digits with a dark outline
+const ORANGE_TEXT = [{ f: ORANGE(120), th: 128 }, { f: ORANGE(90), th: 128 }, { f: ORANGE(60), th: 128 }, { f: r => r, th: 180 }];
+const LIGHT_TEXT = [{ gray: true }, { f: LUM, th: 170 }, { f: LUM, th: 130 }];   // pale numbers on a dark strip
+/* Skip an icon at the left of the box (the pink heart and blue angel next to family card numbers): move the left
+   edge past the last column in the first part of the box that holds icon-coloured pixels. */
+function pastIcon(bmp, r, isIcon) {
+  const x0 = Math.max(0, Math.round(r.x0)), y0 = Math.max(0, Math.round(r.y0)), w = Math.max(1, Math.round(r.x1) - x0), h = Math.max(1, Math.round(r.y1) - y0);
+  const c = document.createElement("canvas"); c.width = w; c.height = h;
+  const ctx = c.getContext("2d", { willReadFrequently: true }); ctx.drawImage(bmp, x0, y0, w, h, 0, 0, w, h);
+  const d = ctx.getImageData(0, 0, w, h).data;
+  let last = -1;
+  for (let x = 0; x < w * 0.4; x++) { let n = 0; for (let y = 0; y < h; y++) { const i = (y * w + x) * 4; if (isIcon(d[i], d[i + 1], d[i + 2])) n++; } if (n >= 2) last = x; }
+  return last < 0 ? r : Object.assign({}, r, { x0: x0 + last + 2 });
+}
+async function readNumber(worker, bmp, r, check, variants = NUM_VARIANTS, strict = false) {
+  const x0 = Math.max(0, Math.round(r.x0)), y0 = Math.max(0, Math.round(r.y0)), x1 = Math.min(bmp.width, Math.round(r.x1)), y1 = Math.min(bmp.height, Math.round(r.y1));
+  if (x1 - x0 < 6 || y1 - y0 < 6) return null;
+  const k = Math.max(1, Math.min(6, 100 / (y1 - y0))), P = 30;
+  const c = document.createElement("canvas"); c.width = Math.round((x1 - x0) * k) + 2 * P; c.height = Math.round((y1 - y0) * k) + 2 * P;
+  const ctx = c.getContext("2d", { willReadFrequently: true }); ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(bmp, x0, y0, x1 - x0, y1 - y0, P, P, c.width - 2 * P, c.height - 2 * P);
+  const src = ctx.getImageData(0, 0, c.width, c.height);
+  let best = null; const cands = [];
+  await worker.setParameters({ tessedit_pageseg_mode: "7", tessedit_char_whitelist: "0123456789,." });
+  try {
+    for (const v of variants) {
+      const img = new ImageData(new Uint8ClampedArray(src.data), c.width, c.height), d = img.data;
+      const L = new Float32Array(d.length / 4);
+      for (let i = 0; i < L.length; i++) L[i] = (v.f || LUM)(d[i * 4], d[i * 4 + 1], d[i * 4 + 2]);
+      let th = v.th, bright = true;
+      if (v.otsu) {
+        const hist = new Array(256).fill(0); let n = 0, sum = 0;
+        for (let y = P; y < c.height - P; y++) for (let x = P; x < c.width - P; x++) { hist[Math.max(0, Math.min(255, L[y * c.width + x] | 0))]++; n++; }
+        for (let i = 0; i < 256; i++) sum += i * hist[i];
+        let sB = 0, wB = 0, bv = 0; th = 128;
+        for (let i = 0; i < 256; i++) { wB += hist[i]; if (!wB) continue; const wF = n - wB; if (!wF) break; sB += i * hist[i]; const m = (sB / wB - (sum - sB) / wF) ** 2 * wB * wF; if (m > bv) { bv = m; th = i; } }
+        bright = !v.dark;
+      }
+      for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) {
+        const i = y * c.width + x, inside = x >= P && x < c.width - P && y >= P && y < c.height - P;
+        // gray: keep the shading, just flip light text to dark on light; otherwise make it pure black on white
+        const g = !inside ? 255 : v.gray ? 255 - Math.max(0, Math.min(255, (L[i] - 60) * 1.5)) : (bright ? L[i] > th : L[i] <= th) ? 0 : 255;
+        d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = g; d[i * 4 + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      const { data } = await worker.recognize(c);
+      const raw = data.text.replace(/\s+/g, ""), val = check(raw);
+      if (val) cands.push({ val, conf: data.confidence, trims: raw.replace(/\D/g, "").length - String(val).replace(/\D/g, "").length });
+      if (!strict && cands.length >= 2 && cands.filter(x => x.val === val).length >= 2) break;   // two ways agree: good enough
+    }
+  } finally { await worker.setParameters({ tessedit_char_whitelist: "" }); }
+  // strict: every reading that made sense must agree, and at least two did (a wrong big number is worse than none)
+  if (strict) return cands.length >= 2 && cands.every(x => x.val === cands[0].val) ? cands[0].val : null;
+  // Prefer a value several of the ways agree on, then a confident one that needed no trimming.
+  const score = x => cands.filter(y => y.val === x.val).length * 50 + x.conf - x.trims * 25;
+  for (const x of cands) if (!best || score(x) > score(best)) best = x;
+  // comma groups that add up are a strong check on their own; short readings need the reader to be fairly sure
+  return best && (best.conf >= 20 || /,\d{3}/.test(best.val)) ? best.val : null;
+}
+/* Big numbers are always printed with thousands commas ("153,826,054,348"). The reader sometimes misses a comma
+   or reads an icon as a leading 1, so accept a reading when its groups still add up, trimming stray leading digits. */
+function groupedNum(s) {
+  s = String(s || "").replace(/\./g, ",").replace(/^,+|,+$/g, "");   // a comma often reads as a full stop
+  if (!/^\d[\d,]*$/.test(s)) return null;
+  for (let k = 0; k <= 4; k++) {
+    const cut = [0, 1, 0, 2, 0][k], end = [0, 0, 1, 0, 2][k];   // stray icon digits at either end
+    const t = s.slice(cut, s.length - end).replace(/^,|,$/g, ""); if (!t || t[0] === "0") continue;
+    const parts = t.split(","), trimmed = cut + end > 0;
+    // no commas: fine when nothing was trimmed and it's short ("63323" is printed that way); trimming one down is a guess
+    if (parts.length === 1) { if (!trimmed && t.length <= 6) return t.replace(/\B(?=(\d{3})+(?!\d))/g, ","); continue; }
+    if (parts[0].length >= 1 && parts[0].length <= 3 && parts.slice(1).every(g => g.length === 3)) {
+      const digits = parts.join(""); return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  }
+  return null;
+}
+/* A stat as read from the screen: "1.655T" style values pass through, comma numbers must have sane groups. */
+function cleanNum(v) {
+  if (blank(v)) return null;
+  v = String(v).trim().replace(/[.,]$/, "");
+  if (/^\d+(?:\.\d+)?\s?(?:[kmbtq]|[a-z]{2})$/i.test(v)) return v.replace(/\s/g, "");
+  return groupedNum(v);
+}
+const DETAIL_RE = /\b(?:cultivate|family\s*training)\b/i;
+const POPUP_RE = /power\s*details?|bond\s*detail|total\s*apt|level\s*cap|stella\s*level|current\s*bond/i;
+async function refineFrame(worker, bmp, p, kind) {
+  const sc = p.sc, toB = b => ({ x0: b.x0 / sc, y0: b.y0 / sc, x1: b.x1 / sc, y1: b.y1 / sc });
+  const all = p.lines.map(l => l.text).join("\n");
+  p.extra = {};
+  if (kind === "profile") {
+    // Player level: the yellow number in the green diamond, just left of the rank ("54 Archdemon D III")
+    found: for (const l of p.lines) {
+      const ws = lineWords(l);
+      for (let i = 0; i < ws.length; i++) {
+        if (!/^[A-Z][a-z]{3,}$/.test(ws[i].t)) continue;
+        if (!/^[A-Z][A-Za-z']+(?:\s+[A-Z][A-Za-z']*){0,2}\s+[IVX]{1,4}\b/.test(ws.slice(i, i + 4).map(w => w.t).join(" "))) continue;
+        const b = toB(ws[i].b), h = b.y1 - b.y0, c = (b.y0 + b.y1) / 2;
+        const v = await readNumber(worker, bmp, { x0: b.x0 - 3.1 * h, x1: b.x0 - 1.1 * h, y0: c - 0.75 * h, y1: c + 0.75 * h }, t => /^\d{1,3}$/.test(t) && +t > 0 ? String(+t) : null, YELLOW_TEXT);
+        if (v) { p.extra.level = v; break found; }
+      }
+    }
+  }
+  if (kind === "fellows" && DETAIL_RE.test(all)) {
+    // Fellow page: the big orange power figure sits right above "Lv. 750 ★★★★★", which sits above "Aptitude"
+    const lv = p.lines.find(l => levelHits(l).length && !/stella|[—~]/i.test(l.text) && p.lines.some(o => /aptitude/i.test(o.text) && cyb(o.b) - cyb(l.b) > lh(l) * 0.4 && cyb(o.b) - cyb(l.b) < lh(l) * 4));
+    if (lv) {
+      const b = toB(levelHits(lv)[0].b), h = b.y1 - b.y0;
+      const v = await readNumber(worker, bmp, { x0: bmp.width * 0.11, x1: bmp.width * 0.53, y0: b.y0 - 2.7 * h, y1: b.y0 - 0.3 * h }, t => { const g = groupedNum(t); return g && g.length >= 5 ? g : null; }, ORANGE_TEXT, true);
+      if (v) p.extra.power = v;
+    }
+  }
+  if (kind === "family" && !DETAIL_RE.test(all)) {
+    // Family list: each card shows intimacy (left) and blessing (right) just above the name ribbon
+    const idx = nameIndex("family"), best = new Map();
+    for (const l of p.lines) for (const m of findNames(l, idx)) { const o = best.get(m.k); if (!o || m.conf > o.conf) best.set(m.k, m); }
+    if (best.size >= 2) {
+      p.extra.cards = {};
+      // sizes follow the screen width (measured on a 911px-wide phone screenshot)
+      const U = bmp.width / 911, cw = bmp.width * 0.29;
+      const heart = (r, g, b) => r > 170 && r - g > 50 && b - g > 20, angel = (r, g, b) => b > 150 && b - r > 35;
+      for (const m of best.values()) {
+        const b = toB(m.b), cxm = (b.x0 + b.x1) / 2, cy = (b.y0 + b.y1) / 2 - 36 * U, y0 = cy - 14 * U, y1 = cy + 14 * U;
+        const intimacy = await readNumber(worker, bmp, pastIcon(bmp, { x0: cxm - 0.33 * cw, x1: cxm - 0.02 * cw, y0, y1 }, heart), groupedNum, LIGHT_TEXT);
+        const blessing = await readNumber(worker, bmp, pastIcon(bmp, { x0: cxm + 0.12 * cw, x1: cxm + 0.46 * cw, y0, y1 }, angel), groupedNum, LIGHT_TEXT);
+        p.extra.cards[m.k] = { intimacy, blessing };
+      }
+    }
+  }
+}
+async function readFrame(worker, blob, signal, kind) {
   const bmp = await createImageBitmap(blob);
   try {
     const full = prepForOcr(bmp), sc = full.sc;
@@ -1423,7 +1566,10 @@ async function readFrame(worker, blob, signal) {
         .map(w => ({ t: w.text.trim(), conf: w.confidence, b: { x0: (b.x0 + w.bbox.x0 / k) * sc, x1: (b.x0 + w.bbox.x1 / k) * sc, y0: (b.y0 + w.bbox.y0 / k) * sc, y1: (b.y0 + w.bbox.y1 / k) * sc } }));
       lines.push(...stripLines(words, (b.y1 - b.y0) * sc));
     }
-    return { w: full.canvas.width, h: full.canvas.height, lines };
+    const page = { w: full.canvas.width, h: full.canvas.height, sc, lines };
+    if (signal.aborted) throw { code: "cancelled" };
+    try { await refineFrame(worker, bmp, page, kind); } catch { page.extra = page.extra || {}; }
+    return page;
   } finally { if (bmp.close) bmp.close(); }
 }
 
@@ -1448,8 +1594,11 @@ const cnorm = s => norm(s).replace(/0/g, "o").replace(/1/g, "l").replace(/5/g, "
 function nameIndex(kind) {
   const names = new Map();
   const add = n => { const k = norm(n), c = cnorm(n); if (k.length >= 3 && !names.has(k)) names.set(k, { k, c, n, words: String(n).trim().split(/\s+/).length }); };
-  if (kind === "fellows") { ROSTER.forEach(r => add(r.name)); S.fellows.items.forEach(f => add(f.name)); }
-  else { FAMILY_ROSTER.forEach(r => add(r.name)); S.family.items.forEach(f => add(f.name)); }
+  // Titles ("Goddess of Revelry", "The Omni-Shapeshifter") are printed big on detail pages and read better than the small name under them.
+  const addTitle = (t, n) => { if (!t) return; const c = cnorm(t), key = "t:" + c; if (c.length >= 8 && !names.has(key)) names.set(key, { k: norm(n), c, n, words: String(t).trim().split(/\s+/).length }); };
+  const roster = kind === "fellows" ? ROSTER : FAMILY_ROSTER;
+  roster.forEach(r => add(r.name)); S[kind === "fellows" ? "fellows" : "family"].items.forEach(f => add(f.name));
+  roster.forEach(r => addTitle(r.title, r.name));
   const exact = new Map(), byLen = new Map();
   for (const e of names.values()) { if (!exact.has(e.c)) exact.set(e.c, e); const L = e.c.length; if (!byLen.has(L)) byLen.set(L, []); byLen.get(L).push(e); }
   return { exact, byLen, maxWords: Math.max(1, ...[...names.values()].map(e => e.words)) };
@@ -1523,8 +1672,9 @@ function readStats(text, keys) {
 const LABEL_WORD = { power: /^(?:power|pwr|pow)$/i, aptitude: /^(?:aptitude|apt)$/i, stella: /^stella$/i, intimacy: /^intimacy$/i, blessing: /^blessing$/i, earnings: /^earnings?$/i };
 const NUM_WORD = /^\d[\d,.]*(?:[kmbtq]|[a-z]{2})?$/i;
 function pairStats(lines, keys) {
-  const words = lines.flatMap(l => lineWords(l).map(w => ({ ...w, c: w.t.replace(/^[^\w]+|[^\w.]+$/g, "").replace(/[:：.]$/, "") })));
-  const nums = words.filter(w => NUM_WORD.test(w.c) && /\d/.test(w.c)), o = {}, used = new Set();
+  const words = lines.flatMap(l => lineWords(l).map(w => ({ ...w, c: w.t.replace(/^[^\w+]+|[^\w.]+$/g, "").replace(/[:：.]$/, "") })));
+  // "+73.5M" style numbers are bonuses, not the stat itself
+  const nums = words.filter(w => !w.c.startsWith("+") && NUM_WORD.test(w.c) && /\d/.test(w.c)), o = {}, used = new Set();
   for (const k of keys) {
     if (!LABEL_WORD[k]) continue;
     for (const lw of words.filter(w => LABEL_WORD[k].test(w.c))) {
@@ -1554,6 +1704,7 @@ function parseProfile(pages) {
   const o = {}, votes = new Map(), put = (f, v, w = 1) => vote(votes, "p", f, v, w);
   for (const p of pages) {
     const texts = p.lines.map(l => l.text), all = texts.join("\n");
+    if (p.extra && p.extra.level) put("level", p.extra.level, 5);   // close-up read of the level badge
     const listScreen = p.lines.flatMap(l => levelHits(l)).length >= 2;   // a fellow list: its Lv. numbers aren't the player's level
     for (const t of texts) {
       const earn = t.match(new RegExp(NUM + "\\s*/\\s*s\\b", "i")); if (earn) put("earnings", earn[1], 2);   // "11.21T/s"
@@ -1564,7 +1715,7 @@ function parseProfile(pages) {
     }
     // Player name sits right of the "VIP 5" badge, in the same strip or as the next piece of it
     for (const l of p.lines) {
-      const m = l.text.match(/\bV[I1l|]P\s*[0-9SOo]{1,2}\b(.*)$/); if (!m) continue;
+      const m = l.text.match(/V[I1l|]P\s*[0-9SOo]{1,2}\b(.*)$/); if (!m) continue;
       let rest = m[1];
       if (!/[A-Za-z0-9]{2}/.test(rest)) {
         const h = Math.max(8, l.b.y1 - l.b.y0);
@@ -1587,14 +1738,41 @@ function parseProfile(pages) {
   return o;
 }
 
+/* A fellow's or family member's own page (and the popups opened from it): one person, so every stat on it is theirs. */
+function detailStats(p, kind, ref) {
+  const L = p.lines.filter(l => cyb(l.b) > p.h * 0.085), o = {};   // the top bar holds account totals
+  for (const l of L) {
+    if (/stella|[—~]/i.test(l.text)) continue;
+    const hs = levelHits(l); if (!hs.length) continue;
+    if (L.some(x => x !== l && /aptitude/i.test(x.text) && cyb(x.b) - cyb(l.b) > lh(l) * 0.4 && cyb(x.b) - cyb(l.b) < lh(l) * 4)) { o.level = hs[0].lv; break; }
+  }
+  for (const l of L) {
+    const pw = l.text.match(/\bpower\s*[:：]?\s*(\d[\d,.]*\d)(?!\s*[%+])/i); if (pw && !o.power) { const v = cleanNum(pw[1]); if (v) o.power = v; }
+    const ap = l.text.match(/\b(?:total\s+)?aptitude\s*[:：]?\s*(\d[\d,.]*\d)(?!\s*%)/i); if (ap && !o.aptitude) { const v = cleanNum(ap[1]); if (v) o.aptitude = v; }
+    const sl = l.text.match(/stella\s*level\s*[:：]?\s*(?:l?v\.?)?\s*(\d{1,2})\b/i); if (sl) o.stella = String(+sl[1]);
+  }
+  if (p.extra && p.extra.power) o.power = p.extra.power;
+  if (kind === "family") for (const [k, v] of Object.entries(Object.assign(pairStats(L, ["intimacy", "blessing"]), readStats(L.map(l => l.text).join("\n"), ["intimacy", "blessing"])))) { const c = cleanNum(v); if (c) o[k] = c; }
+  // Skill slots: "Tipsy Level 716/716"
+  if (ref && ref.skills && ref.skills.length) for (const l of L) {
+    const m = l.text.match(/([A-Za-z][A-Za-z' ]{1,30}?)\s+Level\s*(\d{1,4})\s*\/\s*\d{1,4}/i); if (!m) continue;
+    const t = cnorm(m[1]);
+    const sk = ref.skills.map(s => ({ s, d: ocrDist(t, cnorm(s.name)) })).filter(x => x.d <= nameTol(x.s.name.length) || t.endsWith(cnorm(x.s.name))).sort((a, b) => a.d - b.d)[0];
+    if (sk) (o.skills = o.skills || {})[sk.s.id] = String(+m[2]);
+  }
+  return o;
+}
 function parsePages(kind, pages) {
   if (kind === "profile") return parseProfile(pages);
   if (kind === "events") return parseEvents(pages);
   const idx = nameIndex(kind);
   const keys = kind === "fellows" ? ["power", "aptitude", "stella"] : ["intimacy", "blessing", "stella"];
-  const found = new Map(), order = [];
+  const BY = kind === "fellows" ? ROSTER_BY : FAMILY_BY;
+  const found = new Map(), order = [], skills = new Map();
   const seen = (key, name) => { if (!found.has(key)) { found.set(key, {}); order.push({ key, name }); } };
+  let current = null;   // the person whose own page we're on, for popups opened from it
   for (const p of pages) {
+    const all = p.lines.map(l => l.text).join("\n");
     // 1. names, one anchor per name per spot on screen
     let anchors = [];
     for (const l of p.lines) for (const m of findNames(l, idx)) anchors.push({ n: m.n, key: m.k, b: m.b, conf: m.conf, l });
@@ -1602,20 +1780,41 @@ function parsePages(kind, pages) {
     anchors = anchors.filter((a, i) => !anchors.slice(0, i).some(o => o.key === a.key && Math.abs(cx(o.b) - cx(a.b)) < p.w * 0.1 && Math.abs(cyb(o.b) - cyb(a.b)) < p.w * 0.1));
     // Same name twice on one screen (whole-screen pass + strip pass in different spots) keeps the most confident.
     anchors = anchors.filter((a, i) => !anchors.slice(0, i).some(o => o.key === a.key));
+
+    // A single person's page: their name or title is near the top. Popups opened from it carry no name.
+    const detail = DETAIL_RE.test(all);
+    let solo = null;
+    if (detail) solo = anchors.find(a => cyb(a.b) < p.h * 0.25) || null;
+    else if (!anchors.length && current && POPUP_RE.test(all)) solo = current;
+    if (solo || detail) {
+      current = solo;
+      if (!solo) continue;
+      seen(solo.key, solo.n);
+      const st = detailStats(p, kind, BY.get(solo.key));
+      if (st.skills) { skills.set(solo.key, Object.assign(skills.get(solo.key) || {}, st.skills)); delete st.skills; }
+      for (const [f, v] of Object.entries(st)) vote(found, solo.key, f, v, 2);
+      const fac = FACTIONS.find(f => new RegExp("\\b" + f + "\\b", "i").test(all)); if (fac) vote(found, solo.key, "faction", fac);
+      continue;
+    }
+    if (anchors.length) current = null;   // a list screen; a nameless popup (like an artifact) keeps the person
+
     if (kind === "family" && !anchors.length) {
       // No known name: use a short wordy line just above an Intimacy/Blessing label as the name.
       p.lines.forEach(l => {
         if (!/intimacy|blessing/i.test(l.text)) return;
-        const cand = p.lines.filter(o => o !== l && cyb(o.b) < cyb(l.b) && cyb(l.b) - cyb(o.b) < lh(l) * 5 && /^[A-Za-z][A-Za-z '&.-]{2,24}$/.test(o.text) && !/intimacy|blessing|stella|level|power/i.test(o.text)).sort((a, b) => cyb(b.b) - cyb(a.b))[0];
+        const cand = p.lines.filter(o => o !== l && cyb(o.b) < cyb(l.b) && cyb(l.b) - cyb(o.b) < lh(l) * 5 && /^[A-Za-z][A-Za-z '&.-]{2,24}$/.test(o.text) && !/intimacy|blessing|stella|level|power|interact|bonds|skills|gift|story|travel|cosplay|favorite|info|hide/i.test(o.text)).sort((a, b) => cyb(b.b) - cyb(a.b))[0];
         if (cand && !anchors.some(a => a.l === cand)) anchors.push({ n: cand.text.trim(), key: norm(cand.text), b: cand.b, conf: cand.conf, l: cand });
       });
     }
     if (!anchors.length) continue;
-    for (const a of anchors) seen(a.key, a.n);
+    // list in screen order: row by row, left to right
+    const row = a => Math.round(cyb(a.b) / (p.w * 0.08));
+    for (const a of [...anchors].sort((a, b) => row(a) - row(b) || cx(a.b) - cx(b.b))) seen(a.key, a.n);
     const W = p.w, wt = a => 0.5 + Math.max(0, Math.min(100, a.conf ?? 70)) / 100;
+    const body = p.lines.filter(l => cyb(l.b) > p.h * 0.085);   // the top bar holds account totals
     // 2. levels. On the fellow list "Lv.750" sits at the top of the card and the name ribbon at the bottom,
     //    so a level belongs to the closest name below it in the same column. Next to the name also counts.
-    const hits = p.lines.flatMap(l => levelHits(l));
+    const hits = body.flatMap(l => levelHits(l));
     const taken = new Set();
     if (anchors.length === 1) { const h = hits.sort((a, b) => b.conf - a.conf)[0]; if (h) vote(found, anchors[0].key, "level", h.lv, wt(h)); }
     else {
@@ -1629,10 +1828,13 @@ function parsePages(kind, pages) {
       const usedA = new Set();
       for (const { h, a } of pairs) { if (taken.has(h) || usedA.has(a)) continue; taken.add(h); usedA.add(a); vote(found, a.key, "level", h.lv, wt(h)); }
     }
-    // 3. other stats from the lines around each name
+    // 3. close-up reads of the numbers on family cards
+    const cards = (p.extra && p.extra.cards) || {};
+    for (const a of anchors) { const c = cards[a.key]; if (c) { if (c.intimacy) vote(found, a.key, "intimacy", c.intimacy, 3); if (c.blessing) vote(found, a.key, "blessing", c.blessing, 3); } }
+    // 4. other stats from the lines around each name
     const groups = new Map(anchors.map(a => [a, [a.l]]));
-    if (anchors.length === 1) groups.set(anchors[0], p.lines.slice());
-    else p.lines.forEach(l => {
+    if (anchors.length === 1) groups.set(anchors[0], body.slice());
+    else body.forEach(l => {
       if (anchors.some(a => a.l === l)) return;
       let best = null, bd = Infinity;
       for (const a of anchors) {
@@ -1651,20 +1853,24 @@ function parsePages(kind, pages) {
       if (kind === "fellows" && !st.power && anchors.length === 1) { const m = text.match(SUFFIXED); if (m) st.power = m[1].replace(/\s/g, ""); }
       const r = a.l.text.match(RARITY_RE) || text.match(/\b(LR|UR\*?|SSR\+?)\b/);
       if (r) st.rarity = r[1];
-      for (const [f, v] of Object.entries(st)) vote(found, a.key, f, v, wt(a));
+      for (const [f, v0] of Object.entries(st)) {
+        const v = ["power", "aptitude", "intimacy", "blessing"].includes(f) ? cleanNum(v0) : v0;
+        if (v) vote(found, a.key, f, v, wt(a));
+      }
       const fac = FACTIONS.find(f => new RegExp("\\b" + f + "\\b", "i").test(text)); if (fac) vote(found, a.key, "faction", fac);
     }
   }
   return order.map(({ key, name }) => {
     const o = Object.assign({ name }, winners(found.get(key) || {}));
     if (o.rarity) o.rarity = canonRarity(o.rarity);
-    const ref = (kind === "fellows" ? ROSTER_BY : FAMILY_BY).get(key);
+    const ref = BY.get(key);
     if (ref) {
       o.name = ref.name; o.faction = o.faction || ref.faction;
       // a rarity the fellow can never have is a misread
       if (o.rarity && ref.path && ref.path.length && !ref.path.map(canonRarity).includes(o.rarity)) delete o.rarity;
       o.rarity = o.rarity || ref.rarity;
     }
+    if (skills.has(key)) o.skills = skills.get(key);
     return o;
   });
 }
@@ -1689,6 +1895,10 @@ function parseEvents(pages) {
 }
 
 /* ================= Import: review ================= */
+function skillText(it) {
+  const ref = refFor("fellows", it), names = new Map(((ref && ref.skills) || []).map(s => [s.id, s.name]));
+  return Object.entries(it.skills).map(([id, lv]) => `${names.get(id) || id} Lv ${lv}`).join(", ");
+}
 function showReview(kind, data, nFrames, pages) {
   const st = $("#imp-stage");
   const rawText = pages.map((p, i) => `— Screen ${i + 1} —\n` + p.lines.map(l => l.text).join("\n")).join("\n\n");
@@ -1722,7 +1932,7 @@ function showReview(kind, data, nFrames, pages) {
     <p class="muted small" style="margin:0">${pages.length ? "The reader can misread small text. Check the numbers, fix anything in the boxes, and untick rows that are wrong." : "Check the rows, fix anything in the boxes, and untick any you don't want to save."}</p>
     <div class="table-scroll"><table><thead><tr><th><input type="checkbox" id="rv-all" checked aria-label="Select all"></th><th>Name</th><th></th>${cols.map(([, l]) => `<th>${l}</th>`).join("")}</tr></thead>
     <tbody>${rows.map((r, i) => `<tr data-row="${i}"><td><input type="checkbox" class="rv-on" ${r.status === "same" ? "" : "checked"} aria-label="Save this row"></td>
-      <td><input class="name-in" data-f="name" value="${esc(r.it.name)}" aria-label="Name"></td><td><span class="badge ${r.status}">${r.status === "new" ? "New" : r.status === "chg" ? "Update" : "Same"}</span></td>
+      <td><input class="name-in" data-f="name" value="${esc(r.it.name)}" aria-label="Name"></td><td><span class="badge ${r.status}">${r.status === "new" ? "New" : r.status === "chg" ? "Update" : "Same"}</span>${r.it.skills ? `<div class="muted small">${esc(skillText(r.it))}</div>` : ""}</td>
       ${cols.map(([f, l]) => `<td><input data-f="${f}" value="${esc(r.it[f] ?? "")}" placeholder="${r.ex && !blank(r.ex[f]) ? esc(r.ex[f]) : "—"}" aria-label="${l}"></td>`).join("")}</tr>`).join("")}</tbody></table></div>
     ${raw}
     <div class="toolbar" style="justify-content:flex-end"><button class="btn" type="button" data-close>Discard</button><button class="btn hot" type="button" id="rv-save">Save selected</button></div>`;
@@ -1738,6 +1948,7 @@ function showReview(kind, data, nFrames, pages) {
       if (o.faction) o.faction = canonFaction(o.faction); if (o.rarity) o.rarity = canonRarity(o.rarity);
       if (kind !== "events") { const ref = refFor(kind, o); if (ref) { o.ref = ref.id; o.name = ref.name; o.faction = o.faction || ref.faction; o.rarity = o.rarity || ref.rarity; } }
       const ex = list.find(x => norm(x.name) === norm(o.name));
+      if (o.skills) o.skills = Object.assign({}, (ex && ex.skills) || {}, o.skills);   // add to the skill slots already saved
       if (ex) { Object.assign(ex, o); if (kind !== "events") ex.updatedAt = now; }
       else list.push(Object.assign({ id: newId() }, kind === "events" ? { done: false, startsAt: now } : { other: {}, updatedAt: now }, o));
       n++;
