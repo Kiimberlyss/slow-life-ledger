@@ -269,6 +269,22 @@ details.raw pre { white-space: pre-wrap; font-size: 0.78rem; color: var(--muted)
 .toasts { position: fixed; z-index: 60; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 8px; width: min(440px, calc(100% - 32px)); }
 .toast { background: var(--ink); color: var(--bg); padding: 11px 16px; border-radius: 12px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 12px 30px -10px rgb(0 0 0 / 0.5); }
 
+/* Quick edit & skills */
+table.quick td { padding: 4px 8px; }
+table.quick td input:not([type="checkbox"]) { min-width: 76px; }
+table.quick select { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 5px 6px; }
+table.quick .qn { white-space: nowrap; }
+table.quick .qn b { display: block; font-weight: 600; }
+table.quick tr.q-missing .qn b { color: var(--muted); font-weight: 400; }
+table.quick tr.q-missing td input:not([type="checkbox"]), table.quick tr.q-missing select { opacity: 0.6; }
+table.quick tbody tr:hover { background: var(--panel-2); }
+.skills { display: grid; gap: 10px; }
+.skills-head { display: flex; gap: 8px 14px; align-items: baseline; flex-wrap: wrap; }
+.skills-head h3 { font-size: 1.2rem; }
+.sk-total { margin-left: auto; font-size: 0.88rem; color: var(--muted); }
+.sk-total b { color: var(--mint); font-size: 1.05rem; }
+.skills td input { max-width: 90px; }
+
 @media (max-width: 720px) {
   .banner-row { padding-block: 16px 8px; }
   .brand h1 { font-size: 1.45rem; }
@@ -358,12 +374,14 @@ details.raw pre { white-space: pre-wrap; font-size: 0.78rem; color: var(--muted)
       <div class="card">
         <div class="card-head"><h3>Roster</h3>
           <div class="toolbar">
+            <div class="seg" data-mode-for="fellows" role="group" aria-label="View"><button type="button" data-mode="cards" aria-pressed="true">Cards</button><button type="button" data-mode="quick" aria-pressed="false">Quick edit</button></div>
+            <button class="btn sm" type="button" data-paste="fellows">Paste from a spreadsheet</button>
             <select class="field-in" id="f-faction" aria-label="Faction"></select>
             <select class="field-in" id="f-rarity" aria-label="Rarity"></select>
             <select class="field-in" id="f-sort" aria-label="Sort by">
               <option value="power">Sort: Power</option><option value="level">Sort: Level</option><option value="aptitude">Sort: Aptitude</option><option value="rarity">Sort: Rarity</option><option value="name">Sort: Name</option><option value="updatedAt">Sort: Recently updated</option>
             </select>
-            <label class="check"><input type="checkbox" id="f-missing">Show fellows I don't have</label>
+            <label class="check" id="f-missing-wrap"><input type="checkbox" id="f-missing">Show fellows I don't have</label>
           </div>
         </div>
         <div class="card-body"><div class="chars" id="fellow-grid"></div></div>
@@ -383,8 +401,12 @@ details.raw pre { white-space: pre-wrap; font-size: 0.78rem; color: var(--muted)
       <div class="card">
         <div class="card-head"><h3>Members</h3>
           <div class="toolbar">
+            <div class="seg" data-mode-for="family" role="group" aria-label="View"><button type="button" data-mode="cards" aria-pressed="true">Cards</button><button type="button" data-mode="quick" aria-pressed="false">Quick edit</button></div>
+            <button class="btn sm" type="button" data-paste="family">Paste from a spreadsheet</button>
             <select class="field-in" id="m-faction" aria-label="Faction"></select>
+            <select class="field-in" id="m-rarity" aria-label="Rarity"></select>
             <select class="field-in" id="m-sort" aria-label="Sort by"><option value="intimacy">Sort: Intimacy</option><option value="blessing">Sort: Blessing</option><option value="rarity">Sort: Rarity</option><option value="name">Sort: Name</option></select>
+            <label class="check" id="m-missing-wrap"><input type="checkbox" id="m-missing">Show family I don't have</label>
           </div>
         </div>
         <div class="card-body"><div class="chars" id="family-grid"></div></div>
@@ -439,177 +461,6 @@ details.raw pre { white-space: pre-wrap; font-size: 0.78rem; color: var(--muted)
 <script>
 "use strict";
 /* ================= Game reference (fan wiki: zik-ascend.github.io/isl-tools, patch 8105) ================= */
-const ROSTER_RAW = `Acedia|Dil|SSR
-Adeline|Unf|SR
-Aegle|Inf|UR
-Ainz Ooal Gown|Inf|SSR+
-Ais Wallenstein|Bra|SSR+>UR
-Aisha Greyrat|Ins|SSR
-Albedo|Bra|SSR>SSR+>UR>LR
-Allucia|Dil|SSR
-Amaterasu|Ins|UR
-Andras|Bra|UR
-Angie|Inf|SR
-Anne|Unf|SSR
-Anpu|Dil|UR
-Ao Li|Inf|UR
-Aqua|Ins|SSR+>UR>LR
-Arake|Dil|R
-Athena|Inf|UR
-Augustine|Inf|SSR
-Aurora|Bra|SSR+>UR
-Avar|Unf|SSR
-Avril|Ins|SSR
-Barbara|Inf|SR
-Beelsebub|Unf|UR
-Bell Cranel|Dil|SSR
-Belle|Dil|R
-Benimaru|Bra|SSR
-Beryl|Bra|UR*
-Björnson|Bra|R
-Black|Ins|SSR
-Boatter|Unf|R
-Brotein|Bra|SR
-Bubo|Inf|SSR
-Carrotte|Dil|SR
-Chisato Nishikigi|Unf|SSR>SSR+>UR>LR
-Cimitir|Inf|SR
-Crysta|Dil|SSR>SSR+
-Darkness|Unf|SSR
-Demiurge|Inf|SR
-Denisa|Dil|SR
-Dionysia|Bra|SSR+>UR*
-Dr.Dotor|Inf|R
-Elise|Ins|SR
-Elma|Unf|SSR
-Emma|Dil|SR
-Emosen|Bra|SSR
-Eros|Unf|SR
-Erza|Bra|SSR
-Eter & NAL|Inf|SSR
-Fafnir|Bra|SSR
-Fafnyria|Dil|SSR+>UR*
-Fawna|Bra|SR
-Fifi|Dil|N
-Fifi|Unf|SSR+>UR
-Floaty|Inf|SR
-Flos|Inf|SSR
-Freesia|Bra|UR
-Frogella|Unf|SSR
-Future Maxim|Inf|SSR+>UR
-Gabrael|Inf|UR*
-Gale|Unf|SSR+>UR
-Geast|Dil|R
-Genos|Ins|SSR
-Giyu Tomioka|Bra|SSR+>UR
-Gray|Inf|SSR
-Grayce|Ins|SR
-Guarg|Bra|R
-Hakuren|Dil|SSR>UR
-Hattie|Inf|SSR>SSR+>UR*
-Hawker|Bra|R
-Healora|Bra|SSR
-Heracles|Bra|UR
-Hermes|Unf|UR
-Huowang Dade|Bra|SR
-Ida|Dil|SSR
-Inosuke Hashibira|Unf|SSR
-Iori|Unf|SSR
-Ira|Bra|SSR
-Ixchel|Ins|UR
-Jewlry|Dil|SSR
-Justitia|Ins|SR
-Kaity|Unf|R
-Kanna|Ins|SSR>SSR+>UR*
-Kaye|Dil|SSR
-Kazuma|Dil|SSR+
-Kerr & Bel & Ross|Ins|UR
-Knivi|Bra|N
-Kuku|Dil|SSR+>UR
-Lailah|Ins|SSR+>UR
-Leon|Bra|UR
-Lincale|Inf|R
-Linlang|Inf|SR>SSR+>UR
-Liona|Inf|SR>SSR+>UR
-Liz|Dil|SR
-Lokia|Dil|SSR+>UR
-Loya|Ins|SSR
-Lucoa|Inf|SR
-Lucoa|Inf|SSR
-Lula|Dil|SSR
-Luminus Valentine|Unf|SSR
-Lux|Ins|SSR
-Magellan|Ins|SSR
-Mammon|Bra|SSR
-Master Tongxuan|Dil|UR
-Maxim|Inf|N
-Meaden|Ins|R
-Mescal|Unf|SSR>UR
-Mia|Unf|UR
-Milim Nava|Unf|SSR>SSR+>UR*
-Mio|Ins|SSR
-Mirac|Ins|R
-Moork|Unf|SR
-Mulberry|Ins|SSR
-Mushimi|Ins|SSR>SSR+>UR*
-Myner|Unf|SSR
-Nalu|Ins|SR
-Narberal Gamma|Bra|SSR+
-Natsu|Dil|SSR>SSR+>UR*
-Nemetona|Dil|UR
-Neptune|Inf|UR
-Nierus|Inf|UR
-Nip|Unf|SSR
-Norn Greyrat|Dil|SSR
-Nyar|Bra|UR
-Onikiri|Ins|SSR
-Orivita|Unf|UR
-Paat|Bra|SSR
-Phanes|Ins|UR
-Phinphinx|Ins|UR
-Prim|Unf|R
-Pump|Unf|N
-Quenchy|Bra|SR
-Rani|Ins|SR
-Reir|Ins|N
-Rimuru Tempest|Unf|SSR>SSR+>UR*>LR
-Rissette|Unf|SR>SSR+>UR
-Rogile|Inf|R
-Roxy Migurdia|Inf|SSR>SSR+>UR*
-Rudeus Greyrat|Bra|SSR
-Ryu Lion|Unf|SSR
-Saitama|Dil|SSR
-Salvo|Bra|SSR
-Scorion|Bra|SR
-Searin|Unf|SR
-Serious Acedia|Dil|SSR+>UR
-Shiki|Inf|SSR
-Shinobu Kocho|Inf|SSR+>UR>LR
-Shlomo|Ins|SSR>UR*
-Spipi|Dil|SR
-Stephanie|Inf|SSR
-Stheno|Inf|SSR
-Sunna|Dil|UR
-Super|Inf|SSR
-Surena|Bra|SSR
-Tamamo|Ins|UR
-Tanjiro Kamado|Bra|SSR+
-Terrible Tornado|Bra|SSR>SSR+>UR>LR
-Thalia|Dil|SSR
-Thora|Unf|SSR+>UR
-Tigirl|Bra|SSR
-Tigris|Inf|SSR
-Tohru|Dil|UR
-Tomoe|Unf|SSR>UR
-Trady|Dil|SSR>UR
-Umbra|Inf|SSR+>UR
-Veldora Tempest|Ins|SSR+
-Verity|Bra|SSR+>UR
-Violetta|Dil|SSR>SSR+>UR*
-Witty|Unf|SR
-Woolf|Ins|R
-Zenitsu Agatsuma|Dil|SSR+`;
-const FAMILY_KNOWN = ["Crysta", "Hestia", "Liliruca Arde", "Mia", "Usuri", "Loo", "Diablo", "Mors"];
 
 const FACTION_CODES = { Dil: "Diligent", Ins: "Inspiring", Bra: "Brave", Inf: "Informed", Unf: "Unfettered" };
 const FACTIONS = Object.values(FACTION_CODES);
@@ -618,13 +469,33 @@ const RARITIES = ["N", "R", "SR", "SSR", "SSR+", "UR", "UR*", "LR"];
 const RARITY_VAR = { "N": "--r-n", "R": "--r-r", "SR": "--r-sr", "SSR": "--r-ssr", "SSR+": "--r-ssrp", "UR": "--r-ur", "UR*": "--r-urs", "LR": "--r-lr" };
 
 const norm = s => String(s ?? "").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]/g, "");
-const ROSTER = ROSTER_RAW.trim().split("\n").map(line => {
-  const [name, f, prog] = line.split("|");
-  const steps = prog.split(">");
-  return { name, faction: FACTION_CODES[f], rarity: steps[0], maxRarity: steps[steps.length - 1], prog: steps.join(" → ") };
-});
-const ROSTER_BY = new Map();
-for (const r of ROSTER) if (!ROSTER_BY.has(norm(r.name))) ROSTER_BY.set(norm(r.name), r);
+/* Fellow and family lists come from data/game.json, built from the fan wiki by tools/build_game_data.py */
+let ROSTER = [], FAMILY_ROSTER = [];
+const ROSTER_BY = new Map(), FAMILY_BY = new Map();
+let gameInfo = null;
+function useGameData(g) {
+  gameInfo = g;
+  const shape = e => {
+    const path = (e.path && e.path.length ? e.path : [e.rarity]).map(canonRarity);
+    return Object.assign({}, e, { faction: canonFaction(e.faction), rarity: path[0], maxRarity: path[path.length - 1], prog: path.join(" → ") });
+  };
+  ROSTER = (g.fellows || []).map(shape);
+  FAMILY_ROSTER = (g.family || []).map(shape);
+  ROSTER_BY.clear(); FAMILY_BY.clear();
+  for (const r of ROSTER) if (!ROSTER_BY.has(norm(r.name))) ROSTER_BY.set(norm(r.name), r);
+  for (const r of FAMILY_ROSTER) if (!FAMILY_BY.has(norm(r.name))) FAMILY_BY.set(norm(r.name), r);
+}
+function refFor(kind, item) {
+  const list = kind === "fellows" ? ROSTER : FAMILY_ROSTER;
+  if (item.ref) { const r = list.find(x => x.id === item.ref); if (r) return r; }
+  return (kind === "fellows" ? ROSTER_BY : FAMILY_BY).get(norm(item.name)) || null;
+}
+function skillApt(item) {
+  const ref = refFor("fellows", item); if (!ref || !ref.skills || !item.skills) return null;
+  let sum = 0, any = false;
+  for (const s of ref.skills) { const lv = parseNum(item.skills[s.id]); if (isFinite(lv) && s.per) { sum += lv * s.per; any = true; } }
+  return any ? sum : null;
+}
 
 /* ================= Helpers ================= */
 const $ = s => document.querySelector(s);
@@ -798,58 +669,126 @@ function sortBy(rows, key) {
     return numeric ? y - x : 0;
   });
 }
+const viewMode = { fellows: "cards", family: "cards" };
+const QCOLS = {
+  fellows: [["level", "Level"], ["aptitude", "Aptitude"], ["power", "Power"], ["stella", "Stella"]],
+  family: [["intimacy", "Intimacy"], ["blessing", "Blessing"], ["stella", "Stella"], ["blessed", "Blesses"]],
+};
+const removedCache = {};
+function ownedRefs(kind) { return new Set(S[kind].items.map(i => { const r = refFor(kind, i); return r ? r.id : null; }).filter(Boolean)); }
+function rosterRows(kind, includeMissing) {
+  let rows = S[kind].items.map(f => ({ ...f }));
+  if (includeMissing) {
+    const own = ownedRefs(kind);
+    rows = rows.concat((kind === "fellows" ? ROSTER : FAMILY_ROSTER).filter(r => !own.has(r.id)).map(r => ({ name: r.name, faction: r.faction, rarity: r.rarity, ref: r.id, _missing: true })));
+  }
+  return rows;
+}
 function charCard(r, kind) {
   const fc = `var(${FACTION_VAR[r.faction] || "--muted"})`, rc = `var(${RARITY_VAR[r.rarity] || "--line-2"})`;
-  const ref = kind === "fellows" ? ROSTER_BY.get(norm(r.name)) : null;
+  const ref = refFor(kind, r);
   const stats = kind === "fellows" ? [["Level", r.level], ["Aptitude", r.aptitude], ["Power", r.power]] : [["Intimacy", r.intimacy], ["Blessing", r.blessing], ["Stella", r.stella]];
-  const foot = r._missing ? `<span>Not recruited</span><span class="prog">${esc(ref ? ref.prog : "")}</span>`
-    : kind === "fellows" ? `<span>${blank(r.stella) ? "" : "Stella " + esc(r.stella)}</span><span>${esc(ago(r.updatedAt))}</span>`
-    : `<span>${blank(r.blessed) ? "" : "Blesses " + esc(r.blessed)}</span><span>${esc(ago(r.updatedAt))}</span>`;
-  const attr = r._missing ? `data-add-known="${esc(r.name)}"` : `data-edit="${kind}:${esc(r.id)}"`;
+  let foot;
+  if (r._missing) foot = `<span>${kind === "fellows" ? "Not recruited" : "Not in your family"}</span><span class="prog">${esc(ref ? ref.prog : "")}</span>`;
+  else if (kind === "fellows") { const sa = skillApt(r); foot = `<span>${[blank(r.stella) ? "" : "Stella " + esc(r.stella), sa == null ? "" : "Skills +" + fmtNum(sa) + " apt"].filter(Boolean).join(" · ")}</span><span>${esc(ago(r.updatedAt))}</span>`; }
+  else { const bl = !blank(r.blessed) ? r.blessed : ref && ref.blesses && ref.blesses.length ? ref.blesses.join(", ") : ""; foot = `<span>${bl ? "Blesses " + esc(bl) : ""}</span><span>${esc(ago(r.updatedAt))}</span>`; }
+  const attr = r._missing ? `data-add-known="${kind}:${esc(r.ref)}"` : `data-edit="${kind}:${esc(r.id)}"`;
   return `<button type="button" class="char ${r._missing ? "missing" : ""}" style="--fc:${fc};--rc:${rc}" ${attr} aria-label="${esc(r.name)}">
     <div class="char-top"><span class="avatar">${esc(initials(r.name))}</span><div class="char-name"><b>${esc(r.name)}</b><span>${rarityChip(r.rarity)}${factionTag(r.faction)}</span></div></div>
     ${r._missing ? "" : `<div class="char-stats">${stats.map(([l, v]) => `<div class="cs"><i>${l}</i><b>${show(v)}</b></div>`).join("")}</div>`}
     <div class="char-foot">${foot}</div></button>`;
 }
-function renderFellows() {
+function quickTable(kind, rows) {
+  const cols = QCOLS[kind];
+  return `<p class="muted small" style="margin:0 0 10px">Tick the ones you have and type their numbers. Changes save as you go. Press Tab to jump to the next box.</p>
+  <div class="table-scroll"><table class="quick"><thead><tr><th>Have</th><th>Name</th><th>Rarity</th>${cols.map(([, l]) => `<th>${l}</th>`).join("")}</tr></thead><tbody>
+  ${rows.map(r => {
+    const ref = refFor(kind, r);
+    const ph = kind === "family" && ref && ref.blesses && ref.blesses.length ? ref.blesses.join(", ") : "";
+    return `<tr data-q="${kind}" data-id="${esc(r.id || "")}" data-ref="${esc(r.ref || (ref ? ref.id : ""))}" data-name="${esc(r.name)}" class="${r._missing ? "q-missing" : ""}">
+      <td><input type="checkbox" class="q-own" ${r._missing ? "" : "checked"} aria-label="I have ${esc(r.name)}"></td>
+      <td class="qn"><b>${esc(r.name)}</b>${factionTag(r.faction)}</td>
+      <td><select class="q-f" data-f="rarity" aria-label="Rarity of ${esc(r.name)}">${RARITIES.map(x => `<option${x === r.rarity ? " selected" : ""}>${x}</option>`).join("")}</select></td>
+      ${cols.map(([f, l]) => `<td><input class="q-f" data-f="${f}" value="${esc(r._missing ? "" : r[f] ?? "")}" placeholder="${f === "blessed" ? esc(ph) : ""}" aria-label="${l} of ${esc(r.name)}"></td>`).join("")}</tr>`;
+  }).join("")}</tbody></table></div>`;
+}
+function renderFellowSummary() {
   const items = S.fellows.items;
-  fillSelect($("#f-faction"), "All factions", FACTIONS);
-  fillSelect($("#f-rarity"), "All rarities", RARITIES);
-  const owned = new Set(items.map(f => norm(f.name)));
-  const have = ROSTER.filter(r => owned.has(norm(r.name))).length;
+  const have = ownedRefs("fellows").size;
   const powers = items.map(f => parseNum(f.power)).filter(isFinite);
   const total = powers.reduce((a, b) => a + b, 0);
   const urUp = items.filter(f => RARITIES.indexOf(f.rarity) >= RARITIES.indexOf("UR")).length;
-  $("#fellow-pills").innerHTML = `<span class="pill"><b>${items.length}</b>recruited</span><span class="pill" style="--c:var(--muted)"><b>${have}/${ROSTER.length}</b>of the wiki roster</span><span class="pill"><b>${powers.length ? fmtNum(total) : "—"}</b>total power</span><span class="pill" style="--c:var(--gold)"><b>${urUp}</b>UR or higher</span>`;
+  $("#fellow-pills").innerHTML = `<span class="pill"><b>${items.length}</b>recruited</span><span class="pill" style="--c:var(--muted)"><b>${have}/${ROSTER.length || "—"}</b>of the wiki roster</span><span class="pill"><b>${powers.length ? fmtNum(total) : "—"}</b>total power</span><span class="pill" style="--c:var(--gold)"><b>${urUp}</b>UR or higher</span>`;
   const byF = FACTIONS.map(f => { const l = items.filter(x => x.faction === f); return { f, n: l.length, p: l.map(x => parseNum(x.power)).filter(isFinite).reduce((a, b) => a + b, 0) }; });
   const maxP = Math.max(1, ...byF.map(x => x.p));
   $("#fellow-factions").innerHTML = items.length ? byF.map(x => `<div class="fbar" style="--c:var(${FACTION_VAR[x.f]})"><span class="fac">${x.f}</span><div class="track"><div class="fill" style="width:${(x.p / maxP * 100).toFixed(1)}%"></div></div><span class="tnum">${x.n} · ${total ? Math.round(x.p / total * 100) + "%" : "—"}</span></div>`).join("")
-    : `<p class="muted small" style="margin:0">Your faction balance shows up once you import fellows.</p>`;
-
-  const q = norm($("#global-search").value), fac = $("#f-faction").value, rar = $("#f-rarity").value, showMissing = $("#f-missing").checked;
-  let rows = items.map(f => ({ ...f }));
-  if (showMissing) rows = rows.concat(ROSTER.filter(r => !owned.has(norm(r.name))).map(r => ({ name: r.name, faction: r.faction, rarity: r.rarity, _missing: true })));
-  rows = rows.filter(r => (!q || norm(r.name).includes(q)) && (!fac || r.faction === fac) && (!rar || r.rarity === rar));
-  sortBy(rows, $("#f-sort").value);
-  if (showMissing) rows.sort((a, b) => (a._missing ? 1 : 0) - (b._missing ? 1 : 0));
-  const g = $("#fellow-grid");
-  if (!items.length && !showMissing) { g.innerHTML = emptyState("i-sword", "var(--pink)", "No fellows yet", "Open your Fellows screen, start your phone's screen recorder and scroll slowly through the whole list. Then import the video here.", "fellows"); return; }
-  g.innerHTML = rows.length ? rows.map(r => charCard(r, "fellows")).join("") : `<p class="muted">No fellows match these filters.</p>`;
+    : `<p class="muted small" style="margin:0">Your faction balance shows up once you add fellows.</p>`;
 }
-function renderFamily() {
+function renderFamilySummary() {
   const items = S.family.items;
-  fillSelect($("#m-faction"), "All factions", FACTIONS);
   const sum = k => items.map(x => parseNum(x[k])).filter(isFinite).reduce((a, b) => a + b, 0);
   const has = k => items.some(x => isFinite(parseNum(x[k])));
-  $("#family-pills").innerHTML = `<span class="pill"><b>${items.length}</b>members</span><span class="pill"><b>${has("intimacy") ? fmtNum(sum("intimacy")) : "—"}</b>total Intimacy</span><span class="pill" style="--c:var(--gold)"><b>${has("blessing") ? fmtNum(sum("blessing")) : "—"}</b>total Blessing</span>`;
-  const g = $("#family-grid");
-  if (!items.length) { g.innerHTML = emptyState("i-heart", "var(--lilac)", "No family members yet", "Record your Family screen while you scroll through every member, or tap into a member's page while recording. Then import the video.", "family"); return; }
-  const q = norm($("#global-search").value), fac = $("#m-faction").value;
-  const rows = sortBy(items.filter(r => (!q || norm(r.name).includes(q)) && (!fac || r.faction === fac)).map(r => ({ ...r })), $("#m-sort").value);
-  g.innerHTML = rows.length ? rows.map(r => charCard(r, "family")).join("") : `<p class="muted">No family members match.</p>`;
+  $("#family-pills").innerHTML = `<span class="pill"><b>${items.length}</b>members</span><span class="pill" style="--c:var(--muted)"><b>${ownedRefs("family").size}/${FAMILY_ROSTER.length || "—"}</b>of the wiki list</span><span class="pill"><b>${has("intimacy") ? fmtNum(sum("intimacy")) : "—"}</b>total Intimacy</span><span class="pill" style="--c:var(--gold)"><b>${has("blessing") ? fmtNum(sum("blessing")) : "—"}</b>total Blessing</span>`;
 }
+function renderRoster(kind) {
+  const p = kind === "fellows" ? "f" : "m";
+  fillSelect($(`#${p}-faction`), "All factions", FACTIONS);
+  fillSelect($(`#${p}-rarity`), "All rarities", RARITIES);
+  const mode = viewMode[kind];
+  document.querySelectorAll(`[data-mode-for="${kind}"] button`).forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
+  $(`#${p}-missing-wrap`).hidden = mode === "quick";
+  $(`#${p}-sort`).hidden = mode === "quick";
+  const q = norm($("#global-search").value), fac = $(`#${p}-faction`).value, rar = $(`#${p}-rarity`).value;
+  const includeMissing = mode === "quick" || $(`#${p}-missing`).checked;
+  let rows = rosterRows(kind, includeMissing).filter(r => (!q || norm(r.name).includes(q)) && (!fac || r.faction === fac) && (!rar || r.rarity === rar));
+  if (mode === "quick") rows.sort((a, b) => (a._missing ? 1 : 0) - (b._missing ? 1 : 0) || String(a.name).localeCompare(String(b.name)));
+  else { sortBy(rows, $(`#${p}-sort`).value); if (includeMissing) rows.sort((a, b) => (a._missing ? 1 : 0) - (b._missing ? 1 : 0)); }
+  const g = $(kind === "fellows" ? "#fellow-grid" : "#family-grid");
+  g.classList.toggle("chars", mode === "cards");
+  if (mode === "cards" && !S[kind].items.length && !includeMissing) {
+    g.innerHTML = kind === "fellows"
+      ? emptyState("i-sword", "var(--pink)", "No fellows yet", "The fastest way to start is Quick edit: tick the fellows you have and type in their numbers. You can also paste rows from a spreadsheet or import a screen recording.", "fellows")
+      : emptyState("i-heart", "var(--lilac)", "No family members yet", "Use Quick edit to tick the family members you have and type their Intimacy and Blessing, or paste them from a spreadsheet.", "family");
+    return;
+  }
+  if (!rows.length) { g.innerHTML = `<p class="muted">Nothing matches these filters.</p>`; return; }
+  g.innerHTML = mode === "quick" ? quickTable(kind, rows) : rows.map(r => charCard(r, kind)).join("");
+}
+function renderFellows() { renderFellowSummary(); renderRoster("fellows"); }
+function renderFamily() { renderFamilySummary(); renderRoster("family"); }
 function emptyState(icon, color, title, text, kind) {
-  return `<div class="empty" style="grid-column:1/-1"><div class="orb" style="--c:${color}"><svg><use href="#${icon}"/></svg></div><strong>${title}</strong><p>${text}</p><button class="btn hot" type="button" data-open-import="${kind}"><svg><use href="#i-film"/></svg>Import a recording</button></div>`;
+  return `<div class="empty" style="grid-column:1/-1"><div class="orb" style="--c:${color}"><svg><use href="#${icon}"/></svg></div><strong>${title}</strong><p>${text}</p>
+    <div class="toolbar" style="justify-content:center"><button class="btn hot" type="button" data-set-mode="${kind}:quick">Open Quick edit</button><button class="btn" type="button" data-paste="${kind}">Paste from a spreadsheet</button><button class="btn" type="button" data-open-import="${kind}"><svg><use href="#i-film"/></svg>Import a recording</button></div></div>`;
+}
+function persistQuiet() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch { if (storageOk) toast("This browser is blocking storage, so changes won't be kept."); storageOk = false; }
+}
+function quickChange(el) {
+  const tr = el.closest("tr[data-q]"); if (!tr) return;
+  const kind = tr.dataset.q, list = S[kind].items;
+  let item = tr.dataset.id ? list.find(x => x.id === tr.dataset.id) : null;
+  const cacheKey = kind + ":" + (tr.dataset.ref || norm(tr.dataset.name));
+  if (el.classList.contains("q-own")) {
+    if (!el.checked) {
+      if (item) { removedCache[cacheKey] = item; S[kind].items = list.filter(x => x !== item); tr.dataset.id = ""; tr.classList.add("q-missing"); }
+      persistQuiet(); afterQuick(kind); return;
+    }
+    if (!item && removedCache[cacheKey]) { item = removedCache[cacheKey]; delete removedCache[cacheKey]; list.push(item); tr.dataset.id = item.id; tr.classList.remove("q-missing"); persistQuiet(); afterQuick(kind); return; }
+  }
+  if (!item) {
+    const ref = (kind === "fellows" ? ROSTER : FAMILY_ROSTER).find(r => r.id === tr.dataset.ref);
+    item = { id: newId(), name: tr.dataset.name, ref: ref ? ref.id : undefined, faction: ref ? ref.faction : null, rarity: ref ? ref.rarity : null, other: {} };
+    tr.querySelectorAll(".q-f").forEach(inp => { const v = inp.value.trim(); if (v && inp.dataset.f !== "rarity") item[inp.dataset.f] = v; });
+    list.push(item); tr.dataset.id = item.id; tr.querySelector(".q-own").checked = true; tr.classList.remove("q-missing");
+  }
+  if (el.classList.contains("q-f")) { const v = el.value.trim(); if (v) item[el.dataset.f] = v; else delete item[el.dataset.f]; }
+  item.updatedAt = new Date().toISOString();
+  S[kind].updatedAt = item.updatedAt;
+  persistQuiet(); afterQuick(kind);
+}
+function afterQuick(kind) {
+  if (kind === "fellows") renderFellowSummary(); else renderFamilySummary();
+  renderTips(); navCounts();
 }
 
 /* ================= Events ================= */
@@ -909,7 +848,7 @@ function buildTips() {
   const tips = [];
   const F = S.fellows.items, M = S.family.items, E = S.events.items, P = S.profile, now = Date.now();
   if (!F.length && !M.length && !(P.history || []).length) {
-    tips.push({ c: "var(--gold)", tag: "Start here", icon: "i-film", title: "Import your first recording", body: "<p>Begin with your Fellows list. Tips about upgrades and faction balance appear once the ledger knows your fellows.</p>", action: "fellows" });
+    tips.push({ c: "var(--gold)", tag: "Start here", icon: "i-film", title: "Add your fellows", body: "<p>Open Fellows, switch to Quick edit, tick the ones you have and type their numbers. Tips about upgrades, skills and faction balance appear once the ledger knows your fellows.</p>" });
     return tips;
   }
   const soon = E.filter(e => evStatus(e, now) === "soon" && !e.done);
@@ -927,7 +866,17 @@ function buildTips() {
     const top3 = sorted.slice(0, 3).reduce((a, f) => a + parseNum(f.power), 0);
     if (total && top3 / total > 0.6) tips.push({ c: "var(--gold)", tag: "Focus", icon: "i-sword", title: "Most of your power sits in three fellows", body: `<p>${sorted.slice(0, 3).map(f => esc(f.name)).join(", ")} hold ${Math.round(top3 / total * 100)}% of your fellow power. Strengthening them pays off fastest; raising the next few closes the gap if you need wider coverage.</p>` });
   }
-  const upgradable = F.map(f => ({ f, ref: ROSTER_BY.get(norm(f.name)) })).filter(x => x.ref && x.f.rarity && RARITIES.indexOf(x.f.rarity) >= 0 && RARITIES.indexOf(x.f.rarity) < RARITIES.indexOf(x.ref.maxRarity));
+  const withSkills = F.map(f => ({ f, ref: refFor("fellows", f) })).filter(x => x.ref && x.ref.skills && x.ref.skills.length && x.f.skills && Object.keys(x.f.skills).length);
+  if (withSkills.length) {
+    const picks = withSkills.sort((a, b) => (parseNum(b.f.power) || 0) - (parseNum(a.f.power) || 0)).slice(0, 5).map(({ f, ref }) => {
+      const open = ref.skills.filter(s => s.per && isFinite(parseNum(f.skills[s.id])) && (!s.cap || parseNum(f.skills[s.id]) < s.cap)).sort((a, b) => b.per - a.per)[0];
+      return open ? `<li><b>${esc(f.name)}</b>: ${esc(open.name)} (+${open.per} aptitude per level, now Lv ${esc(f.skills[open.id])})</li>` : "";
+    }).filter(Boolean);
+    if (picks.length) tips.push({ c: "var(--pink)", tag: "Skills", icon: "i-up", title: "Best skill slots to level next", body: `<p>For your strongest fellows, these unlocked skills give the most aptitude per level and are still below their base cap.</p><ul>${picks.join("")}</ul>` });
+  } else if (F.some(f => { const r = refFor("fellows", f); return r && r.skills && r.skills.length; })) {
+    tips.push({ c: "var(--sky)", tag: "Skills", icon: "i-sword", title: "Add skill levels for your top fellows", body: "<p>Open a fellow's card and type their skill levels. The ledger then shows which skill slot gives the most aptitude for your next upgrade.</p>" });
+  }
+  const upgradable = F.map(f => ({ f, ref: refFor("fellows", f) })).filter(x => x.ref && x.f.rarity && RARITIES.indexOf(x.f.rarity) >= 0 && RARITIES.indexOf(x.f.rarity) < RARITIES.indexOf(x.ref.maxRarity));
   if (upgradable.length) {
     upgradable.sort((a, b) => (parseNum(b.f.power) || 0) - (parseNum(a.f.power) || 0));
     tips.push({ c: "var(--pink)", tag: "Upgrade", icon: "i-up", title: `${upgradable.length} fellow${upgradable.length > 1 ? "s" : ""} can still rise in rarity`, body: `<p>Rarity upgrades cost Crystal Fragments and add 5 Aptitude per level, with milestones at Lv 20, 40 and 80.</p><ul>${upgradable.slice(0, 6).map(x => `<li><b>${esc(x.f.name)}</b>: ${esc(x.f.rarity)} → ${esc(x.ref.maxRarity)}</li>`).join("")}</ul>` });
@@ -955,7 +904,9 @@ function renderTips() {
 }
 
 function renderAll() {
-  renderProfile(); renderFellows(); renderFamily(); renderEvents(); renderTips();
+  renderProfile(); renderFellows(); renderFamily(); renderEvents(); renderTips(); navCounts();
+}
+function navCounts() {
   $("#nav-fellows").textContent = S.fellows.items.length;
   $("#nav-family").textContent = S.family.items.length;
   $("#nav-events").textContent = S.events.items.filter(e => evStatus(e) !== "ended").length;
@@ -1011,7 +962,13 @@ function editItem(kind, id, preset) {
   const ex = id ? list.find(x => x.id === id) : null, obj = ex || preset || {};
   const noun = { fellows: "fellow", family: "family member", events: "event" }[kind];
   const other = Object.entries(obj.other || {}).filter(([, v]) => !blank(v));
-  openSheet(sheetHead(ex ? esc(ex.name) : "Add " + noun) + `<form class="sheet-body" id="edit-form">${formHtml(fields, obj)}
+  const ref = kind === "events" ? null : refFor(kind, obj);
+  const skills = kind === "fellows" && ref && ref.skills ? ref.skills : [];
+  const skillHtml = skills.length ? `<div class="skills"><div class="skills-head"><h3>Skill slots</h3><span class="muted small">Type each skill's current level. Leave locked skills empty.</span><span class="sk-total">Aptitude from skills: <b id="sk-total">—</b></span></div>
+    <div class="table-scroll"><table><thead><tr><th>Skill</th><th>Unlocks at</th><th>Per level</th><th>Base cap</th><th>Level</th></tr></thead><tbody>
+    ${skills.map((s, i) => `<tr><td><b>${esc(s.name)}</b></td><td class="muted">${esc(s.unlock)}</td><td>+${s.per ?? "?"} apt</td><td>${s.cap ?? "—"}</td><td><input type="number" inputmode="numeric" min="0" id="sk-${i}" data-skill="${esc(s.id)}" data-per="${s.per || 0}" value="${esc((obj.skills || {})[s.id] ?? "")}" aria-label="Level of ${esc(s.name)}"></td></tr>`).join("")}
+    </tbody></table></div><p class="muted small" style="margin:0">Skill list from the fan wiki. Caps can be raised by bonds and events, so the base cap is a guide.</p></div>` : "";
+  openSheet(sheetHead(ex ? esc(ex.name) : "Add " + noun) + `<form class="sheet-body" id="edit-form">${formHtml(fields, obj)}${skillHtml}
     ${kind === "events" ? `<div class="form"><label class="wide" for="fm-left">Or set the end from the in-game countdown<input id="fm-left" placeholder="For example 3d 14h" autocomplete="off"></label></div>` : ""}
     ${other.length ? `<div><p class="muted small" style="margin:0 0 6px">Other stats read from your recordings</p><dl class="kv">${other.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl></div>` : ""}
     <p class="err" id="fm-err" hidden></p></form>
@@ -1021,12 +978,18 @@ function editItem(kind, id, preset) {
     const o = readForm(fields);
     if (kind === "events") { const left = parseRemaining($("#fm-left").value); if (left != null) { o.endsAt = new Date(Date.now() + left).toISOString(); if (!o.startsAt) o.startsAt = new Date().toISOString(); } }
     if (!o.name) { const e = $("#fm-err"); e.hidden = false; e.textContent = "Add a name first."; return; }
+    if (skills.length) { o.skills = {}; sheet.querySelectorAll("[data-skill]").forEach(inp => { if (inp.value.trim() !== "") o.skills[inp.dataset.skill] = inp.value.trim(); }); }
+    if (kind !== "events") { const r = refFor(kind, o) || ref; if (r && norm(r.name) === norm(o.name)) o.ref = r.id; }
     if (ex) Object.assign(ex, o, kind === "events" ? {} : { updatedAt: new Date().toISOString() });
     else list.push(Object.assign({ id: newId() }, kind === "events" ? { done: false } : { other: {}, updatedAt: new Date().toISOString() }, o));
     save(kind); closeSheet(); toast(ex ? "Saved." : `Added ${o.name}.`);
   });
   const del = $("#fm-del");
   if (del) armDelete(del, "Remove", () => { S[kind].items = list.filter(x => x !== ex); save(kind); closeSheet(); toast(`Removed ${ex.name}.`); });
+  if (skills.length) {
+    const total = () => { let s = 0, any = false; sheet.querySelectorAll("[data-skill]").forEach(i => { const v = parseFloat(i.value); if (isFinite(v)) { s += v * (+i.dataset.per); any = true; } }); $("#sk-total").textContent = any ? "+" + s.toLocaleString() : "—"; };
+    sheet.querySelectorAll("[data-skill]").forEach(i => i.addEventListener("input", total)); total();
+  }
 }
 function editProfile() {
   openSheet(sheetHead("Edit profile") + `<form class="sheet-body" id="edit-form">${formHtml(FIELDS.profile, S.profile.current || {})}<label class="check"><input type="checkbox" id="fm-snap" checked>Add this as a new reading on the growth chart</label></form>
@@ -1222,7 +1185,7 @@ function nameIndex(kind) {
   const names = new Map();
   const add = n => { const k = norm(n); if (k.length >= 3 && !names.has(k)) names.set(k, n); };
   if (kind === "fellows") { ROSTER.forEach(r => add(r.name)); S.fellows.items.forEach(f => add(f.name)); }
-  else { FAMILY_KNOWN.forEach(add); S.family.items.forEach(f => add(f.name)); ROSTER.forEach(r => add(r.name)); }
+  else { FAMILY_ROSTER.forEach(r => add(r.name)); S.family.items.forEach(f => add(f.name)); }
   return [...names.entries()].map(([k, n]) => ({ k, n, re: k.length <= 4 ? new RegExp("(^|[^a-z])" + escRe(n.toLowerCase()) + "([^a-z]|$)", "i") : null }));
 }
 function findName(text, idx) {
@@ -1301,7 +1264,7 @@ function parsePages(kind, pages) {
   return order.map(({ key, name }) => {
     const o = Object.assign({ name }, winners(found.get(key) || {}));
     if (o.rarity) o.rarity = canonRarity(o.rarity);
-    if (kind === "fellows") { const ref = ROSTER_BY.get(key); if (ref) { o.name = ref.name; o.faction = o.faction || ref.faction; o.rarity = o.rarity || ref.rarity; } }
+    const ref = (kind === "fellows" ? ROSTER_BY : FAMILY_BY).get(key); if (ref) { o.name = ref.name; o.faction = o.faction || ref.faction; o.rarity = o.rarity || ref.rarity; }
     return o;
   });
 }
@@ -1329,7 +1292,8 @@ function parseEvents(pages) {
 function showReview(kind, data, nFrames, pages) {
   const st = $("#imp-stage");
   const rawText = pages.map((p, i) => `— Screen ${i + 1} —\n` + p.lines.map(l => l.text).join("\n")).join("\n\n");
-  const raw = `<details class="raw"><summary>Show all the text that was read</summary><pre>${esc(rawText)}</pre></details>`;
+  const raw = pages.length ? `<details class="raw"><summary>Show all the text that was read</summary><pre>${esc(rawText)}</pre></details>` : "";
+  const fromWhere = pages.length ? `in ${nFrames} screen${nFrames === 1 ? "" : "s"}` : "in your pasted rows";
   if (kind === "profile") {
     const f = FIELDS.profile;
     st.innerHTML = `<p style="margin:0"><b>Here's what was read from ${nFrames} screen${nFrames === 1 ? "" : "s"}.</b> Fix anything that's wrong, then save.</p>
@@ -1354,8 +1318,8 @@ function showReview(kind, data, nFrames, pages) {
     $("#imp-retry").onclick = () => openImport(kind); return;
   }
   const counts = { new: 0, chg: 0, same: 0 }; rows.forEach(r => counts[r.status]++);
-  st.innerHTML = `<p style="margin:0"><b>Found ${rows.length} ${kind === "family" ? "family members" : kind} in ${nFrames} screen${nFrames === 1 ? "" : "s"}.</b> ${counts.new} new, ${counts.chg} updated, ${counts.same} unchanged.</p>
-    <p class="muted small" style="margin:0">The reader can misread small text. Check the numbers, fix anything in the boxes, and untick rows that are wrong.</p>
+  st.innerHTML = `<p style="margin:0"><b>Found ${rows.length} ${kind === "family" ? "family members" : kind} ${fromWhere}.</b> ${counts.new} new, ${counts.chg} updated, ${counts.same} unchanged.</p>
+    <p class="muted small" style="margin:0">${pages.length ? "The reader can misread small text. Check the numbers, fix anything in the boxes, and untick rows that are wrong." : "Check the rows, fix anything in the boxes, and untick any you don't want to save."}</p>
     <div class="table-scroll"><table><thead><tr><th><input type="checkbox" id="rv-all" checked aria-label="Select all"></th><th>Name</th><th></th>${cols.map(([, l]) => `<th>${l}</th>`).join("")}</tr></thead>
     <tbody>${rows.map((r, i) => `<tr data-row="${i}"><td><input type="checkbox" class="rv-on" ${r.status === "same" ? "" : "checked"} aria-label="Save this row"></td>
       <td><input class="name-in" data-f="name" value="${esc(r.it.name)}" aria-label="Name"></td><td><span class="badge ${r.status}">${r.status === "new" ? "New" : r.status === "chg" ? "Update" : "Same"}</span></td>
@@ -1372,6 +1336,7 @@ function showReview(kind, data, nFrames, pages) {
       if (blank(o.name)) return;
       if (kind === "events") { const left = parseRemaining(o.timeRemaining); if (left != null) o.endsAt = new Date(Date.now() + left).toISOString(); delete o.timeRemaining; }
       if (o.faction) o.faction = canonFaction(o.faction); if (o.rarity) o.rarity = canonRarity(o.rarity);
+      if (kind !== "events") { const ref = refFor(kind, o); if (ref) { o.ref = ref.id; o.name = ref.name; o.faction = o.faction || ref.faction; o.rarity = o.rarity || ref.rarity; } }
       const ex = list.find(x => norm(x.name) === norm(o.name));
       if (ex) { Object.assign(ex, o); if (kind !== "events") ex.updatedAt = now; }
       else list.push(Object.assign({ id: newId() }, kind === "events" ? { done: false, startsAt: now } : { other: {}, updatedAt: now }, o));
@@ -1381,15 +1346,67 @@ function showReview(kind, data, nFrames, pages) {
   };
 }
 
+/* ================= Paste from a spreadsheet ================= */
+const PASTE_KEYS = { fellows: ["name", "level", "aptitude", "power", "stella"], family: ["name", "intimacy", "blessing", "stella"] };
+const HEADER_WORDS = { name: ["name", "fellow", "member", "family"], level: ["level", "lv", "lvl"], aptitude: ["aptitude", "apt"], power: ["power", "pwr"], stella: ["stella", "star", "stars"], intimacy: ["intimacy"], blessing: ["blessing", "bless"], rarity: ["rarity"], faction: ["faction", "type"], blessed: ["blesses", "blessed"] };
+function splitRow(line) {
+  if (line.includes("\t")) return line.split("\t");
+  if (line.includes(";")) return line.split(";");
+  if (line.includes("|")) return line.split("|");
+  return line.split(/\s*,\s+|\s{2,}/);
+}
+function parsePaste(kind, text) {
+  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  if (!lines.length) return [];
+  let keys = PASTE_KEYS[kind];
+  const first = splitRow(lines[0]).map(c => norm(c));
+  const mapped = first.map(c => Object.keys(HEADER_WORDS).find(k => HEADER_WORDS[k].includes(c)) || null);
+  if (mapped.includes("name")) { keys = mapped; lines.shift(); }
+  const idx = nameIndex(kind);
+  return lines.map(line => {
+    const cells = splitRow(line).map(c => c.trim());
+    const o = {};
+    keys.forEach((k, i) => { if (k && !blank(cells[i])) o[k] = cells[i]; });
+    if (blank(o.name)) return null;
+    const known = findName(o.name, idx); if (known) o.name = known;
+    return o;
+  }).filter(Boolean);
+}
+function openPaste(kind) {
+  const keys = PASTE_KEYS[kind].map(k => k[0].toUpperCase() + k.slice(1));
+  const noun = kind === "fellows" ? "fellow" : "family member";
+  openSheet(sheetHead("Paste from a spreadsheet") + `<div class="sheet-body" id="imp-body">
+    <p style="margin:0">Copy rows from Google Sheets, Excel or a notes app and paste them below, one ${noun} per line. Put the columns in this order: <b>${keys.join(", ")}</b>. A header row with those names also works, in any order. Leave a column empty if you don't know it.</p>
+    <div class="form"><label class="wide" for="paste-box">Your rows<textarea id="paste-box" style="min-height:200px;font-family:ui-monospace,Consolas,monospace" placeholder="${kind === "fellows" ? "Ais Wallenstein\t120\t3450\t412M\t5\nAqua\t110\t2980\t365M\t3" : "Crysta\t1200\t950\t3\nHestia\t800\t640\t1"}"></textarea></label></div>
+    <div class="toolbar"><button class="btn hot" type="button" id="paste-go">Check these rows</button><span class="err" id="paste-err" hidden></span></div>
+    <div id="imp-stage" hidden></div></div>`);
+  $("#paste-go").onclick = () => {
+    const data = parsePaste(kind, $("#paste-box").value);
+    if (!data.length) { const e = $("#paste-err"); e.hidden = false; e.textContent = "No rows with a name were found. Paste at least one line that starts with a name."; return; }
+    sheet.querySelectorAll("#imp-body > p, #imp-body > .form, #imp-body > .toolbar").forEach(el => el.hidden = true);
+    $("#imp-stage").hidden = false;
+    showReview(kind, data, 0, []);
+  };
+}
+
 /* ================= Wiring ================= */
 document.addEventListener("click", e => {
   const t = e.target.closest("button, [data-open-import]"); if (!t) return;
   if (t.matches("[data-close]")) return closeSheet();
   if (t.hasAttribute("data-open-import")) return openImport(t.getAttribute("data-open-import") || undefined);
   if (t.dataset.edit) { const [kind, id] = t.dataset.edit.split(":"); return editItem(kind, id); }
-  if (t.dataset.addKnown) { const r = ROSTER_BY.get(norm(t.dataset.addKnown)); return editItem("fellows", null, { name: r.name, faction: r.faction, rarity: r.rarity }); }
+  if (t.dataset.addKnown) {
+    const [kind, refId] = t.dataset.addKnown.split(":");
+    const r = (kind === "family" ? FAMILY_ROSTER : ROSTER).find(x => x.id === refId);
+    return editItem(kind, null, r ? { name: r.name, faction: r.faction, rarity: r.rarity, ref: r.id } : {});
+  }
+  if (t.dataset.paste) return openPaste(t.dataset.paste);
+  if (t.dataset.setMode) { const [kind, mode] = t.dataset.setMode.split(":"); viewMode[kind] = mode; return kind === "fellows" ? renderFellows() : renderFamily(); }
+  const seg = t.closest("[data-mode-for]");
+  if (seg && t.dataset.mode) { const kind = seg.dataset.modeFor; viewMode[kind] = t.dataset.mode; return kind === "fellows" ? renderFellows() : renderFamily(); }
 });
 document.addEventListener("change", e => {
+  if (e.target.matches(".q-own, .q-f")) return quickChange(e.target);
   const id = e.target.dataset && e.target.dataset.done;
   if (id) { const ev = S.events.items.find(x => x.id === id); if (ev) { ev.done = e.target.checked; save("events"); } }
 });
@@ -1399,7 +1416,7 @@ $("#btn-add-family").onclick = () => editItem("family", null);
 $("#btn-add-event").onclick = () => editItem("events", null);
 $("#live-pill").onclick = () => { evFilter = "live"; location.hash = "#events"; renderEvents(); };
 ["#f-faction", "#f-rarity", "#f-sort", "#f-missing"].forEach(s => $(s).addEventListener("input", renderFellows));
-["#m-faction", "#m-sort"].forEach(s => $(s).addEventListener("input", renderFamily));
+["#m-faction", "#m-rarity", "#m-sort", "#m-missing"].forEach(s => $(s).addEventListener("input", renderFamily));
 $("#global-search").addEventListener("input", () => {
   const h = location.hash.replace("#", "");
   if (h !== "fellows" && h !== "family") location.hash = "#fellows";
@@ -1411,6 +1428,10 @@ $("#growth-metric").addEventListener("click", e => { const b = e.target.closest(
 load();
 route();
 renderAll();
+fetch("data/game.json")
+  .then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)))
+  .then(g => { useGameData(g); renderAll(); })
+  .catch(() => toast("Couldn't load the fellow and family lists. Reload the page to try again."));
 $("#clock").textContent = new Date().toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit", second: "2-digit" });
 </script>
 </body>
