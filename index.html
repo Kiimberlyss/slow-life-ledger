@@ -1504,6 +1504,8 @@ function cleanNum(v) {
   if (/^\d+(?:\.\d+)?\s?(?:[kmbtq]|[a-z]{2})$/i.test(v)) return v.replace(/\s/g, "");
   return groupedNum(v);
 }
+// "Archdemon D III"; the reader often turns the I's into T, l or 1, or runs "D III" together
+const RANK_RE = /\b([A-Z][a-z]{3,}(?:\s+[A-Z][a-z]+){0,2})\s+([A-Z])\s*([IVXTl1|]{1,4})(?![A-Za-z0-9])/;
 const DETAIL_RE = /\b(?:cultivate|family\s*training)\b/i;
 const POPUP_RE = /power\s*details?|bond\s*detail|total\s*apt|level\s*cap|stella\s*level|current\s*bond/i;
 async function refineFrame(worker, bmp, p, kind) {
@@ -1516,7 +1518,7 @@ async function refineFrame(worker, bmp, p, kind) {
       const ws = lineWords(l);
       for (let i = 0; i < ws.length; i++) {
         if (!/^[A-Z][a-z]{3,}$/.test(ws[i].t)) continue;
-        if (!/^[A-Z][A-Za-z']+(?:\s+[A-Z][A-Za-z']*){0,2}\s+[IVX]{1,4}\b/.test(ws.slice(i, i + 4).map(w => w.t).join(" "))) continue;
+        if (!RANK_RE.test(ws.slice(i, i + 4).map(w => w.t).join(" "))) continue;
         const b = toB(ws[i].b), h = b.y1 - b.y0, c = (b.y0 + b.y1) / 2;
         const v = await readNumber(worker, bmp, { x0: b.x0 - 3.1 * h, x1: b.x0 - 1.1 * h, y0: c - 0.75 * h, y1: c + 0.75 * h }, t => /^\d{1,3}$/.test(t) && +t > 0 ? String(+t) : null, YELLOW_TEXT);
         if (v) { p.extra.level = v; break found; }
@@ -1550,8 +1552,17 @@ async function refineFrame(worker, bmp, p, kind) {
     }
   }
 }
+/* Screenshots come in every size. Scale each one to the same width first so the reader sees text at the size
+   it was tuned on, whatever the phone. */
+const FRAME_W = 911;   // the width the reader was tuned and checked on
+async function frameBitmap(blob) {
+  const b = await createImageBitmap(blob);
+  if (Math.abs(b.width - FRAME_W) < 20) return b;
+  try { const r = await createImageBitmap(b, { resizeWidth: FRAME_W, resizeHeight: Math.round(b.height * FRAME_W / b.width), resizeQuality: "high" }); if (b.close) b.close(); return r; }
+  catch { return b; }
+}
 async function readFrame(worker, blob, signal, kind) {
-  const bmp = await createImageBitmap(blob);
+  const bmp = await frameBitmap(blob);
   try {
     const full = prepForOcr(bmp), sc = full.sc;
     await worker.setParameters({ tessedit_pageseg_mode: "11" });
@@ -1708,8 +1719,10 @@ function parseProfile(pages) {
     const listScreen = p.lines.flatMap(l => levelHits(l)).length >= 2;   // a fellow list: its Lv. numbers aren't the player's level
     for (const t of texts) {
       const earn = t.match(new RegExp(NUM + "\\s*/\\s*s\\b", "i")); if (earn) put("earnings", earn[1], 2);   // "11.21T/s"
-      const rank = t.match(/(?:^|[^0-9A-Za-z])([0-9SOo]{1,3})[^A-Za-z0-9]{0,3}\s*([A-Z][A-Za-z']+(?:\s+[A-Z][A-Za-z']*){0,3}\s+[IVX]{1,4})\b/);  // "54 Archdemon D III" (often read "(S4)>")
-      if (rank && /\d/.test(rank[1])) { const lv = fixDigits(rank[1]); if (/^\d+$/.test(lv)) { put("level", String(+lv), 2); put("title", rank[2]); } }
+      // Rank: "Archdemon D III". The level number beside it is read close up (refineFrame); read along with
+      // the line it comes out as "4»" or "(S4)" too often to trust.
+      const rank = t.match(RANK_RE);
+      if (rank) put("title", `${rank[1]} ${rank[2]} ${rank[3].replace(/[Tl1|]/g, "I")}`, rank[0].includes(rank[2] + " ") ? 1.5 : 0.5);
 
       const lv = listScreen ? [] : levelHits({ text: t }); if (lv.length && /\b(?:lv|lvl|level)\b/i.test(t)) put("level", lv[0].lv);
     }
@@ -1724,6 +1737,15 @@ function parseProfile(pages) {
       }
       const words = []; for (const w of rest.replace(/^[\s|:.,]+/, "").split(/\s+/)) { if (!/^[\w.'-]{2,}$/.test(w) || /^\d+$/.test(w)) break; words.push(w); }
       if (words.length) put("name", words.slice(0, 3).join(" "), 2);
+    }
+    // The VIP badge often doesn't read. The name plate is the left one on the row just below the rank.
+    const rankLine = p.lines.find(l => RANK_RE.test(l.text));
+    if (rankLine) {
+      const h = lh(rankLine);
+      for (const l of p.lines) {
+        const dy = cyb(l.b) - cyb(rankLine.b), t = l.text.replace(/^[^\w]+|[^\w.'-]+$/g, "");
+        if (dy > h * 1.5 && dy < h * 6 && cx(l.b) > p.w * 0.12 && cx(l.b) < p.w * 0.45 && /^[\w.'-]{2,16}(?: [\w.'-]{2,16}){0,2}$/.test(t) && !/^\d+$/.test(t) && !/V[I1l|]P/.test(t)) put("name", t);
+      }
     }
     const st = Object.assign(pairStats(p.lines, ["power", "earnings"]), readStats(all, listScreen ? ["power", "earnings"] : ["level", "power", "earnings"]));
     for (const [k, v] of Object.entries(st)) put(k, v);
