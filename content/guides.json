@@ -1,0 +1,30 @@
+{
+  "_help": "The Guides list. Each guide is a Markdown file in content/guides/. Add \"draft\": true to hide one from everyone except editors. See content/README.md.",
+  "guides": [
+    {
+      "slug": "stamina-events",
+      "title": "Planning a stamina event",
+      "summary": "How to read the milestone tables, gem packs and the ways to get a UR on the Stamina page.",
+      "file": "content/guides/stamina-events.md",
+      "tags": ["Events", "Stamina"],
+      "updated": "2026-11-07"
+    },
+    {
+      "slug": "using-the-site",
+      "title": "Using Slow Life Ledger",
+      "summary": "What each page is for, and how to keep your own ledger of fellows and family.",
+      "file": "content/guides/using-the-site.md",
+      "tags": ["Start here"],
+      "updated": "2026-11-07"
+    },
+    {
+      "slug": "editing-the-site",
+      "title": "Editing the site",
+      "summary": "For editors: how to add reminders, guides, tabs and refresh the stamina tables.",
+      "file": "content/guides/editing-the-site.md",
+      "tags": ["Editors"],
+      "updated": "2026-11-07",
+      "draft": true
+    }
+  ]
+}

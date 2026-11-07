@@ -1,0 +1,118 @@
+/* Styles for Home, Stamina, Guides, Wiki, Markdown pages and the profile. Colours come from the tokens in style.css. */
+
+.stack { display: grid; gap: 18px; align-content: start; min-width: 0; }
+.hero-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: space-between; }
+.intro p { margin: 0 0 6px; color: var(--muted); max-width: 70ch; }
+.page-top { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.edit-btn { border-style: dashed; }
+.draft { display: inline-block; margin-left: 6px; padding: 0 7px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; color: var(--muted); border: 1px dashed var(--line-2); vertical-align: middle; }
+.small { font-size: 0.86rem; }
+
+/* ---------- My ledger sub-tabs ---------- */
+.subnav { display: flex; gap: 6px; flex-wrap: wrap; }
+.subnav a { display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 99px; text-decoration: none; color: var(--ink); font-weight: 600; font-size: 0.9rem; background: var(--panel); box-shadow: var(--shadow); }
+.subnav a svg { width: 16px; height: 16px; color: var(--c); }
+.subnav a[aria-current="page"] { background: var(--ink); color: var(--bg); }
+.subnav a[aria-current="page"] svg { color: var(--bg); }
+.subnav .count { font-size: 0.72rem; color: var(--muted); background: var(--panel-2); border-radius: 99px; padding: 0 7px; }
+.subnav a[aria-current="page"] .count { background: color-mix(in srgb, var(--bg) 20%, transparent); color: var(--bg); }
+
+/* ---------- Home ---------- */
+.rem-group { display: grid; gap: 10px; margin-bottom: 18px; }
+.rem-title { font-size: 1.2rem; }
+.rems { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.rem { display: flex; gap: 12px; padding: 16px; align-items: flex-start; border-left: 4px solid var(--c); }
+.rem-main { display: grid; gap: 3px; min-width: 0; }
+.rem h3 { font-size: 1.1rem; }
+.rem-when { font-size: 0.84rem; color: var(--muted); }
+.rem-when b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.rem-note { font-size: 0.9rem; color: var(--muted); overflow-wrap: anywhere; }
+.live-dot { display: inline-block; margin-left: 6px; padding: 0 7px; border-radius: 99px; font-size: 0.7rem; color: var(--on-accent); background: var(--mint); }
+.link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.link-card { display: flex; gap: 12px; align-items: center; padding: 16px; text-decoration: none; color: var(--ink); transition: transform 0.12s; }
+.link-card:hover { transform: translateY(-2px); }
+.link-card > span:last-child { display: grid; gap: 2px; }
+
+/* ---------- Stamina ---------- */
+.picker { display: flex; gap: 6px; flex-wrap: wrap; }
+.pick { padding: 6px 12px; border-radius: 99px; background: var(--panel); border: 1px solid var(--line-2); color: var(--ink); text-decoration: none; font-size: 0.86rem; font-weight: 600; }
+.pick:hover { border-color: var(--c); }
+.pick[aria-current="page"] { background: var(--c); border-color: var(--c); color: var(--on-accent); }
+.st-intro p { margin: 0 0 8px; color: var(--muted); max-width: 80ch; }
+.st-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; align-items: start; }
+.st-sub { margin: 0 0 8px; }
+.st-packs, .st-block { display: grid; gap: 10px; }
+.st-block h4 { font-size: 1rem; }
+.table-scroll.tall { max-height: 520px; overflow-y: auto; }
+table.data td, table.data th { padding: 7px 10px; border-top: 1px solid var(--line); }
+table.data thead th { position: sticky; top: 0; z-index: 1; }
+table.data tbody th { background: transparent; color: var(--ink); font-size: 0.86rem; white-space: normal; min-width: 140px; }
+table.data td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.data td.neg { color: var(--coral); font-weight: 600; }
+table.data tbody tr:nth-child(even) { background: var(--panel-2); }
+.ways { display: grid; gap: 8px; }
+.ways details { border: 1px solid var(--line); border-radius: 12px; padding: 4px 12px; background: var(--panel); }
+.ways details[open] { padding-bottom: 12px; }
+.way-flat { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: flex; gap: 10px; flex-wrap: wrap; align-items: baseline; font-size: 0.95rem; }
+.way-flat .muted { font-size: 0.86rem; }
+.ways summary { cursor: pointer; padding: 8px 0; display: flex; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+.ways summary .muted { font-size: 0.86rem; }
+.ways details > .table-scroll { margin-top: 6px; }
+
+/* ---------- Guides and Markdown pages ---------- */
+.guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.guide-card { padding: 18px; display: grid; gap: 6px; align-content: start; text-decoration: none; color: var(--ink); transition: transform 0.12s; }
+.guide-card:hover { transform: translateY(-2px); }
+.guide-card h3 { font-size: 1.2rem; }
+.guide-card p { margin: 0; }
+.prose { padding: 22px clamp(18px, 4vw, 40px); max-width: 860px; overflow-wrap: anywhere; }
+.prose h1 { font-size: clamp(1.7rem, 4vw, 2.2rem); margin-bottom: 12px; }
+.prose h2 { font-size: 1.4rem; margin: 26px 0 8px; }
+.prose h3 { font-size: 1.15rem; margin: 20px 0 6px; }
+.prose p, .prose li { color: var(--ink); max-width: 72ch; }
+.prose ul, .prose ol { padding-left: 22px; }
+.prose code { background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; padding: 1px 5px; font-size: 0.88em; }
+.prose pre { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; overflow-x: auto; }
+.prose pre code { border: 0; padding: 0; background: none; }
+.prose blockquote { margin: 14px 0; padding: 10px 16px; border-left: 4px solid var(--gold); background: color-mix(in srgb, var(--gold) 10%, var(--panel)); border-radius: 0 10px 10px 0; }
+.prose blockquote p { margin: 0; }
+.prose table { margin: 12px 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.prose td, .prose th { padding: 8px 10px; border-top: 1px solid var(--line); }
+.prose img { border-radius: 10px; }
+
+/* ---------- Wiki ---------- */
+.wiki-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+.wiki-card { display: flex; gap: 12px; align-items: center; padding: 12px 14px; text-decoration: none; color: var(--ink); border-left: 4px solid var(--c); transition: transform 0.12s; }
+.wiki-card:hover { transform: translateY(-2px); }
+.wiki-text { display: grid; gap: 2px; min-width: 0; }
+.wiki-mono { width: 44px; height: 44px; flex: none; border-radius: 12px; display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; color: var(--c); background: color-mix(in srgb, var(--c) 14%, var(--panel)); }
+.wiki-mono.big { width: 72px; height: 72px; border-radius: 18px; font-size: 1.6rem; }
+.wiki-tags { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; margin-top: 3px; }
+.own { font-size: 0.7rem; font-weight: 700; color: var(--mint); }
+.wiki-hero { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; padding: 18px; border-left: 5px solid var(--c); }
+.wiki-hero > div:nth-child(2) { flex: 1 1 240px; display: grid; gap: 2px; }
+.wiki-hero h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); }
+.wiki-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.link-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.link-chips a, .link-chips span { padding: 4px 11px; border-radius: 99px; background: var(--panel-2); border: 1px solid var(--line-2); text-decoration: none; color: var(--ink); font-size: 0.86rem; font-weight: 600; }
+.link-chips a:hover { border-color: var(--lilac); }
+
+/* ---------- Profile ---------- */
+.profile-card { display: flex; gap: clamp(16px, 4vw, 32px); padding: 22px; flex-wrap: wrap; align-items: flex-start; }
+.avatar-wrap { display: grid; gap: 6px; justify-items: center; }
+.avatar-btn { position: relative; border: 0; padding: 0; background: none; cursor: pointer; border-radius: 50%; }
+.avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; display: grid; place-items: center; }
+.avatar-lg { width: 128px; height: 128px; border: 4px solid var(--panel); box-shadow: 0 0 0 3px var(--gold); }
+.avatar-blank { background: color-mix(in srgb, var(--gold) 18%, var(--panel)); color: var(--gold); font-family: var(--font-display); font-weight: 700; font-size: 2.6rem; }
+.avatar-blank svg { width: 46%; height: 46%; }
+.avatar-cam { position: absolute; right: 2px; bottom: 2px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--bg); border: 3px solid var(--panel); }
+.avatar-cam svg { width: 18px; height: 18px; }
+.avatar-btn:hover .avatar-cam { background: var(--mint); color: var(--on-accent); }
+.profile-main { flex: 1 1 320px; display: grid; gap: 14px; min-width: 0; }
+.profile-main h2 { font-size: clamp(1.6rem, 4vw, 2.1rem); }
+.wide-stat { grid-column: 1 / -1; }
+
+@media (max-width: 560px) {
+  .profile-card { justify-content: center; }
+  .rems, .wiki-grid, .guide-grid, .link-grid { grid-template-columns: 1fr; }
+}

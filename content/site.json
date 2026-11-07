@@ -1,0 +1,16 @@
+{
+  "_help": "The site's menu and settings. Each nav entry is a tab. type: home, stamina, guides, wiki, ledger, or page (a Markdown file, set with \"file\"). icon: home, bolt, book, wiki, user, bell, sprout, heart, sword, cal, bulb. See content/README.md.",
+  "repo": "Kiimberlyss/slow-life-ledger",
+  "branch": "main",
+  "editors": ["fYcjUfUjDFMQZTu1L3f0xoGq3PI2"],
+  "nav": [
+    { "id": "home", "label": "Home", "icon": "home", "type": "home" },
+    { "id": "stamina", "label": "Stamina", "icon": "bolt", "type": "stamina" },
+    { "id": "guides", "label": "Guides", "icon": "book", "type": "guides" },
+    { "id": "wiki", "label": "Wiki", "icon": "wiki", "type": "wiki" },
+    { "id": "me", "label": "My ledger", "icon": "user", "type": "ledger" }
+  ],
+  "links": [
+    { "label": "Fan wiki (zik-ascend)", "url": "https://zik-ascend.github.io/isl-tools/wiki/" }
+  ]
+}

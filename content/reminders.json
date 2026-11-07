@@ -1,0 +1,41 @@
+{
+  "_help": "Reminders on the Home page. Times are UTC (end with Z). type: maintenance, update, event, note, daily, weekly. Add \"draft\": true to hide one from everyone except editors. Past one-off reminders hide themselves. See content/README.md.",
+  "items": [
+    {
+      "title": "Example: server maintenance",
+      "type": "maintenance",
+      "start": "2026-11-12T02:00:00Z",
+      "end": "2026-11-12T05:00:00Z",
+      "note": "Replace this with the time from the game's announcement, then remove the draft line.",
+      "draft": true
+    },
+    {
+      "title": "Example: what's coming next",
+      "type": "update",
+      "start": "2026-11-20T00:00:00Z",
+      "note": "New banner, new event, a patch: anything worth knowing about ahead of time.",
+      "draft": true
+    },
+    {
+      "title": "Example: daily reset",
+      "type": "daily",
+      "time": "00:00",
+      "note": "Set this to the game's daily reset time in UTC.",
+      "draft": true
+    },
+    {
+      "title": "Example: weekly reset",
+      "type": "weekly",
+      "day": "Monday",
+      "time": "00:00",
+      "note": "Set this to the weekly reset in UTC.",
+      "draft": true
+    },
+    {
+      "title": "Example: pinned note",
+      "type": "note",
+      "note": "A note with no time stays pinned until you remove it. You can use **bold** and [links](https://zik-ascend.github.io/isl-tools/wiki/).",
+      "draft": true
+    }
+  ]
+}

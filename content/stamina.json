@@ -1,0 +1,8245 @@
+{
+ "source": "https://docs.google.com/spreadsheets/d/1Yc0zwTUAS1y9-Rguju0jEd2Aex5s0Z6KYbM_IcerEOE/edit",
+ "builtAt": "2026-11-07 12:26 UTC",
+ "intro": [
+  "Following pages are infosheets and some calculators (WIP) for the stamina based events, these event dont include the gacha events since i dont find them real megas and they do not include World Tree cup and Inferno Rally since their point gain is dependent on luck/ the floor you are on. I also did not include Sandtopia for similair reasons and Northern Oddyssey due to it not really needing planning, you will get Sunna with enough runs for sure.",
+  "You will see i have written out some ways of obtaining the URs (this is in all the megas 100 shards), I do not reccomend following certain scenarios (for all players, do not follow the no packs bought way, always buy 188 pack, and for people without a couple 100ks of gems, dont buy the largest packs as well, they have the worst gem value)",
+  "All math in the ways that i have done (not the calculators) is lazy math, this means i expect you to get to the 6 shard milestone or its equivalent with just stamina regen, this is in all the mega events possible if you do not let the stamina cap. Usually though you will go over the 6 shard milestone, so you can save some items when you are pushing, the amount of items you need that i wrote in here is for the worst case possible (aka no stamina rebate chance and barely making 6 shard milestone)",
+  "The calculators (WIP) are done with values you provide and should pose a relativily true answer to how many more items you need, the bigger push, the more true they become, luck is still a factor in here",
+  "I am currently in process of updating the sheet so some things arent finished rn"
+ ],
+ "events": [
+  {
+   "id": "penglai-immortal",
+   "name": "Penglai immortal",
+   "notes": [],
+   "milestones": [
+    {
+     "title": "Milestones",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina",
+        "Basket needed"
+       ],
+       "rows": [
+        [
+         1,
+         1,
+         125,
+         0
+        ],
+        [
+         5,
+         6,
+         450,
+         0
+        ],
+        [
+         7,
+         13,
+         725,
+         55
+        ],
+        [
+         10,
+         23,
+         1100,
+         130
+        ],
+        [
+         12,
+         35,
+         1600,
+         230
+        ],
+        [
+         15,
+         50,
+         2150,
+         340
+        ],
+        [
+         20,
+         70,
+         2875,
+         485
+        ],
+        [
+         30,
+         100,
+         3800,
+         670
+        ],
+        [
+         50,
+         150,
+         5250,
+         960
+        ],
+        [
+         70,
+         220,
+         7500,
+         1410
+        ],
+        [
+         85,
+         305,
+         10000,
+         1910
+        ],
+        [
+         100,
+         405,
+         13000,
+         2510
+        ],
+        [
+         100,
+         505,
+         16000,
+         3110
+        ],
+        [
+         150,
+         655,
+         20500,
+         4010
+        ],
+        [
+         100,
+         755,
+         23500,
+         4610
+        ],
+        [
+         150,
+         905,
+         28000,
+         5510
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Milestones without free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina"
+       ],
+       "rows": [
+        [
+         7,
+         7,
+         275
+        ],
+        [
+         10,
+         17,
+         650
+        ],
+        [
+         12,
+         29,
+         1150
+        ],
+        [
+         15,
+         44,
+         1700
+        ],
+        [
+         20,
+         64,
+         2425
+        ],
+        [
+         30,
+         94,
+         3350
+        ],
+        [
+         50,
+         144,
+         4800
+        ],
+        [
+         70,
+         214,
+         7050
+        ],
+        [
+         85,
+         299,
+         9550
+        ],
+        [
+         100,
+         399,
+         12550
+        ],
+        [
+         100,
+         499,
+         15550
+        ],
+        [
+         150,
+         649,
+         20050
+        ],
+        [
+         100,
+         749,
+         23050
+        ],
+        [
+         150,
+         899,
+         27550
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "plans": [
+    {
+     "title": "Way 1",
+     "subtitle": "17 runs · each run 6 shards · no packs bought · 102 total shards",
+     "notes": [],
+     "tables": []
+    },
+    {
+     "title": "Way 2",
+     "subtitle": "7 runs · S packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         13,
+         23,
+         23,
+         23,
+         100
+        ],
+        [
+         "energy needed",
+         450,
+         450,
+         450,
+         725,
+         1100,
+         1100,
+         1100,
+         ""
+        ],
+        [
+         "stamina in packs left over after event",
+         315,
+         630,
+         945,
+         985,
+         650,
+         315,
+         -20,
+         ""
+        ],
+        [
+         "Baskets left over after event",
+         63,
+         126,
+         189,
+         197,
+         130,
+         63,
+         -4,
+         ""
+        ],
+        [
+         "Baskets used in event",
+         0,
+         0,
+         0,
+         55,
+         130,
+         130,
+         130,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         27636
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 3",
+     "subtitle": "8 runs · S packs only, one big shard run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         70,
+         112
+        ],
+        [
+         "energy needed",
+         450,
+         450,
+         450,
+         450,
+         450,
+         450,
+         450,
+         2875,
+         ""
+        ],
+        [
+         "stamina in packs left over after event",
+         315,
+         630,
+         945,
+         1260,
+         1575,
+         1890,
+         2205,
+         95,
+         ""
+        ],
+        [
+         "Baskets left over after event",
+         63,
+         126,
+         189,
+         252,
+         315,
+         378,
+         441,
+         19,
+         ""
+        ],
+        [
+         "Baskets used in event",
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         485,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         31584
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 4",
+     "subtitle": "4 runs · S + M packs only, shard gain spread out · you have a lot of packs left over so next ur can be done shorter",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         23,
+         23,
+         23,
+         35,
+         104
+        ],
+        [
+         "energy needed",
+         1100,
+         1100,
+         1100,
+         1600,
+         ""
+        ],
+        [
+         "stamina in packs left over after event",
+         295,
+         590,
+         885,
+         680,
+         ""
+        ],
+        [
+         "Baskets left over after event",
+         59,
+         118,
+         177,
+         136,
+         ""
+        ],
+        [
+         "Baskets used in event",
+         130,
+         130,
+         130,
+         230,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 5",
+     "subtitle": "4 runs · S + M packs only, one big shard run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         100,
+         118
+        ],
+        [
+         "energy needed",
+         450,
+         450,
+         450,
+         3800,
+         ""
+        ],
+        [
+         "stamina in packs left over after event",
+         945,
+         1890,
+         2835,
+         430,
+         ""
+        ],
+        [
+         "Baskets left over after event",
+         189,
+         378,
+         567,
+         86,
+         ""
+        ],
+        [
+         "Baskets used in event",
+         0,
+         0,
+         0,
+         670,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 6",
+     "subtitle": "2 runs · S + M + L packs only, shard gain spread",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         50,
+         50,
+         100
+        ],
+        [
+         "energy needed",
+         2150,
+         2150,
+         ""
+        ],
+        [
+         "stamina in packs left over after event",
+         190,
+         380,
+         ""
+        ],
+        [
+         "Baskets left over after event",
+         38,
+         76,
+         ""
+        ],
+        [
+         "Baskets used in event",
+         340,
+         340,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 7",
+     "subtitle": "2 runs · S + M + L packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         100,
+         106
+        ],
+        [
+         "energy needed",
+         450,
+         3800,
+         ""
+        ],
+        [
+         "stamina in packs left over after event",
+         1890,
+         430,
+         ""
+        ],
+        [
+         "Baskets left over after event",
+         378,
+         86,
+         ""
+        ],
+        [
+         "Baskets used in event",
+         0,
+         670,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "info": [
+    {
+     "title": "Free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [],
+       "rows": [
+        [
+         450,
+         "This is with losing a bit and without ssr event character boost"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Gems stamina",
+     "subtitle": "5 stamina = 1 basket",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "188 pack (S pack)",
+         15,
+         45,
+         315
+        ],
+        [
+         "gem cost",
+         188,
+         564,
+         3948
+        ],
+        [
+         "988 pack (M pack)",
+         30,
+         90,
+         630
+        ],
+        [
+         "gem cost",
+         988,
+         2964,
+         20748
+        ],
+        [
+         "1988 pack (L pack)",
+         45,
+         135,
+         945
+        ],
+        [
+         "gem cost",
+         1988,
+         5964,
+         41748
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "raphael-stage",
+   "name": "Raphael stage",
+   "notes": [],
+   "milestones": [
+    {
+     "title": "Milestones",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina",
+        "Permits needed"
+       ],
+       "rows": [
+        [
+         1,
+         1,
+         150,
+         0
+        ],
+        [
+         2,
+         3,
+         270,
+         0
+        ],
+        [
+         3,
+         6,
+         450,
+         0
+        ],
+        [
+         7,
+         13,
+         950,
+         100
+        ],
+        [
+         10,
+         23,
+         1700,
+         250
+        ],
+        [
+         12,
+         35,
+         2600,
+         430
+        ],
+        [
+         15,
+         50,
+         3800,
+         670
+        ],
+        [
+         20,
+         70,
+         5300,
+         970
+        ],
+        [
+         30,
+         100,
+         7600,
+         1430
+        ],
+        [
+         40,
+         140,
+         9800,
+         1870
+        ],
+        [
+         60,
+         200,
+         12800,
+         2470
+        ],
+        [
+         70,
+         270,
+         17000,
+         3310
+        ],
+        [
+         80,
+         350,
+         21800,
+         4270
+        ],
+        [
+         80,
+         430,
+         26600,
+         5230
+        ],
+        [
+         120,
+         550,
+         33800,
+         6670
+        ],
+        [
+         100,
+         650,
+         39800,
+         7870
+        ],
+        [
+         150,
+         800,
+         48800,
+         9670
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Milestones without free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina"
+       ],
+       "rows": [
+        [
+         7,
+         7,
+         500
+        ],
+        [
+         10,
+         17,
+         1250
+        ],
+        [
+         12,
+         29,
+         2150
+        ],
+        [
+         15,
+         44,
+         3350
+        ],
+        [
+         20,
+         64,
+         4850
+        ],
+        [
+         30,
+         94,
+         7150
+        ],
+        [
+         40,
+         134,
+         9350
+        ],
+        [
+         60,
+         194,
+         12350
+        ],
+        [
+         70,
+         264,
+         16550
+        ],
+        [
+         80,
+         344,
+         21350
+        ],
+        [
+         80,
+         424,
+         26150
+        ],
+        [
+         120,
+         544,
+         33350
+        ],
+        [
+         100,
+         644,
+         39350
+        ],
+        [
+         150,
+         794,
+         48350
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "plans": [
+    {
+     "title": "Way 1",
+     "subtitle": "17 runs · each run 6 shards · no packs bought · 102 total shards",
+     "notes": [],
+     "tables": []
+    },
+    {
+     "title": "Way 2",
+     "subtitle": "9 runs · S packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "run 9",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         23,
+         35,
+         100
+        ],
+        [
+         "Stamina needed",
+         450,
+         450,
+         450,
+         450,
+         450,
+         450,
+         450,
+         1700,
+         2600,
+         ""
+        ],
+        [
+         "Permits left over after run",
+         84,
+         168,
+         252,
+         336,
+         420,
+         504,
+         588,
+         422,
+         76,
+         ""
+        ],
+        [
+         "Permits used",
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         250,
+         430,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         35532
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 3",
+     "subtitle": "10 runs · S packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "run 9",
+        "run 10",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         50,
+         104
+        ],
+        [
+         "Stamina needed",
+         450,
+         450,
+         450,
+         450,
+         450,
+         450,
+         450,
+         450,
+         450,
+         3800,
+         ""
+        ],
+        [
+         "Permits left over after run",
+         84,
+         168,
+         252,
+         336,
+         420,
+         504,
+         588,
+         672,
+         756,
+         170,
+         ""
+        ],
+        [
+         "Permits used",
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         670,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         39480
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 4",
+     "subtitle": "5 runs · S + M packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         13,
+         23,
+         23,
+         35,
+         100
+        ],
+        [
+         "Stamina needed",
+         450,
+         950,
+         1700,
+         1700,
+         2600,
+         ""
+        ],
+        [
+         "Permits left over after run",
+         252,
+         404,
+         406,
+         408,
+         230,
+         ""
+        ],
+        [
+         "Permits used",
+         0,
+         100,
+         250,
+         250,
+         430,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         24696,
+         123480
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 5",
+     "subtitle": "6 runs · S + M packs only, one big shard run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         6,
+         70,
+         100
+        ],
+        [
+         "Stamina needed",
+         450,
+         450,
+         450,
+         450,
+         450,
+         5300,
+         ""
+        ],
+        [
+         "Permits left over after run",
+         252,
+         504,
+         756,
+         1008,
+         1260,
+         542,
+         ""
+        ],
+        [
+         "Permits used",
+         0,
+         0,
+         0,
+         0,
+         0,
+         970,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         24696,
+         24696,
+         148176
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 6",
+     "subtitle": "3 runs · S + M + L packs only, shard gain spread",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         35,
+         35,
+         35,
+         105
+        ],
+        [
+         "Stamina needed",
+         2600,
+         2600,
+         2600,
+         ""
+        ],
+        [
+         "Permits left over after run",
+         74,
+         148,
+         222,
+         ""
+        ],
+        [
+         "Permits used",
+         430,
+         430,
+         430,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         66444,
+         199332
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 7",
+     "subtitle": "3 runs · S + M + L packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         100,
+         112
+        ],
+        [
+         "Stamina needed",
+         450,
+         450,
+         7600,
+         ""
+        ],
+        [
+         "Permits left over after run",
+         504,
+         1008,
+         82,
+         ""
+        ],
+        [
+         "Permits used",
+         0,
+         0,
+         1430,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         66444,
+         199332
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "info": [
+    {
+     "title": "Free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [],
+       "rows": [
+        [
+         450,
+         "This is with losing a bit (a little bit)"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Gems stamina",
+     "subtitle": "5 stamina = 1 permit",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "188 packs (S packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Permits gained",
+         4,
+         12,
+         84
+        ],
+        [
+         "Stamina gained",
+         20,
+         60,
+         420
+        ],
+        [
+         "Gem cost",
+         188,
+         564,
+         3948
+        ]
+       ]
+      },
+      {
+       "header": [
+        "988 packs (M packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Permits gained",
+         8,
+         24,
+         168
+        ],
+        [
+         "Stamina gained",
+         40,
+         120,
+         840
+        ],
+        [
+         "Gem cost",
+         988,
+         2964,
+         20748
+        ]
+       ]
+      },
+      {
+       "header": [
+        "1988 packs (L packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Permits gained",
+         12,
+         36,
+         252
+        ],
+        [
+         "Stamina gained",
+         60,
+         180,
+         1260
+        ],
+        [
+         "Gem cost",
+         1988,
+         5964,
+         41748
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "touno-island-story",
+   "name": "Touno Island Story",
+   "notes": [
+    "This is for 8 day touno, which happened at 15/05/2025, i do not know if it will always be 8 days, if not i will change it here"
+   ],
+   "milestones": [
+    {
+     "title": "Milestones",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina",
+        "Sakuramochis needed"
+       ],
+       "rows": [
+        [
+         1,
+         1,
+         150,
+         0
+        ],
+        [
+         5,
+         6,
+         500,
+         0
+        ],
+        [
+         7,
+         13,
+         1000,
+         100
+        ],
+        [
+         10,
+         23,
+         1750,
+         250
+        ],
+        [
+         12,
+         35,
+         2650,
+         430
+        ],
+        [
+         15,
+         50,
+         3800,
+         660
+        ],
+        [
+         20,
+         70,
+         5300,
+         960
+        ],
+        [
+         30,
+         100,
+         7500,
+         1400
+        ],
+        [
+         40,
+         140,
+         10500,
+         2000
+        ],
+        [
+         60,
+         200,
+         15000,
+         2900
+        ],
+        [
+         70,
+         270,
+         20000,
+         3900
+        ],
+        [
+         80,
+         350,
+         26000,
+         5100
+        ],
+        [
+         80,
+         430,
+         32000,
+         6300
+        ],
+        [
+         120,
+         550,
+         41000,
+         8100
+        ],
+        [
+         100,
+         650,
+         48500,
+         9600
+        ],
+        [
+         160,
+         810,
+         60500,
+         12000
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Milestones without free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina"
+       ],
+       "rows": [
+        [
+         7,
+         7,
+         500
+        ],
+        [
+         10,
+         17,
+         1250
+        ],
+        [
+         12,
+         29,
+         2150
+        ],
+        [
+         15,
+         44,
+         3300
+        ],
+        [
+         20,
+         64,
+         4800
+        ],
+        [
+         30,
+         94,
+         7000
+        ],
+        [
+         40,
+         134,
+         10000
+        ],
+        [
+         60,
+         194,
+         14500
+        ],
+        [
+         70,
+         264,
+         19500
+        ],
+        [
+         80,
+         344,
+         25500
+        ],
+        [
+         80,
+         424,
+         31500
+        ],
+        [
+         120,
+         544,
+         40500
+        ],
+        [
+         100,
+         644,
+         48000
+        ],
+        [
+         160,
+         804,
+         60000
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "plans": [
+    {
+     "title": "Way 1",
+     "subtitle": "17 runs · each run 6 shards · no packs bought · 102 total shards",
+     "notes": [],
+     "tables": []
+    },
+    {
+     "title": "Way 2",
+     "subtitle": "7 runs · S packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         13,
+         13,
+         13,
+         13,
+         13,
+         13,
+         23,
+         101
+        ],
+        [
+         "Stamina needed",
+         1000,
+         1000,
+         1000,
+         1000,
+         1000,
+         1000,
+         1750,
+         ""
+        ],
+        [
+         "Sakuramochi left over after run",
+         44,
+         88,
+         132,
+         176,
+         220,
+         264,
+         158,
+         ""
+        ],
+        [
+         "Sakuramochi used",
+         100,
+         100,
+         100,
+         100,
+         100,
+         100,
+         250,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         4512,
+         4512,
+         4512,
+         4512,
+         4512,
+         4512,
+         4512,
+         31584
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 3",
+     "subtitle": "7 runs · S packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         70,
+         106
+        ],
+        [
+         "Stamina needed",
+         500,
+         500,
+         500,
+         500,
+         500,
+         500,
+         5300,
+         ""
+        ],
+        [
+         "Sakuramochi left over after run",
+         144,
+         288,
+         432,
+         576,
+         720,
+         864,
+         48,
+         ""
+        ],
+        [
+         "Sakuramochi used",
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         960,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         4512,
+         4512,
+         4512,
+         4512,
+         4512,
+         4512,
+         4512,
+         31584
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 4",
+     "subtitle": "3 runs · S + M packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         35,
+         35,
+         35,
+         105
+        ],
+        [
+         "Stamina needed",
+         2650,
+         2650,
+         2650,
+         ""
+        ],
+        [
+         "Sakuramochi left over after run",
+         2,
+         4,
+         6,
+         ""
+        ],
+        [
+         "Sakuramochi used",
+         430,
+         430,
+         430,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         28224,
+         28224,
+         28224,
+         84672
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 5",
+     "subtitle": "4 runs · S + M packs only, one big shard run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         100,
+         118
+        ],
+        [
+         "Stamina needed",
+         500,
+         500,
+         500,
+         7500,
+         ""
+        ],
+        [
+         "Sakuramochi left over after run",
+         432,
+         864,
+         1296,
+         328,
+         ""
+        ],
+        [
+         "Sakuramochi used",
+         0,
+         0,
+         0,
+         1400,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         28224,
+         28224,
+         28224,
+         28224,
+         112896
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 6",
+     "subtitle": "2 runs · S + M + L packs only, shard gain spread",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         50,
+         50,
+         100
+        ],
+        [
+         "Stamina needed",
+         3800,
+         3800,
+         ""
+        ],
+        [
+         "Sakuramochi left over after run",
+         204,
+         408,
+         ""
+        ],
+        [
+         "Sakuramochi used",
+         660,
+         660,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         75936,
+         75936,
+         151872
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 7",
+     "subtitle": "2 runs · S + M + L packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         100,
+         106
+        ],
+        [
+         "Stamina needed",
+         500,
+         7500,
+         ""
+        ],
+        [
+         "Sakuramochi left over after run",
+         864,
+         328,
+         ""
+        ],
+        [
+         "Sakuramochi used",
+         0,
+         1400,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         75936,
+         75936,
+         151872
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "info": [
+    {
+     "title": "Free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [],
+       "rows": [
+        [
+         500,
+         "This is roughly"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Gems stamina",
+     "subtitle": "5 stamina = 1 Sakuramochi",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "188 packs (S packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Sakuramochi gained",
+         6,
+         18,
+         144
+        ],
+        [
+         "Stamina gained",
+         30,
+         90,
+         720
+        ],
+        [
+         "Gem cost",
+         188,
+         564,
+         4512
+        ]
+       ]
+      },
+      {
+       "header": [
+        "988 packs (M packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Sakuramochi gained",
+         12,
+         36,
+         288
+        ],
+        [
+         "Stamina gained",
+         60,
+         180,
+         1440
+        ],
+        [
+         "Gem cost",
+         988,
+         2964,
+         23712
+        ]
+       ]
+      },
+      {
+       "header": [
+        "1988 packs (L packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Sakuramochi gained",
+         18,
+         54,
+         432
+        ],
+        [
+         "Stamina gained",
+         90,
+         270,
+         2160
+        ],
+        [
+         "Gem cost",
+         1988,
+         5964,
+         47712
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "frantic-forest",
+   "name": "Frantic Forest",
+   "notes": [
+    "WARNING: to use your bells you need monsters, if there are no monster you cant use bells"
+   ],
+   "milestones": [
+    {
+     "title": "Milestones",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina",
+        "Box of Bells needed"
+       ],
+       "rows": [
+        [
+         1,
+         1,
+         960,
+         0
+        ],
+        [
+         5,
+         6,
+         3400,
+         0
+        ],
+        [
+         7,
+         13,
+         5100,
+         56.67
+        ],
+        [
+         10,
+         23,
+         7400,
+         133.33
+        ],
+        [
+         12,
+         35,
+         10500,
+         236.67
+        ],
+        [
+         15,
+         50,
+         14500,
+         370
+        ],
+        [
+         20,
+         70,
+         18800,
+         513.33
+        ],
+        [
+         30,
+         100,
+         24200,
+         693.33
+        ],
+        [
+         50,
+         150,
+         33200,
+         993.33
+        ],
+        [
+         75,
+         225,
+         46700,
+         1443.33
+        ],
+        [
+         85,
+         310,
+         61900,
+         1950
+        ],
+        [
+         100,
+         410,
+         80200,
+         2560
+        ],
+        [
+         100,
+         510,
+         98200,
+         3160
+        ],
+        [
+         150,
+         660,
+         125200,
+         4060
+        ],
+        [
+         100,
+         760,
+         143200,
+         4660
+        ],
+        [
+         150,
+         910,
+         170200,
+         5560
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Milestones without free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina"
+       ],
+       "rows": [
+        [
+         7,
+         7,
+         1700
+        ],
+        [
+         10,
+         17,
+         4000
+        ],
+        [
+         12,
+         29,
+         7100
+        ],
+        [
+         15,
+         44,
+         11100
+        ],
+        [
+         20,
+         64,
+         15400
+        ],
+        [
+         30,
+         94,
+         20800
+        ],
+        [
+         50,
+         144,
+         29800
+        ],
+        [
+         75,
+         219,
+         43300
+        ],
+        [
+         85,
+         304,
+         58500
+        ],
+        [
+         100,
+         404,
+         76800
+        ],
+        [
+         100,
+         504,
+         94800
+        ],
+        [
+         150,
+         654,
+         121800
+        ],
+        [
+         100,
+         754,
+         139800
+        ],
+        [
+         150,
+         904,
+         166800
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "plans": [
+    {
+     "title": "Way 1",
+     "subtitle": "17 runs · each run 6 shards · no packs bought · 102 total shards",
+     "notes": [],
+     "tables": []
+    },
+    {
+     "title": "Way 2",
+     "subtitle": "8 runs · S packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         6,
+         13,
+         23,
+         35,
+         101
+        ],
+        [
+         "Stamina needed",
+         3400,
+         3400,
+         3400,
+         3400,
+         3400,
+         5100,
+         7400,
+         10500,
+         ""
+        ],
+        [
+         "Box of Bells left over after run",
+         63,
+         126,
+         189,
+         252,
+         315,
+         321,
+         240,
+         66,
+         ""
+        ],
+        [
+         "Box of Bells used",
+         0,
+         0,
+         0,
+         0,
+         0,
+         57,
+         134,
+         327,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         31584
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 3",
+     "subtitle": "9 runs · S packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "run 9",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         70,
+         118
+        ],
+        [
+         "Stamina needed",
+         3400,
+         3400,
+         3400,
+         3400,
+         3400,
+         3400,
+         3400,
+         3400,
+         18800,
+         ""
+        ],
+        [
+         "Box of Bells left over after run",
+         63,
+         126,
+         189,
+         252,
+         315,
+         378,
+         441,
+         504,
+         53,
+         ""
+        ],
+        [
+         "Box of Bells used",
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         514,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         35532
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 4",
+     "subtitle": "4 runs · S + M packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         23,
+         23,
+         23,
+         35,
+         104
+        ],
+        [
+         "Stamina needed",
+         7400,
+         7400,
+         7400,
+         10500,
+         ""
+        ],
+        [
+         "Box of Bells left over after run",
+         55,
+         110,
+         165,
+         117,
+         ""
+        ],
+        [
+         "Box of Bells used",
+         134,
+         134,
+         134,
+         237,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 5",
+     "subtitle": "4 runs · S + M packs only, one big shard run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         100,
+         118
+        ],
+        [
+         "Stamina needed",
+         3400,
+         3400,
+         3400,
+         24200,
+         ""
+        ],
+        [
+         "Box of Bells left over after run",
+         189,
+         378,
+         567,
+         62,
+         ""
+        ],
+        [
+         "Box of Bells used",
+         0,
+         0,
+         0,
+         694,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 6",
+     "subtitle": "2 runs · S + M + L packs only, shard gain spread",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         50,
+         50,
+         100
+        ],
+        [
+         "Stamina needed",
+         14500,
+         14500,
+         ""
+        ],
+        [
+         "Box of Bells left over after run",
+         8,
+         16,
+         ""
+        ],
+        [
+         "Box of Bells used",
+         370,
+         370,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 7",
+     "subtitle": "2 runs · S + M + L packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         100,
+         106
+        ],
+        [
+         "Stamina needed",
+         3400,
+         24200,
+         ""
+        ],
+        [
+         "Box of Bells left over after run",
+         378,
+         62,
+         ""
+        ],
+        [
+         "Box of Bells used",
+         0,
+         694,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "info": [
+    {
+     "title": "Free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [],
+       "rows": [
+        [
+         3400,
+         "This is roughly"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Gems stamina",
+     "subtitle": "1 Box of Bells = 3 Bells = 30 Purify points / stamina",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "188 packs (S packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Box of Bells gained",
+         3,
+         9,
+         63
+        ],
+        [
+         "Stamina gained",
+         90,
+         270,
+         1890
+        ],
+        [
+         "Gem cost",
+         188,
+         564,
+         3948
+        ]
+       ]
+      },
+      {
+       "header": [
+        "988 packs (M packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Box of Bells gained",
+         6,
+         18,
+         126
+        ],
+        [
+         "Stamina gained",
+         180,
+         540,
+         3780
+        ],
+        [
+         "Gem cost",
+         988,
+         2964,
+         20748
+        ]
+       ]
+      },
+      {
+       "header": [
+        "1988 packs (L packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Box of Bells gained",
+         9,
+         27,
+         189
+        ],
+        [
+         "Stamina gained",
+         270,
+         810,
+         5670
+        ],
+        [
+         "Gem cost",
+         1988,
+         5964,
+         41748
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "aloha-bubble-island",
+   "name": "Aloha! Bubble Island",
+   "notes": [
+    "WARNING: sometimes you need more than 20 dice for a circle, sometimes you need less"
+   ],
+   "milestones": [
+    {
+     "title": "Milestones",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Circles needed",
+        "Super dice card needed"
+       ],
+       "rows": [
+        [
+         1,
+         1,
+         15,
+         0
+        ],
+        [
+         5,
+         6,
+         23,
+         0
+        ],
+        [
+         2,
+         8,
+         27,
+         16
+        ],
+        [
+         5,
+         13,
+         36,
+         52
+        ],
+        [
+         7,
+         20,
+         48,
+         100
+        ],
+        [
+         14,
+         34,
+         72,
+         196
+        ],
+        [
+         18,
+         52,
+         104,
+         324
+        ],
+        [
+         22,
+         74,
+         143,
+         480
+        ],
+        [
+         30,
+         104,
+         195,
+         688
+        ],
+        [
+         45,
+         149,
+         276,
+         1012
+        ],
+        [
+         60,
+         209,
+         384,
+         1444
+        ],
+        [
+         45,
+         254,
+         465,
+         1768
+        ],
+        [
+         60,
+         314,
+         573,
+         2200
+        ],
+        [
+         90,
+         404,
+         738,
+         2860
+        ],
+        [
+         120,
+         524,
+         958,
+         3740
+        ],
+        [
+         90,
+         614,
+         1123,
+         4400
+        ],
+        [
+         120,
+         734,
+         1343,
+         5280
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Milestones without free circles",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Circles needed",
+        "Super dice card needed"
+       ],
+       "rows": [
+        [
+         2,
+         2,
+         4,
+         16
+        ],
+        [
+         5,
+         7,
+         13,
+         52
+        ],
+        [
+         7,
+         14,
+         25,
+         100
+        ],
+        [
+         14,
+         28,
+         49,
+         196
+        ],
+        [
+         18,
+         46,
+         81,
+         324
+        ],
+        [
+         22,
+         68,
+         120,
+         480
+        ],
+        [
+         30,
+         98,
+         172,
+         688
+        ],
+        [
+         45,
+         143,
+         253,
+         1012
+        ],
+        [
+         60,
+         203,
+         361,
+         1444
+        ],
+        [
+         45,
+         248,
+         442,
+         1768
+        ],
+        [
+         60,
+         308,
+         550,
+         2200
+        ],
+        [
+         90,
+         398,
+         715,
+         2860
+        ],
+        [
+         120,
+         518,
+         935,
+         3740
+        ],
+        [
+         90,
+         608,
+         1100,
+         4400
+        ],
+        [
+         120,
+         728,
+         1320,
+         5280
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "plans": [
+    {
+     "title": "Way 1",
+     "subtitle": "17 runs · each run 6 shards · no packs bought · 102 total shards",
+     "notes": [],
+     "tables": []
+    },
+    {
+     "title": "Way 2",
+     "subtitle": "7 runs · S packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         8,
+         34,
+         34,
+         100
+        ],
+        [
+         "Circles needed",
+         23,
+         23,
+         23,
+         23,
+         27,
+         72,
+         72,
+         ""
+        ],
+        [
+         "Super dice card left over after run",
+         63,
+         126,
+         189,
+         252,
+         299,
+         166,
+         33,
+         ""
+        ],
+        [
+         "Super dice card used",
+         0,
+         0,
+         0,
+         0,
+         16,
+         196,
+         196,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         27636
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 3",
+     "subtitle": "8 runs · S packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         74,
+         116
+        ],
+        [
+         "Circles needed",
+         23,
+         23,
+         23,
+         23,
+         23,
+         23,
+         23,
+         120,
+         ""
+        ],
+        [
+         "Super dice card left over after run",
+         63,
+         126,
+         189,
+         252,
+         315,
+         378,
+         441,
+         24,
+         ""
+        ],
+        [
+         "Super dice card used",
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         480,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         31584
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 4",
+     "subtitle": "4 runs · S + M packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         8,
+         34,
+         52,
+         100
+        ],
+        [
+         "Circles needed",
+         23,
+         27,
+         72,
+         104,
+         ""
+        ],
+        [
+         "Super dice card left over after run",
+         168,
+         320,
+         292,
+         136,
+         ""
+        ],
+        [
+         "Super dice card used",
+         0,
+         16,
+         196,
+         324,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 5",
+     "subtitle": "5 runs · S + M packs only, one big shard run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         104,
+         128
+        ],
+        [
+         "Circles needed",
+         23,
+         23,
+         23,
+         23,
+         196,
+         ""
+        ],
+        [
+         "Super dice card left over after run",
+         168,
+         336,
+         504,
+         672,
+         152,
+         ""
+        ],
+        [
+         "Super dice card used",
+         0,
+         0,
+         0,
+         0,
+         688,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         24696,
+         123480
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 6",
+     "subtitle": "2 runs · S + M + L packs only, shard gain spread",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         52,
+         52,
+         104
+        ],
+        [
+         "Circles needed",
+         104,
+         104,
+         ""
+        ],
+        [
+         "Super dice card left over after run",
+         12,
+         24,
+         ""
+        ],
+        [
+         "Super dice card used",
+         324,
+         324,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 7",
+     "subtitle": "2 runs · S + M + L packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         102,
+         114
+        ],
+        [
+         "Circles needed",
+         23,
+         23,
+         196,
+         ""
+        ],
+        [
+         "Super dice card left over after run",
+         336,
+         672,
+         320,
+         ""
+        ],
+        [
+         "Super dice card used",
+         0,
+         0,
+         688,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888,
+         265776
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "info": [
+    {
+     "title": "Free circles",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [],
+       "rows": [
+        [
+         23,
+         "This is roughly"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Gems circles",
+     "subtitle": "1 circle = 4 Super dice cards = 20 dice",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "188 packs (S packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Super dice card gained",
+         3,
+         9,
+         63
+        ],
+        [
+         "Circles gained",
+         0.75,
+         2.25,
+         15.75
+        ],
+        [
+         "Gem cost",
+         188,
+         564,
+         3948
+        ]
+       ]
+      },
+      {
+       "header": [
+        "988 packs (M packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Super dice card gained",
+         5,
+         15,
+         105
+        ],
+        [
+         "Circles gained",
+         1.25,
+         3.75,
+         26.25
+        ],
+        [
+         "Gem cost",
+         988,
+         2964,
+         20748
+        ]
+       ]
+      },
+      {
+       "header": [
+        "1988 packs (L packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Super dice card gained",
+         8,
+         24,
+         168
+        ],
+        [
+         "Circles gained",
+         2,
+         6,
+         42
+        ],
+        [
+         "Gem cost",
+         1988,
+         5964,
+         41748
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "explore-mines-in-dungeon",
+   "name": "Explore! Mines in Dungeon!",
+   "notes": [],
+   "milestones": [
+    {
+     "title": "Milestones",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina",
+        "Gold Lamp needed"
+       ],
+       "rows": [
+        [
+         1,
+         1,
+         250,
+         0
+        ],
+        [
+         5,
+         6,
+         900,
+         0
+        ],
+        [
+         7,
+         13,
+         1450,
+         110
+        ],
+        [
+         10,
+         23,
+         2200,
+         260
+        ],
+        [
+         12,
+         35,
+         3200,
+         460
+        ],
+        [
+         15,
+         50,
+         4300,
+         680
+        ],
+        [
+         20,
+         70,
+         5750,
+         970
+        ],
+        [
+         30,
+         100,
+         7600,
+         1340
+        ],
+        [
+         50,
+         150,
+         10500,
+         1920
+        ],
+        [
+         75,
+         225,
+         15000,
+         2820
+        ],
+        [
+         85,
+         310,
+         20000,
+         3820
+        ],
+        [
+         100,
+         410,
+         26000,
+         5020
+        ],
+        [
+         100,
+         510,
+         32000,
+         6220
+        ],
+        [
+         150,
+         660,
+         41000,
+         8020
+        ],
+        [
+         100,
+         760,
+         47000,
+         9220
+        ],
+        [
+         160,
+         920,
+         56000,
+         11020
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Milestones without free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina",
+        "Gold Lamp needed"
+       ],
+       "rows": [
+        [
+         7,
+         7,
+         550,
+         110
+        ],
+        [
+         10,
+         17,
+         1300,
+         260
+        ],
+        [
+         12,
+         29,
+         2300,
+         460
+        ],
+        [
+         15,
+         44,
+         3400,
+         680
+        ],
+        [
+         20,
+         64,
+         4850,
+         970
+        ],
+        [
+         30,
+         94,
+         6700,
+         1340
+        ],
+        [
+         50,
+         144,
+         9600,
+         1920
+        ],
+        [
+         75,
+         219,
+         14100,
+         2820
+        ],
+        [
+         85,
+         304,
+         19100,
+         3820
+        ],
+        [
+         100,
+         404,
+         25100,
+         5020
+        ],
+        [
+         100,
+         504,
+         31100,
+         6220
+        ],
+        [
+         150,
+         654,
+         40100,
+         8020
+        ],
+        [
+         100,
+         754,
+         46100,
+         9220
+        ],
+        [
+         160,
+         914,
+         55100,
+         11020
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "plans": [
+    {
+     "title": "Way 1",
+     "subtitle": "17 runs · each run 6 shards · no packs bought · 102 total shards",
+     "notes": [],
+     "tables": []
+    },
+    {
+     "title": "Way 2",
+     "subtitle": "7 runs · S packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         13,
+         23,
+         23,
+         23,
+         100
+        ],
+        [
+         "Stamina needed",
+         900,
+         900,
+         900,
+         1450,
+         2200,
+         2200,
+         2200,
+         ""
+        ],
+        [
+         "Gold Lamp left over after run",
+         126,
+         252,
+         378,
+         394,
+         260,
+         126,
+         -8,
+         ""
+        ],
+        [
+         "Gold Lamp used",
+         0,
+         0,
+         0,
+         110,
+         260,
+         260,
+         260,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         27636
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 3",
+     "subtitle": "8 runs · S packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         70,
+         112
+        ],
+        [
+         "Stamina needed",
+         900,
+         900,
+         900,
+         900,
+         900,
+         900,
+         900,
+         5750,
+         ""
+        ],
+        [
+         "Gold Lamp left over after run",
+         126,
+         252,
+         378,
+         504,
+         630,
+         756,
+         882,
+         38,
+         ""
+        ],
+        [
+         "Gold Lamp used",
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         970,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         31584
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 4",
+     "subtitle": "4 runs · S + M packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         13,
+         13,
+         70,
+         102
+        ],
+        [
+         "Stamina needed",
+         900,
+         1450,
+         1450,
+         5750,
+         ""
+        ],
+        [
+         "Gold Lamp left over after run",
+         378,
+         496,
+         614,
+         22,
+         ""
+        ],
+        [
+         "Gold Lamp used",
+         0,
+         260,
+         260,
+         970,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 5",
+     "subtitle": "4 runs · S + M packs only, one big shard run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         100,
+         118
+        ],
+        [
+         "Stamina needed",
+         900,
+         900,
+         900,
+         7600,
+         ""
+        ],
+        [
+         "Gold Lamp left over after run",
+         378,
+         756,
+         1134,
+         172,
+         ""
+        ],
+        [
+         "Gold Lamp used",
+         0,
+         0,
+         0,
+         1340,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 6",
+     "subtitle": "2 runs · S + M + L packs only, shard gain spread",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         50,
+         50,
+         100
+        ],
+        [
+         "Stamina needed",
+         4300,
+         4300,
+         ""
+        ],
+        [
+         "Gold Lamp left over after run",
+         76,
+         152,
+         ""
+        ],
+        [
+         "Gold Lamp used",
+         680,
+         680,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 7",
+     "subtitle": "2 runs · S + M + L packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         100,
+         106
+        ],
+        [
+         "Stamina needed",
+         900,
+         7600,
+         ""
+        ],
+        [
+         "Gold Lamp left over after run",
+         756,
+         172,
+         ""
+        ],
+        [
+         "Gold Lamp used",
+         0,
+         1340,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "info": [
+    {
+     "title": "Free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [],
+       "rows": [
+        [
+         900,
+         "This is with losing a bit and without ssr character boosts"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Gems stamina",
+     "subtitle": "5 stamina = 1 Gold Lamp",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "188 packs (S packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Gold Lamp gained",
+         6,
+         18,
+         126
+        ],
+        [
+         "Stamina gained",
+         30,
+         90,
+         630
+        ],
+        [
+         "Gem cost",
+         188,
+         564,
+         3948
+        ]
+       ]
+      },
+      {
+       "header": [
+        "988 packs (M packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Gold Lamp gained",
+         12,
+         36,
+         252
+        ],
+        [
+         "Stamina gained",
+         60,
+         180,
+         1260
+        ],
+        [
+         "Gem cost",
+         988,
+         2964,
+         20748
+        ]
+       ]
+      },
+      {
+       "header": [
+        "1988 packs (L packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Gold Lamp gained",
+         18,
+         54,
+         378
+        ],
+        [
+         "Stamina gained",
+         90,
+         270,
+         1890
+        ],
+        [
+         "Gem cost",
+         1988,
+         5964,
+         41748
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dungeon-dev",
+   "name": "Dungeon Dev",
+   "notes": [],
+   "milestones": [
+    {
+     "title": "Milestones",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina",
+        "Dungeon Manual (L) needed"
+       ],
+       "rows": [
+        [
+         1,
+         1,
+         125,
+         0
+        ],
+        [
+         5,
+         6,
+         450,
+         0
+        ],
+        [
+         7,
+         13,
+         725,
+         55
+        ],
+        [
+         10,
+         23,
+         1100,
+         130
+        ],
+        [
+         12,
+         35,
+         1600,
+         230
+        ],
+        [
+         15,
+         50,
+         2150,
+         340
+        ],
+        [
+         20,
+         70,
+         2875,
+         485
+        ],
+        [
+         30,
+         100,
+         3800,
+         670
+        ],
+        [
+         50,
+         150,
+         5250,
+         960
+        ],
+        [
+         75,
+         225,
+         7500,
+         1410
+        ],
+        [
+         85,
+         310,
+         10000,
+         1910
+        ],
+        [
+         100,
+         410,
+         13000,
+         2510
+        ],
+        [
+         100,
+         510,
+         16000,
+         3110
+        ],
+        [
+         150,
+         660,
+         20500,
+         4010
+        ],
+        [
+         100,
+         760,
+         23500,
+         4610
+        ],
+        [
+         150,
+         910,
+         28000,
+         5510
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Milestones without free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina",
+        "Dungeon Manual (L) needed"
+       ],
+       "rows": [
+        [
+         7,
+         7,
+         275,
+         55
+        ],
+        [
+         10,
+         17,
+         650,
+         130
+        ],
+        [
+         12,
+         29,
+         1150,
+         230
+        ],
+        [
+         15,
+         44,
+         1700,
+         340
+        ],
+        [
+         20,
+         64,
+         2425,
+         485
+        ],
+        [
+         30,
+         94,
+         3350,
+         670
+        ],
+        [
+         50,
+         144,
+         4800,
+         960
+        ],
+        [
+         75,
+         219,
+         7050,
+         1410
+        ],
+        [
+         85,
+         304,
+         9550,
+         1910
+        ],
+        [
+         100,
+         404,
+         12550,
+         2510
+        ],
+        [
+         100,
+         504,
+         15550,
+         3110
+        ],
+        [
+         150,
+         654,
+         20050,
+         4010
+        ],
+        [
+         100,
+         754,
+         23050,
+         4610
+        ],
+        [
+         150,
+         904,
+         27550,
+         5510
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "plans": [
+    {
+     "title": "Way 1",
+     "subtitle": "17 runs · each run 6 shards · no packs bought · 102 total shards",
+     "notes": [],
+     "tables": []
+    },
+    {
+     "title": "Way 2",
+     "subtitle": "7 runs · S packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         13,
+         23,
+         23,
+         23,
+         100
+        ],
+        [
+         "Stamina needed",
+         450,
+         450,
+         450,
+         725,
+         1100,
+         1100,
+         1100,
+         ""
+        ],
+        [
+         "Dungeon Manual (L) left over after run",
+         63,
+         126,
+         189,
+         197,
+         130,
+         63,
+         -4,
+         ""
+        ],
+        [
+         "Dungeon Manual (L) used",
+         0,
+         0,
+         0,
+         55,
+         130,
+         130,
+         130,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         27636
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 3",
+     "subtitle": "8 runs · S packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         70,
+         112
+        ],
+        [
+         "Stamina needed",
+         450,
+         450,
+         450,
+         450,
+         450,
+         450,
+         450,
+         2875,
+         ""
+        ],
+        [
+         "Dungeon Manual (L) left over after run",
+         63,
+         126,
+         189,
+         252,
+         315,
+         378,
+         441,
+         19,
+         ""
+        ],
+        [
+         "Dungeon Manual (L) used",
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         485,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         31584
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 4",
+     "subtitle": "4 runs · S + M packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         13,
+         13,
+         70,
+         102
+        ],
+        [
+         "Stamina needed",
+         450,
+         725,
+         725,
+         2875,
+         ""
+        ],
+        [
+         "Dungeon Manual (L) left over after run",
+         189,
+         323,
+         457,
+         161,
+         ""
+        ],
+        [
+         "Dungeon Manual (L) used",
+         0,
+         55,
+         55,
+         485,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 5",
+     "subtitle": "4 runs · S + M packs only, one big shard run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         100,
+         118
+        ],
+        [
+         "Stamina needed",
+         450,
+         450,
+         450,
+         3800,
+         ""
+        ],
+        [
+         "Dungeon Manual (L) left over after run",
+         189,
+         378,
+         567,
+         86,
+         ""
+        ],
+        [
+         "Dungeon Manual (L) used",
+         0,
+         0,
+         0,
+         670,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 6",
+     "subtitle": "2 runs · S + M + L packs only, shard gain spread",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         50,
+         50,
+         100
+        ],
+        [
+         "Stamina needed",
+         2150,
+         2150,
+         ""
+        ],
+        [
+         "Dungeon Manual (L) left over after run",
+         38,
+         76,
+         ""
+        ],
+        [
+         "Dungeon Manual (L) used",
+         340,
+         340,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 7",
+     "subtitle": "2 runs · S + M + L packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         100,
+         106
+        ],
+        [
+         "Stamina needed",
+         450,
+         3800,
+         ""
+        ],
+        [
+         "Dungeon Manual (L) left over after run",
+         378,
+         86,
+         ""
+        ],
+        [
+         "Dungeon Manual (L) used",
+         0,
+         670,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "info": [
+    {
+     "title": "Free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [],
+       "rows": [
+        [
+         450,
+         "This is with losing a bit and without ssr character boosts"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Gems stamina",
+     "subtitle": "5 stamina = 1 Dungeon Manual (L)",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "188 packs (S packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Dungeon Manual (L) gained",
+         3,
+         9,
+         63
+        ],
+        [
+         "Stamina gained",
+         15,
+         45,
+         315
+        ],
+        [
+         "Gem cost",
+         188,
+         564,
+         3948
+        ]
+       ]
+      },
+      {
+       "header": [
+        "988 packs (M packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Dungeon Manual (L) gained",
+         6,
+         18,
+         126
+        ],
+        [
+         "Stamina gained",
+         30,
+         90,
+         630
+        ],
+        [
+         "Gem cost",
+         988,
+         2964,
+         20748
+        ]
+       ]
+      },
+      {
+       "header": [
+        "1988 packs (L packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Dungeon Manual (L) gained",
+         9,
+         27,
+         189
+        ],
+        [
+         "Stamina gained",
+         45,
+         135,
+         945
+        ],
+        [
+         "Gem cost",
+         1988,
+         5964,
+         41748
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "guild-trade-festival",
+   "name": "Guild Trade Festival",
+   "notes": [],
+   "milestones": [
+    {
+     "title": "Milestones",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina",
+        "Permit needed"
+       ],
+       "rows": [
+        [
+         1,
+         1,
+         50,
+         0
+        ],
+        [
+         2,
+         3,
+         90,
+         0
+        ],
+        [
+         3,
+         6,
+         150,
+         0
+        ],
+        [
+         7,
+         13,
+         230,
+         80
+        ],
+        [
+         10,
+         23,
+         350,
+         200
+        ],
+        [
+         12,
+         35,
+         470,
+         320
+        ],
+        [
+         15,
+         50,
+         590,
+         440
+        ],
+        [
+         20,
+         70,
+         750,
+         600
+        ],
+        [
+         30,
+         100,
+         960,
+         810
+        ],
+        [
+         40,
+         140,
+         1360,
+         1210
+        ],
+        [
+         60,
+         200,
+         1720,
+         1570
+        ],
+        [
+         70,
+         270,
+         2240,
+         2090
+        ],
+        [
+         80,
+         350,
+         2840,
+         2690
+        ],
+        [
+         80,
+         430,
+         2440,
+         2290
+        ],
+        [
+         120,
+         550,
+         4300,
+         4150
+        ],
+        [
+         100,
+         650,
+         5140,
+         4990
+        ],
+        [
+         150,
+         800,
+         6190,
+         6040
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Milestones without free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina"
+       ],
+       "rows": [
+        [
+         7,
+         7,
+         80
+        ],
+        [
+         10,
+         17,
+         200
+        ],
+        [
+         12,
+         29,
+         320
+        ],
+        [
+         15,
+         44,
+         440
+        ],
+        [
+         20,
+         64,
+         600
+        ],
+        [
+         30,
+         94,
+         810
+        ],
+        [
+         40,
+         134,
+         1210
+        ],
+        [
+         60,
+         194,
+         1570
+        ],
+        [
+         70,
+         264,
+         2090
+        ],
+        [
+         80,
+         344,
+         2690
+        ],
+        [
+         80,
+         424,
+         2290
+        ],
+        [
+         120,
+         544,
+         4150
+        ],
+        [
+         100,
+         644,
+         4990
+        ],
+        [
+         150,
+         794,
+         6040
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "plans": [
+    {
+     "title": "Way 1",
+     "subtitle": "17 runs · each run 6 shards · no packs bought · 102 total shards",
+     "notes": [],
+     "tables": []
+    },
+    {
+     "title": "Way 2",
+     "subtitle": "8 runs · S packs only, one big run, the shard gain spread out is inneficient, it requires the same amount of runs and you get less shards for the same amount of stuff used",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         70,
+         112
+        ],
+        [
+         "Stamina needed",
+         150,
+         150,
+         150,
+         150,
+         150,
+         150,
+         150,
+         750,
+         ""
+        ],
+        [
+         "Permit left over after run",
+         84,
+         168,
+         252,
+         336,
+         420,
+         504,
+         588,
+         72,
+         ""
+        ],
+        [
+         "Permit used",
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         600,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         31584
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 4",
+     "subtitle": "4 runs · S + M packs only, one big run, the same happened as with the S packs only",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         100,
+         118
+        ],
+        [
+         "Stamina needed",
+         150,
+         150,
+         150,
+         960,
+         ""
+        ],
+        [
+         "Permit left over after run",
+         252,
+         504,
+         756,
+         198,
+         ""
+        ],
+        [
+         "Permit used",
+         0,
+         0,
+         0,
+         810,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 6",
+     "subtitle": "2 runs · S + M + L packs only, shard gain spread",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         50,
+         50,
+         100
+        ],
+        [
+         "Stamina needed",
+         590,
+         590,
+         ""
+        ],
+        [
+         "Permit left over after run",
+         64,
+         128,
+         ""
+        ],
+        [
+         "Permit used",
+         440,
+         440,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 7",
+     "subtitle": "2 runs · S + M + L packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         100,
+         106
+        ],
+        [
+         "Stamina needed",
+         150,
+         960,
+         ""
+        ],
+        [
+         "Permit left over after run",
+         504,
+         198,
+         ""
+        ],
+        [
+         "Permit used",
+         0,
+         810,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "info": [
+    {
+     "title": "Free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [],
+       "rows": [
+        [
+         150,
+         "This is with losing a bit"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Gems stamina",
+     "subtitle": "1 stamina = 1 Permit",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "188 packs (S packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Permit gained",
+         4,
+         12,
+         84
+        ],
+        [
+         "Stamina gained",
+         4,
+         12,
+         84
+        ],
+        [
+         "Gem cost",
+         188,
+         564,
+         3948
+        ]
+       ]
+      },
+      {
+       "header": [
+        "988 packs (M packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Permit gained",
+         8,
+         24,
+         168
+        ],
+        [
+         "Stamina gained",
+         8,
+         24,
+         168
+        ],
+        [
+         "Gem cost",
+         988,
+         2964,
+         20748
+        ]
+       ]
+      },
+      {
+       "header": [
+        "1988 packs (L packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Permit gained",
+         12,
+         36,
+         252
+        ],
+        [
+         "Stamina gained",
+         12,
+         36,
+         252
+        ],
+        [
+         "Gem cost",
+         1988,
+         5964,
+         41748
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "casino-on-yacht",
+   "name": "Casino on Yacht",
+   "notes": [
+    "Every 5 floors you earn 5% more points each stamina spent with a cap of 125 points/stamina, this is after you hit lvl 25, for the math i assume that you have reached floor 25 with free stamina,",
+    "if you didnt no worry, the points you gained from capturing Nyars magic should cancel this out, to be sure you can keep 10 extra deluxe chicken meal"
+   ],
+   "milestones": [
+    {
+     "title": "Milestones",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Points",
+        "Deluxe Chicken Meal needed"
+       ],
+       "rows": [
+        [
+         1,
+         1,
+         20000,
+         0
+        ],
+        [
+         5,
+         6,
+         91000,
+         0
+        ],
+        [
+         7,
+         13,
+         150000,
+         94.4
+        ],
+        [
+         10,
+         23,
+         233000,
+         227.2
+        ],
+        [
+         12,
+         35,
+         348000,
+         411.2
+        ],
+        [
+         15,
+         50,
+         480000,
+         622.4
+        ],
+        [
+         20,
+         70,
+         661000,
+         912
+        ],
+        [
+         30,
+         100,
+         890000,
+         1278.4
+        ],
+        [
+         50,
+         150,
+         1250000,
+         1854.4
+        ],
+        [
+         75,
+         225,
+         1820000,
+         2766.4
+        ],
+        [
+         85,
+         310,
+         2440000,
+         3758.4
+        ],
+        [
+         100,
+         410,
+         3190000,
+         4958.4
+        ],
+        [
+         100,
+         510,
+         3940000,
+         6158.4
+        ],
+        [
+         150,
+         660,
+         5070000,
+         7966.4
+        ],
+        [
+         100,
+         760,
+         5820000,
+         9166.4
+        ],
+        [
+         150,
+         910,
+         6940000,
+         10958.4
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Milestones without free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Points",
+        "Deluxe Chicken Meal needed"
+       ],
+       "rows": [
+        [
+         7,
+         7,
+         59000,
+         94.4
+        ],
+        [
+         10,
+         17,
+         142000,
+         227.2
+        ],
+        [
+         12,
+         29,
+         257000,
+         411.2
+        ],
+        [
+         15,
+         44,
+         389000,
+         622.4
+        ],
+        [
+         20,
+         64,
+         570000,
+         912
+        ],
+        [
+         30,
+         94,
+         799000,
+         1278.4
+        ],
+        [
+         50,
+         144,
+         1159000,
+         1854.4
+        ],
+        [
+         75,
+         219,
+         1729000,
+         2766.4
+        ],
+        [
+         85,
+         304,
+         2349000,
+         3758.4
+        ],
+        [
+         100,
+         404,
+         3099000,
+         4958.4
+        ],
+        [
+         100,
+         504,
+         3849000,
+         6158.4
+        ],
+        [
+         150,
+         654,
+         4979000,
+         7966.4
+        ],
+        [
+         100,
+         754,
+         5729000,
+         9166.4
+        ],
+        [
+         150,
+         904,
+         6849000,
+         10958.4
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "plans": [
+    {
+     "title": "Way 1",
+     "subtitle": "17 runs · each run 6 shards · no packs bought · 102 total shards",
+     "notes": [],
+     "tables": []
+    },
+    {
+     "title": "Way 2",
+     "subtitle": "7 runs · S packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         13,
+         23,
+         23,
+         23,
+         100
+        ],
+        [
+         "Points needed",
+         91000,
+         91000,
+         91000,
+         150000,
+         233000,
+         233000,
+         233000,
+         ""
+        ],
+        [
+         "Deluxe Chicken Meal left over after run",
+         144,
+         288,
+         432,
+         481,
+         397,
+         313,
+         229,
+         ""
+        ],
+        [
+         "Deluxe Chicken Meal used",
+         0,
+         0,
+         0,
+         95,
+         228,
+         228,
+         228,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         4512,
+         4512,
+         4512,
+         4512,
+         4512,
+         4512,
+         4512,
+         31584
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 3",
+     "subtitle": "7 runs · S packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         6,
+         6,
+         6,
+         6,
+         70,
+         106
+        ],
+        [
+         "Points needed",
+         91000,
+         91000,
+         91000,
+         91000,
+         91000,
+         91000,
+         661000,
+         ""
+        ],
+        [
+         "Deluxe Chicken Meal left over after run",
+         144,
+         288,
+         432,
+         576,
+         720,
+         864,
+         96,
+         ""
+        ],
+        [
+         "Deluxe Chicken Meal used",
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         912,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         4512,
+         4512,
+         4512,
+         4512,
+         4512,
+         4512,
+         4512,
+         31584
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 4",
+     "subtitle": "3 runs · S + M packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         35,
+         35,
+         35,
+         105
+        ],
+        [
+         "Points needed",
+         348000,
+         348000,
+         348000,
+         ""
+        ],
+        [
+         "Deluxe Chicken Meal left over after run",
+         20,
+         40,
+         60,
+         ""
+        ],
+        [
+         "Deluxe Chicken Meal used",
+         412,
+         412,
+         412,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         28224,
+         28224,
+         28224,
+         84672
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 5",
+     "subtitle": "3 runs · S + M packs only, one big shard run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         6,
+         100,
+         112
+        ],
+        [
+         "Points needed",
+         91000,
+         91000,
+         890000,
+         ""
+        ],
+        [
+         "Deluxe Chicken Meal left over after run",
+         432,
+         864,
+         17,
+         ""
+        ],
+        [
+         "Deluxe Chicken Meal used",
+         0,
+         0,
+         1279,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         28224,
+         28224,
+         28224,
+         84672
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 6",
+     "subtitle": "2 runs · S + M + L packs only, shard gain spread",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         50,
+         50,
+         100
+        ],
+        [
+         "Points needed",
+         480000,
+         480000,
+         ""
+        ],
+        [
+         "Deluxe Chicken Meal left over after run",
+         241,
+         482,
+         ""
+        ],
+        [
+         "Deluxe Chicken Meal used",
+         623,
+         623,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         75936,
+         75936,
+         151872
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 7",
+     "subtitle": "2 runs · S + M + L packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         6,
+         100,
+         106
+        ],
+        [
+         "Points needed",
+         91000,
+         890000,
+         ""
+        ],
+        [
+         "Deluxe Chicken Meal left over after run",
+         864,
+         449,
+         ""
+        ],
+        [
+         "Deluxe Chicken Meal used",
+         0,
+         1279,
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         75936,
+         75936,
+         151872
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "info": [
+    {
+     "title": "Free Points",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [],
+       "rows": [
+        [
+         91000,
+         "This is with losing a bit and without ssr character boosts"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Gems stamina",
+     "subtitle": "5 stamina = 1 Deluxe Chicken Meal = 625 points",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "188 packs (S packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Deluxe Chicken Meal gained",
+         6,
+         18,
+         144
+        ],
+        [
+         "Points gained",
+         3750,
+         11250,
+         90000
+        ],
+        [
+         "Gem cost",
+         188,
+         564,
+         4512
+        ]
+       ]
+      },
+      {
+       "header": [
+        "988 packs (M packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Deluxe Chicken Meal gained",
+         12,
+         36,
+         288
+        ],
+        [
+         "Points gained",
+         7500,
+         22500,
+         180000
+        ],
+        [
+         "Gem cost",
+         988,
+         2964,
+         23712
+        ]
+       ]
+      },
+      {
+       "header": [
+        "1988 packs (L packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Deluxe Chicken Meal gained",
+         18,
+         54,
+         432
+        ],
+        [
+         "Points gained",
+         11250,
+         33750,
+         270000
+        ],
+        [
+         "Gem cost",
+         1988,
+         5964,
+         47712
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cloud-kingdom-games",
+   "name": "Cloud Kingdom Games",
+   "notes": [
+    "All calculations are made for when youre arena 15 or past arena 15"
+   ],
+   "milestones": [
+    {
+     "title": "Milestones",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina",
+        "Fusion Nut Bar needed"
+       ],
+       "rows": [
+        [
+         1,
+         1,
+         14000,
+         0
+        ],
+        [
+         5,
+         6,
+         58000,
+         0
+        ],
+        [
+         7,
+         13,
+         102000,
+         120.25
+        ],
+        [
+         10,
+         23,
+         162000,
+         195.25
+        ],
+        [
+         12,
+         35,
+         243000,
+         296.5
+        ],
+        [
+         15,
+         50,
+         331000,
+         406.5
+        ],
+        [
+         20,
+         70,
+         450000,
+         555.25
+        ],
+        [
+         30,
+         100,
+         600000,
+         742.75
+        ],
+        [
+         50,
+         150,
+         830000,
+         1030.25
+        ],
+        [
+         75,
+         225,
+         1190000,
+         1480.25
+        ],
+        [
+         85,
+         310,
+         1600000,
+         1992.75
+        ],
+        [
+         100,
+         410,
+         2080000,
+         2592.75
+        ],
+        [
+         100,
+         510,
+         2560000,
+         3192.75
+        ],
+        [
+         150,
+         660,
+         3290000,
+         4105.25
+        ],
+        [
+         100,
+         760,
+         3770000,
+         4705.25
+        ],
+        [
+         150,
+         910,
+         4490000,
+         5605.25
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Milestones without free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina",
+        "Fusion Nut Bar needed"
+       ],
+       "rows": [
+        [
+         7,
+         7,
+         44000,
+         120.25
+        ],
+        [
+         10,
+         17,
+         104000,
+         195.25
+        ],
+        [
+         12,
+         29,
+         185000,
+         296.5
+        ],
+        [
+         15,
+         44,
+         273000,
+         406.5
+        ],
+        [
+         20,
+         64,
+         392000,
+         555.25
+        ],
+        [
+         30,
+         94,
+         542000,
+         742.75
+        ],
+        [
+         50,
+         144,
+         772000,
+         1030.25
+        ],
+        [
+         75,
+         219,
+         1132000,
+         1480.25
+        ],
+        [
+         85,
+         304,
+         1542000,
+         1992.75
+        ],
+        [
+         100,
+         404,
+         2022000,
+         2592.75
+        ],
+        [
+         100,
+         504,
+         2502000,
+         3192.75
+        ],
+        [
+         150,
+         654,
+         3232000,
+         4105.25
+        ],
+        [
+         100,
+         754,
+         3712000,
+         4705.25
+        ],
+        [
+         150,
+         904,
+         4432000,
+         5605.25
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Shards",
+        "Total shards",
+        "Stamina"
+       ],
+       "rows": [
+        [
+         7,
+         "",
+         ""
+        ],
+        [
+         42,
+         58,
+         ""
+        ],
+        [
+         441,
+         "",
+         ""
+        ],
+        [
+         "",
+         "",
+         -310.25
+        ],
+        [
+         55,
+         751.25,
+         ""
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "plans": [
+    {
+     "title": "Way 1",
+     "subtitle": "17 runs · each run 6 shards · no packs bought · 102 total shards",
+     "notes": [],
+     "tables": []
+    },
+    {
+     "title": "Way 2",
+     "subtitle": "8 runs · S packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         0
+        ],
+        [
+         "Stamina needed",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Fusion Nut Bar left over after run",
+         63,
+         126,
+         189,
+         252,
+         315,
+         378,
+         441,
+         504,
+         ""
+        ],
+        [
+         "Fusion Nut Bar used",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         31584
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 3",
+     "subtitle": "9 runs · S packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "run 9",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         0
+        ],
+        [
+         "Stamina needed",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Fusion Nut Bar left over after run",
+         63,
+         126,
+         189,
+         252,
+         315,
+         378,
+         441,
+         504,
+         567,
+         ""
+        ],
+        [
+         "Fusion Nut Bar used",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         35532
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 4",
+     "subtitle": "4 runs · S + M packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         "",
+         "",
+         "",
+         "",
+         0
+        ],
+        [
+         "Stamina needed",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Fusion Nut Bar left over after run",
+         189,
+         378,
+         567,
+         756,
+         ""
+        ],
+        [
+         "Fusion Nut Bar used",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 5",
+     "subtitle": "4 runs · S + M packs only, one big shard run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         "",
+         "",
+         "",
+         "",
+         0
+        ],
+        [
+         "Stamina needed",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Fusion Nut Bar left over after run",
+         189,
+         378,
+         567,
+         756,
+         ""
+        ],
+        [
+         "Fusion Nut Bar used",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 6",
+     "subtitle": "2 runs · S + M + L packs only, shard gain spread",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         "",
+         "",
+         0
+        ],
+        [
+         "Stamina needed",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Fusion Nut Bar left over after run",
+         378,
+         756,
+         ""
+        ],
+        [
+         "Fusion Nut Bar used",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 7",
+     "subtitle": "2 runs · S + M + L packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         "",
+         "",
+         0
+        ],
+        [
+         "Stamina needed",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Fusion Nut Bar left over after run",
+         378,
+         756,
+         ""
+        ],
+        [
+         "Fusion Nut Bar used",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "info": [
+    {
+     "title": "Free stamina",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [],
+       "rows": [
+        [
+         3400,
+         "This is roughly"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Gems stamina",
+     "subtitle": "1 Fusion Nut Bar = 5 Dices = 800 Super Achievement points",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "188 packs (S packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Fusion Nut Bar gained",
+         3,
+         9,
+         63
+        ],
+        [
+         "Stamina gained",
+         2400,
+         7200,
+         50400
+        ],
+        [
+         "Gem cost",
+         188,
+         564,
+         3948
+        ]
+       ]
+      },
+      {
+       "header": [
+        "988 packs (M packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Fusion Nut Bar gained",
+         6,
+         18,
+         126
+        ],
+        [
+         "Stamina gained",
+         4800,
+         14400,
+         100800
+        ],
+        [
+         "Gem cost",
+         988,
+         2964,
+         20748
+        ]
+       ]
+      },
+      {
+       "header": [
+        "1988 packs (L packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Fusion Nut Bar gained",
+         9,
+         27,
+         189
+        ],
+        [
+         "Stamina gained",
+         7200,
+         21600,
+         151200
+        ],
+        [
+         "Gem cost",
+         1988,
+         5964,
+         41748
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "march-of-the-northrealm",
+   "name": "March Of The Northrealm",
+   "notes": [
+    "All calculations are done after you reach difficulty stage",
+    "Note: you can only use stamina in multiples of 10"
+   ],
+   "milestones": [
+    {
+     "title": "Milestones",
+     "subtitle": "2 insignias = 1 SSR+ shard, 1 insignia = 2 crystal fragments",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "Insignias",
+        "Total insignias",
+        "Score",
+        "Large Energy Bowl needed"
+       ],
+       "rows": [
+        [
+         6,
+         6,
+         13000,
+         0
+        ],
+        [
+         30,
+         36,
+         52000,
+         0
+        ],
+        [
+         42,
+         78,
+         86000,
+         54.4
+        ],
+        [
+         60,
+         138,
+         133000,
+         129.6
+        ],
+        [
+         70,
+         208,
+         196000,
+         230.4
+        ],
+        [
+         80,
+         288,
+         264000,
+         339.2
+        ],
+        [
+         100,
+         388,
+         355000,
+         484.8
+        ],
+        [
+         150,
+         538,
+         471000,
+         670.4
+        ],
+        [
+         300,
+         838,
+         652000,
+         960
+        ],
+        [
+         450,
+         1288,
+         933000,
+         1409.6
+        ],
+        [
+         510,
+         1798,
+         1250000,
+         1916.8
+        ],
+        [
+         600,
+         2398,
+         1620000,
+         2508.8
+        ],
+        [
+         600,
+         2998,
+         2000000,
+         3116.8
+        ],
+        [
+         900,
+         3898,
+         2560000,
+         4012.8
+        ],
+        [
+         600,
+         4498,
+         2930000,
+         4604.8
+        ],
+        [
+         900,
+         5398,
+         3500000,
+         5516.8
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "plans": [
+    {
+     "title": "Way 1",
+     "subtitle": "17 runs · each run 6 shards · no packs bought · 102 total shards",
+     "notes": [],
+     "tables": []
+    },
+    {
+     "title": "Way 2",
+     "subtitle": "8 runs · S packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         0
+        ],
+        [
+         "Stamina needed",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Large Energy Bowl left over after run",
+         63,
+         126,
+         189,
+         252,
+         315,
+         378,
+         441,
+         504,
+         ""
+        ],
+        [
+         "Large Energy Bowl used",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         31584
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 3",
+     "subtitle": "9 runs · S packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "run 5",
+        "run 6",
+        "run 7",
+        "run 8",
+        "run 9",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         0
+        ],
+        [
+         "Stamina needed",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Large Energy Bowl left over after run",
+         63,
+         126,
+         189,
+         252,
+         315,
+         378,
+         441,
+         504,
+         567,
+         ""
+        ],
+        [
+         "Large Energy Bowl used",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         "S AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         3948,
+         35532
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 4",
+     "subtitle": "4 runs · S + M packs only, shard gain spread out",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         "",
+         "",
+         "",
+         "",
+         0
+        ],
+        [
+         "Stamina needed",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Large Energy Bowl left over after run",
+         189,
+         378,
+         567,
+         756,
+         ""
+        ],
+        [
+         "Large Energy Bowl used",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 5",
+     "subtitle": "4 runs · S + M packs only, one big shard run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "run 3",
+        "run 4",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         "",
+         "",
+         "",
+         "",
+         0
+        ],
+        [
+         "Stamina needed",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Large Energy Bowl left over after run",
+         189,
+         378,
+         567,
+         756,
+         ""
+        ],
+        [
+         "Large Energy Bowl used",
+         "",
+         "",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         "S AP + M AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         24696,
+         24696,
+         24696,
+         24696,
+         98784
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 6",
+     "subtitle": "2 runs · S + M + L packs only, shard gain spread",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         "",
+         "",
+         0
+        ],
+        [
+         "Stamina needed",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Large Energy Bowl left over after run",
+         378,
+         756,
+         ""
+        ],
+        [
+         "Large Energy Bowl used",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Way 7",
+     "subtitle": "2 runs · S + M + L packs only, one big run",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "",
+        "run 1",
+        "run 2",
+        "total"
+       ],
+       "rows": [
+        [
+         "Shards each run",
+         "",
+         "",
+         0
+        ],
+        [
+         "Stamina needed",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Large Energy Bowl left over after run",
+         378,
+         756,
+         ""
+        ],
+        [
+         "Large Energy Bowl used",
+         "",
+         "",
+         ""
+        ],
+        [
+         "Packs bought",
+         "S AP + M AP + L AP",
+         "S AP + M AP + L AP",
+         ""
+        ],
+        [
+         "Gems needed",
+         66444,
+         66444,
+         132888
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "info": [
+    {
+     "title": "Free score",
+     "subtitle": "Free stamina also gives 70 extra insignias",
+     "notes": [],
+     "tables": [
+      {
+       "header": [],
+       "rows": [
+        [
+         52000,
+         "This is with losing a bit and without stamina rebate"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Gems stamina",
+     "subtitle": "2 Large Energy Bowl = 10 stamina = 1250 score",
+     "notes": [],
+     "tables": [
+      {
+       "header": [
+        "188 packs (S packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Large Energy Bowl gained",
+         3,
+         9,
+         63
+        ],
+        [
+         "Stamina gained",
+         1875,
+         5625,
+         39375
+        ],
+        [
+         "Gem cost",
+         188,
+         564,
+         3948
+        ]
+       ]
+      },
+      {
+       "header": [
+        "988 packs (M packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Large Energy Bowl gained",
+         6,
+         18,
+         126
+        ],
+        [
+         "Stamina gained",
+         3750,
+         11250,
+         78750
+        ],
+        [
+         "Gem cost",
+         988,
+         2964,
+         20748
+        ]
+       ]
+      },
+      {
+       "header": [
+        "1988 packs (L packs)",
+        "1 pack (1P)",
+        "All packs one day (AO)",
+        "All packs whole event (AP)"
+       ],
+       "rows": [
+        [
+         "Large Energy Bowl gained",
+         9,
+         27,
+         189
+        ],
+        [
+         "Stamina gained",
+         5625,
+         16875,
+         118125
+        ],
+        [
+         "Gem cost",
+         1988,
+         5964,
+         41748
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "",
+     "subtitle": "",
+     "notes": [],
+     "tables": [
+      {
+       "header": [],
+       "rows": [
+        [
+         "Ways to get 1 ur",
+         "You need 600 insignias for a UR, for an SSR+ you just need 200"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
